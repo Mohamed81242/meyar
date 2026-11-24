@@ -1,6 +1,16 @@
+import { createElement } from "react";
+import { Navigate } from "react-router-dom";
 import type { RouteConfig } from "@/router";
 
 export const billingRoutes: RouteConfig[] = [
+    {
+        index: true,
+        element: createElement(Navigate, { to: "/dashboard/billing", replace: true }),
+    },
+    {
+        path: "overview",
+        element: createElement(Navigate, { to: "/dashboard/billing", replace: true }),
+    },
     {
         path: "billing",
         lazy: () =>

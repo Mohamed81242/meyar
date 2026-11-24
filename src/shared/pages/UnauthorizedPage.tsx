@@ -46,7 +46,7 @@ export function UnauthorizedPage() {
                     </Button>
                     <Button
                         type="button"
-                        onClick={() => navigate("/dashboard/overview")}
+                        onClick={() => navigate("/dashboard/billing")}
                         className="rounded-xl bg-dashboard-primary hover:bg-dashboard-primary/90 text-white text-xs h-10 px-4 gap-2 font-semibold shadow-xs"
                     >
                         <Home className="w-3.5 h-3.5" />

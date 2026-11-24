@@ -120,7 +120,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                 )}
             >
                 <Link
-                    to="/dashboard/overview"
+                    to="/dashboard/billing"
                     className={cn(
                         "flex items-center text-dashboard-muted-foreground hover:text-dashboard-foreground transition-colors",
                         isCollapsed
