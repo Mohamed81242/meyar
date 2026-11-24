@@ -106,7 +106,7 @@ export let mockWalletTransactions: WalletTransaction[] = [
         occurredAt: "2026-08-12T11:00:00.000000Z",
         createdAt: "2026-08-12T11:00:00.000000Z",
         updatedAt: "2026-08-12T11:30:00.000000Z",
-        user: mockFinancialTransactions[4].user,
+        user: mockFinancialTransactions[1]?.user || mockFinancialTransactions[0]?.user,
     },
 ];
 
