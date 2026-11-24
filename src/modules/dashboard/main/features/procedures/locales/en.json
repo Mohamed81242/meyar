@@ -1,6 +1,46 @@
 {
     "title": "Procedures",
-    "main": {
-        "title": "Procedures"
-    }
+    "home": "Home",
+    "filter": "Filter",
+    "totalItems": "Total Items:",
+    "orderList": "قائمة الترتيب",
+    "searchPlaceholder": "Search tasks or companies...",
+    "allCompanies": "All Companies / Entities",
+    "allStatuses": "All Statuses",
+    "allPriorities": "All Priorities",
+    "reset": "Reset",
+    "apply": "Apply",
+    "noProcedures": "No procedures found",
+    "columns": {
+        "tasks": "TASKS",
+        "status": "STATUS",
+        "priority": "PRIORITY",
+        "action": "ACTION"
+    },
+    "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
+    },
+    "addProcedure": "Add New Procedure",
+    "editProcedure": "Edit Procedure",
+    "taskTitleLabel": "Task Description / Procedure",
+    "taskTitlePlaceholder": "e.g. Separate poultry preparation rooms from fish",
+    "companyLabel": "Company / Entity",
+    "companyPlaceholder": "e.g. Sami Sulaiman Sindi Co.",
+    "priorityLabel": "Priority",
+    "statusLabel": "Status",
+    "delayDaysLabel": "Delay Days",
+    "cancel": "Cancel",
+    "save": "Save Changes",
+    "add": "Add Procedure",
+    "saving": "Saving...",
+    "deleting": "Deleting...",
+    "delete": "Delete",
+    "deleteConfirmTitle": "Delete Procedure",
+    "deleteConfirmDesc": "Are you sure you want to delete this procedure? This action cannot be undone.",
+    "fillRequired": "Please fill in all required fields",
+    "createdSuccess": "Procedure created successfully",
+    "updatedSuccess": "Procedure updated successfully",
+    "deletedSuccess": "Procedure deleted successfully",
+    "actionFailed": "An error occurred while executing the operation"
 }

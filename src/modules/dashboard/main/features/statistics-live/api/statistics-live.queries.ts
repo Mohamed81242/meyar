@@ -1,19 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import { statisticsLiveApi } from "./statistics-live.api";
 import { statisticsLiveKeys } from "./statistics-live.keys";
-import type { ListQueryParams } from "@/shared/api";
+import type { StatisticsLiveQueryParams } from "../types";
 
-export function useStatisticsLivesList(params?: ListQueryParams) {
+export function useStatisticsLiveOverview(params?: StatisticsLiveQueryParams) {
     return useQuery({
-        queryKey: statisticsLiveKeys.list(params),
-        queryFn: ({ signal }) => statisticsLiveApi.getList(params, signal),
-    });
-}
-
-export function useStatisticsLive(id: string) {
-    return useQuery({
-        queryKey: statisticsLiveKeys.detail(id),
-        queryFn: ({ signal }) => statisticsLiveApi.getById(id, signal),
-        enabled: !!id,
+        queryKey: statisticsLiveKeys.overview(params),
+        queryFn: ({ signal }) => statisticsLiveApi.getOverview(params, signal),
+        refetchInterval: params?.realtime ? 5000 : false, // 5s live polling if realtime toggle is on
     });
 }

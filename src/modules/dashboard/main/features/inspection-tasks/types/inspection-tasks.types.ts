@@ -1,24 +1,42 @@
 import { z } from "zod";
 
-export const inspectionTasksSchema = z.object({
-    name: z.string().min(1, "Name is required"),
-    description: z.string().optional(),
-    role: z.string().optional(),
-    email: z.string().email().optional(),
-    phone: z.string().optional(),
-});
+export type InspectionTaskStatus = "completed" | "in_progress" | "pending" | "cancelled";
 
-export interface InspectionTasks {
-    id: string;
-    name: string;
-    description?: string | null;
-    role?: string | null;
-    email?: string | null;
-    phone?: string | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
+export interface TaskScoreBreakdown {
+    label: string;
+    score: number;
 }
 
-export type InspectionTasksCreatePayload = z.infer<typeof inspectionTasksSchema>;
-export type InspectionTasksUpdatePayload = Partial<InspectionTasksCreatePayload>;
+export const inspectionTaskSchema = z.object({
+    entityName: z.string().min(1, "Entity name is required"),
+    templateName: z.string().min(1, "Template name is required"),
+    status: z.enum(["completed", "in_progress", "pending", "cancelled"]).default("completed"),
+    lastUpdate: z.string().optional(),
+    startDate: z.string().optional(),
+    completeDate: z.string().optional().nullable(),
+    flaggedItemsCount: z.number().default(0),
+    score: z.number().default(100),
+});
+
+export interface InspectionTask {
+    id: string;
+    entityName: string;
+    templateName: string;
+    status: InspectionTaskStatus;
+    lastUpdate: string;
+    startDate: string;
+    completeDate?: string | null;
+    flaggedItemsCount: number;
+    score: number;
+    scores?: TaskScoreBreakdown[];
+    createdAt?: string;
+    updatedAt?: string;
+}
+
+export type InspectionTaskCreatePayload = z.infer<typeof inspectionTaskSchema>;
+export type InspectionTaskUpdatePayload = Partial<InspectionTaskCreatePayload>;
+
+// Backwards compatibility aliases
+export type InspectionTasks = InspectionTask;
+export type InspectionTasksCreatePayload = InspectionTaskCreatePayload;
+export type InspectionTasksUpdatePayload = InspectionTaskUpdatePayload;

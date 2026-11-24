@@ -1,6 +1,32 @@
 {
+    "home": "الرئيسية",
     "title": "Inspection Types",
-    "main": {
-        "title": "Inspection Types"
+    "addType": "+ Add New Type",
+    "editType": "تعديل النوع",
+    "name": "Name",
+    "nameRequired": "الاسم مطلوب",
+    "typeCreated": "تم إنشاء نوع التقييم بنجاح",
+    "typeUpdated": "تم تحديث نوع التقييم بنجاح",
+    "typeDeleted": "تم حذف نوع التقييم بنجاح",
+    "failedToCreate": "فشل إنشاء نوع التقييم",
+    "failedToUpdate": "فشل تحديث نوع التقييم",
+    "failedToDelete": "فشل حذف نوع التقييم",
+    "templatesCount": "عدد القوالب {{count}}",
+    "save": "حفظ",
+    "add": "Add",
+    "saving": "جاري الحفظ...",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "deleting": "جاري الحذف...",
+    "deleteType": "حذف نوع التقييم",
+    "confirmDelete": "هل أنت متأكد من رغبتك في حذف هذا النوع؟",
+    "cannotUndo": "لا يمكن التراجع عن هذا الإجراء.",
+    "columns": {
+        "name": "NAME",
+        "action": "ACTION"
+    },
+    "actions": {
+        "edit": "تعديل",
+        "delete": "حذف"
     }
 }

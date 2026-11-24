@@ -1,40 +1,44 @@
-import type { CompanyClassifications, CompanyClassificationsCreatePayload, CompanyClassificationsUpdatePayload } from "../types";
+import type { CompanyClassification, CompanyClassificationCreatePayload, CompanyClassificationUpdatePayload } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
-export let mockCompanyClassificationss: CompanyClassifications[] = [
+export let mockCompanyClassificationss: CompanyClassification[] = [
     {
         id: "1",
-        name: "عبدالرحمن قاسم",
-        description: "Standard account item",
-        role: "أدمن",
-        email: "abuqasim1427@gmail.com",
-        phone: "+966 552818590",
+        name: "مطابخ الاعاشة",
+        description: "مطابخ",
         isActive: true,
-        createdAt: "2026/10/14 , 08:19:28 PM",
-        updatedAt: "2026/10/14 , 09:02:52 PM",
+        createdAt: "2026/10/14",
+        updatedAt: "2026/10/14",
     },
     {
         id: "2",
-        name: "فراس حافظ",
-        description: "Administrative account",
-        role: "أدمن",
-        email: "rmz.alemtithal@gmail.com",
-        phone: "+966 500000000",
+        name: "مصانع",
+        description: "مصانع",
         isActive: true,
-        createdAt: "2026/08/26 , 02:35:26 AM",
-        updatedAt: "2026/08/26 , 02:35:26 AM",
-    }
+        createdAt: "2026/08/26",
+        updatedAt: "2026/08/26",
+    },
+    {
+        id: "3",
+        name: "مطعم",
+        description: "مطاعم",
+        isActive: true,
+        createdAt: "2026/08/26",
+        updatedAt: "2026/08/26",
+    },
 ];
 
 export const mockCompanyClassificationsApi = {
-    getList: async (params?: any, signal?: AbortSignal): Promise<any> => {
+    getList: async (params?: any, _signal?: AbortSignal): Promise<any> => {
         return new Promise((resolve) => {
             setTimeout(() => {
                 const { page = 1, search, perPage = 10 } = (params || {}) as any;
-                const filtered = mockCompanyClassificationss.filter(item => 
-                    !search || 
-                    item.name.toLowerCase().includes(search.toLowerCase()) ||
-                    (item.email && item.email.toLowerCase().includes(search.toLowerCase()))
+                const filtered = mockCompanyClassificationss.filter(
+                    (item) =>
+                        !search ||
+                        item.name.toLowerCase().includes(search.toLowerCase()) ||
+                        (item.description &&
+                            item.description.toLowerCase().includes(search.toLowerCase()))
                 );
                 const p = Number(page);
                 const limit = Number(perPage);
@@ -47,38 +51,39 @@ export const mockCompanyClassificationsApi = {
                     nextPageUrl: null,
                     total: filtered.length,
                 });
-            }, 300);
+            }, 200);
         });
     },
 
-    getById: async (id: string, signal?: AbortSignal): Promise<CompanyClassifications | null> => {
+    getById: async (id: string, _signal?: AbortSignal): Promise<CompanyClassification | null> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 const mock = mockCompanyClassificationss.find((s) => s.id === id);
                 if (!mock) reject(new Error("Not found"));
                 else resolve(mock);
-            }, 300);
+            }, 200);
         });
     },
-    
-    create: async (payload: CompanyClassificationsCreatePayload): Promise<CompanyClassifications> => {
+
+    create: async (payload: CompanyClassificationCreatePayload): Promise<CompanyClassification> => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const now = new Date().toLocaleDateString();
-                const newItem: CompanyClassifications = {
+                const now = new Date().toISOString().split("T")[0];
+                const newItem: CompanyClassification = {
                     id: uuidv4(),
-                    ...payload,
+                    name: payload.name,
+                    description: payload.description || "",
                     isActive: true,
                     createdAt: now,
                     updatedAt: now,
                 };
                 mockCompanyClassificationss = [newItem, ...mockCompanyClassificationss];
                 resolve(newItem);
-            }, 300);
+            }, 200);
         });
     },
 
-    update: async (id: string, payload: CompanyClassificationsUpdatePayload): Promise<CompanyClassifications> => {
+    update: async (id: string, payload: CompanyClassificationUpdatePayload): Promise<CompanyClassification> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 const index = mockCompanyClassificationss.findIndex((s) => s.id === id);
@@ -87,28 +92,25 @@ export const mockCompanyClassificationsApi = {
                     return;
                 }
                 const existing = mockCompanyClassificationss[index];
-                const updatedItem = {
+                const updatedItem: CompanyClassification = {
                     ...existing,
-                    ...payload,
-                    updatedAt: new Date().toLocaleDateString(),
+                    name: payload.name !== undefined ? payload.name : existing.name,
+                    description:
+                        payload.description !== undefined ? payload.description : existing.description,
+                    updatedAt: new Date().toISOString().split("T")[0],
                 };
                 mockCompanyClassificationss[index] = updatedItem;
                 resolve(updatedItem);
-            }, 300);
+            }, 200);
         });
     },
 
     delete: async (id: string): Promise<void> => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                const index = mockCompanyClassificationss.findIndex((s) => s.id === id);
-                if (index === -1) {
-                    reject(new Error("Not found"));
-                    return;
-                }
                 mockCompanyClassificationss = mockCompanyClassificationss.filter((s) => s.id !== id);
                 resolve();
-            }, 300);
+            }, 200);
         });
-    }
+    },
 };

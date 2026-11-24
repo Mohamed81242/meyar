@@ -1,3 +1,3 @@
-export * from "./CreateProceduresModal";
-export * from "./EditProceduresModal";
-export * from "./DeleteProceduresModal";
+export * from "./ProcedureFilterPanel";
+export * from "./ProcedureModal";
+export * from "./DeleteProcedureModal";

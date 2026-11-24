@@ -1,6 +1,19 @@
 {
-    "title": "Roles And Permissions",
+    "title": "Roles and Permissions",
     "main": {
-        "title": "Roles And Permissions"
+        "title": "Roles and Permissions",
+        "home": "Home",
+        "addNew": "+ Add New Permission",
+        "loading": "Loading...",
+        "noData": "No roles found"
+    },
+    "table": {
+        "name": "NAME",
+        "numberOfUsers": "NUMBER OF USERS",
+        "action": "ACTION"
+    },
+    "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
     }
 }

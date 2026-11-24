@@ -1,3 +1,3 @@
-export * from "./CreateInspectionTasksModal";
-export * from "./EditInspectionTasksModal";
-export * from "./DeleteInspectionTasksModal";
+export * from "./TaskFilterPanel";
+export * from "./TaskReportModal";
+export * from "./DeleteTaskModal";

@@ -1,34 +1,18 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { statisticsLiveApi } from "./statistics-live.api";
-import { statisticsLiveKeys } from "./statistics-live.keys";
+import { toast } from "sonner";
 
-export function useCreateStatisticsLive() {
-    const queryClient = useQueryClient();
+export function useExportStatisticsReport() {
     return useMutation({
-        mutationFn: statisticsLiveApi.create,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: statisticsLiveKeys.lists() });
+        mutationFn: (format: "excel" | "pdf") => statisticsLiveApi.exportReport(format),
+        onSuccess: (data) => {
+            toast.success("Report generated successfully");
+            if (data.downloadUrl && data.downloadUrl !== "#") {
+                window.open(data.downloadUrl, "_blank");
+            }
         },
-    });
-}
-
-export function useUpdateStatisticsLive() {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: ({ id, data }: { id: string; data: any }) => statisticsLiveApi.update(id, data),
-        onSuccess: (_, { id }) => {
-            queryClient.invalidateQueries({ queryKey: statisticsLiveKeys.lists() });
-            queryClient.invalidateQueries({ queryKey: statisticsLiveKeys.detail(id) });
-        },
-    });
-}
-
-export function useDeleteStatisticsLive() {
-    const queryClient = useQueryClient();
-    return useMutation({
-        mutationFn: statisticsLiveApi.delete,
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: statisticsLiveKeys.lists() });
+        onError: () => {
+            toast.error("Failed to export report");
         },
     });
 }

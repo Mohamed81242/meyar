@@ -3,17 +3,22 @@ import { inspectionTasksApi } from "./inspection-tasks.api";
 import { inspectionTasksKeys } from "./inspection-tasks.keys";
 import type { ListQueryParams } from "@/shared/api";
 
-export function useInspectionTaskssList(params?: ListQueryParams) {
+export function useInspectionTasksList(params?: ListQueryParams) {
     return useQuery({
         queryKey: inspectionTasksKeys.list(params),
         queryFn: ({ signal }) => inspectionTasksApi.getList(params, signal),
     });
 }
 
-export function useInspectionTasks(id: string) {
+// Backwards compatibility alias
+export const useInspectionTaskssList = useInspectionTasksList;
+
+export function useInspectionTask(id: string) {
     return useQuery({
         queryKey: inspectionTasksKeys.detail(id),
         queryFn: ({ signal }) => inspectionTasksApi.getById(id, signal),
-        enabled: !!id,
+        enabled: Boolean(id),
     });
 }
+
+export const useInspectionTasks = useInspectionTask;

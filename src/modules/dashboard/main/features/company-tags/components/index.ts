@@ -1,3 +1,3 @@
-export * from "./CreateCompanyTagsModal";
-export * from "./EditCompanyTagsModal";
-export * from "./DeleteCompanyTagsModal";
+export * from "./TagModal";
+export * from "./DeleteTagModal";
+export * from "./TagEmptyState";

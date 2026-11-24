@@ -1,24 +1,23 @@
 import { z } from "zod";
 
-export const companyClassificationsSchema = z.object({
+export const companyClassificationSchema = z.object({
     name: z.string().min(1, "Name is required"),
     description: z.string().optional(),
-    role: z.string().optional(),
-    email: z.string().email().optional(),
-    phone: z.string().optional(),
 });
 
-export interface CompanyClassifications {
+export interface CompanyClassification {
     id: string;
     name: string;
     description?: string | null;
-    role?: string | null;
-    email?: string | null;
-    phone?: string | null;
     isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
-export type CompanyClassificationsCreatePayload = z.infer<typeof companyClassificationsSchema>;
-export type CompanyClassificationsUpdatePayload = Partial<CompanyClassificationsCreatePayload>;
+export type CompanyClassificationCreatePayload = z.infer<typeof companyClassificationSchema>;
+export type CompanyClassificationUpdatePayload = Partial<CompanyClassificationCreatePayload>;
+
+// Backward compatibility aliases
+export type CompanyClassifications = CompanyClassification;
+export type CompanyClassificationsCreatePayload = CompanyClassificationCreatePayload;
+export type CompanyClassificationsUpdatePayload = CompanyClassificationUpdatePayload;

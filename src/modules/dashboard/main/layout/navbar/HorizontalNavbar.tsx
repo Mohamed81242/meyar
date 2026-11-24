@@ -66,6 +66,26 @@ export const HorizontalNavbar: React.FC = () => {
     const [openMenu, setOpenMenu] = useState<string | null>(null);
     const [hoveredSubMenu, setHoveredSubMenu] = useState<string | null>(null);
     const menuRef = useRef<HTMLDivElement>(null);
+    const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    // Hover Handlers
+    const handleMouseEnterItem = (title: string) => {
+        if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+            hoverTimeoutRef.current = null;
+        }
+        setOpenMenu(title);
+    };
+
+    const handleMouseLeaveItem = () => {
+        if (hoverTimeoutRef.current) {
+            clearTimeout(hoverTimeoutRef.current);
+        }
+        hoverTimeoutRef.current = setTimeout(() => {
+            setOpenMenu(null);
+            setHoveredSubMenu(null);
+        }, 150);
+    };
 
     // Close menu on click outside
     useEffect(() => {
@@ -76,7 +96,12 @@ export const HorizontalNavbar: React.FC = () => {
             }
         };
         document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+            if (hoverTimeoutRef.current) {
+                clearTimeout(hoverTimeoutRef.current);
+            }
+        };
     }, []);
 
     // Close on route change
@@ -169,7 +194,7 @@ export const HorizontalNavbar: React.FC = () => {
     };
 
     return (
-        <header className="w-full bg-white dark:bg-dashboard-card border-b border-[#E2E8F0] dark:border-dashboard-border shrink-0 z-40 select-none">
+        <header className="w-full bg-white dark:bg-dashboard-card border-b border-[#E2E8F0] dark:border-dashboard-border shrink-0 z-50 select-none relative">
             {/* Top Global Bar matching Image 4 */}
             <div className="h-16 px-6 flex items-center justify-between border-b border-[#F1F5F9] dark:border-dashboard-border">
                 {/* Left: Brand Logo + Search Input */}
@@ -178,7 +203,7 @@ export const HorizontalNavbar: React.FC = () => {
                         <MeayarLogo collapsed={false} />
                     </Link>
 
-                    {/* Search Bar matching Image 4 */}
+                    {/* Search Bar */}
                     <div className="hidden sm:flex items-center gap-2.5 px-3 h-9 rounded-lg border border-[#E2E8F0] dark:border-dashboard-border bg-white dark:bg-dashboard-background w-64 text-xs text-[#94A3B8] focus-within:border-dashboard-primary transition-colors">
                         <Search className="w-4 h-4 text-[#94A3B8] shrink-0" />
                         <input
@@ -233,7 +258,7 @@ export const HorizontalNavbar: React.FC = () => {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent
                             align="end"
-                            className="w-48 bg-white dark:bg-dashboard-card border border-[#E2E8F0] dark:border-dashboard-border rounded-xl p-1 shadow-lg text-xs"
+                            className="w-48 bg-white dark:bg-dashboard-card border border-[#E2E8F0] dark:border-dashboard-border rounded-xl p-1 shadow-lg text-xs z-50"
                         >
                             <div className="px-3 py-2 border-b border-[#F1F5F9] dark:border-dashboard-border">
                                 <p className="text-xs font-bold text-[#0F172A] dark:text-dashboard-foreground">
@@ -263,16 +288,22 @@ export const HorizontalNavbar: React.FC = () => {
                 </div>
             </div>
 
-            {/* Bottom Horizontal Menu Navigation Bar matching Image 4 */}
-            <div ref={menuRef} className="px-6 h-12 flex items-center gap-2 overflow-x-auto hide-scrollbar text-xs">
+            {/* Bottom Horizontal Menu Navigation Bar: overflow-visible so dropdowns float over content */}
+            <div ref={menuRef} className="px-6 h-12 flex items-center gap-2 text-xs relative overflow-visible">
                 {navItems.map((item) => {
                     const active = isItemActive(item);
                     const isOpen = openMenu === item.title;
                     const ItemIcon = item.icon;
 
                     return (
-                        <div key={item.title} className="relative">
+                        <div
+                            key={item.title}
+                            className="relative"
+                            onMouseEnter={() => item.subItems && handleMouseEnterItem(item.title)}
+                            onMouseLeave={() => item.subItems && handleMouseLeaveItem()}
+                        >
                             <button
+                                type="button"
                                 onClick={() => setOpenMenu(isOpen ? null : item.title)}
                                 className={cn(
                                     "flex items-center gap-2 px-3 py-1.5 rounded-lg font-semibold transition-all cursor-pointer whitespace-nowrap",
@@ -296,9 +327,13 @@ export const HorizontalNavbar: React.FC = () => {
 
                             {/* Floating Dropdown Card matching Image 4 */}
                             {isOpen && item.subItems && (
-                                <div className="absolute top-full left-0 mt-1.5 z-50 min-w-[220px] bg-white dark:bg-dashboard-card rounded-2xl border border-[#E2E8F0] dark:border-dashboard-border shadow-xl p-1.5 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-150">
+                                <div
+                                    className="absolute top-full start-0 mt-1.5 z-[100] min-w-[220px] bg-white dark:bg-dashboard-card rounded-2xl border border-[#E2E8F0] dark:border-dashboard-border shadow-2xl p-1.5 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-150"
+                                    onMouseEnter={() => handleMouseEnterItem(item.title)}
+                                    onMouseLeave={handleMouseLeaveItem}
+                                >
                                     {/* Arrow Pointer matching Image 4 */}
-                                    <div className="absolute -top-1.5 left-6 w-3 h-3 bg-white dark:bg-dashboard-card border-t border-l border-[#E2E8F0] dark:border-dashboard-border rotate-45" />
+                                    <div className="absolute -top-1.5 start-6 w-3 h-3 bg-white dark:bg-dashboard-card border-t border-l border-[#E2E8F0] dark:border-dashboard-border rotate-45" />
 
                                     {item.subItems.map((sub) => {
                                         const SubIcon = sub.icon;
@@ -317,7 +352,7 @@ export const HorizontalNavbar: React.FC = () => {
                                                     to={sub.href}
                                                     onClick={() => !hasChildren && setOpenMenu(null)}
                                                     className={cn(
-                                                        "flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors",
+                                                        "flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-colors relative z-10",
                                                         isSubActive
                                                             ? "bg-dashboard-secondary text-dashboard-primary font-bold"
                                                             : "text-[#334155] dark:text-dashboard-foreground hover:bg-dashboard-secondary hover:text-dashboard-primary"
@@ -327,12 +362,12 @@ export const HorizontalNavbar: React.FC = () => {
                                                         <SubIcon className={cn("w-4 h-4", isSubActive ? "text-dashboard-primary" : "text-[#64748B]")} />
                                                         <span>{sub.title}</span>
                                                     </div>
-                                                    {hasChildren && <ChevronRight className="w-3.5 h-3.5 text-[#94A3B8]" />}
+                                                    {hasChildren && <ChevronRight className="w-3.5 h-3.5 text-[#94A3B8] rtl:rotate-180" />}
                                                 </Link>
 
                                                 {/* Nested Submenu if any */}
                                                 {hasChildren && isSubHovered && (
-                                                    <div className="absolute top-0 left-full ml-1 min-w-[210px] bg-white dark:bg-dashboard-card rounded-2xl border border-[#E2E8F0] dark:border-dashboard-border shadow-xl p-1.5 flex flex-col gap-0.5 z-50">
+                                                    <div className="absolute top-0 start-full ms-1 min-w-[210px] bg-white dark:bg-dashboard-card rounded-2xl border border-[#E2E8F0] dark:border-dashboard-border shadow-2xl p-1.5 flex flex-col gap-0.5 z-[110]">
                                                         {sub.children!.map((child) => {
                                                             const ChildIcon = child.icon;
                                                             const isChildActive = location.pathname === child.href;

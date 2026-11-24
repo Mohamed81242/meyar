@@ -1,6 +1,36 @@
 {
-    "title": "Folders Or Classifications",
-    "main": {
-        "title": "Folders Or Classifications"
+    "home": "الرئيسية",
+    "title": "Folders or Classifications",
+    "createFolder": "Create Folder",
+    "addFolder": "Add Template Folder",
+    "editFolder": "Edit Template Folder",
+    "name": "Name",
+    "nameRequired": "الاسم مطلوب",
+    "selectTemplates": "Select Templates",
+    "searchTemplate": "Search Template",
+    "selectAllTemplates": "Select All templates",
+    "folderCreated": "تم إنشاء المجلد بنجاح",
+    "folderUpdated": "تم تحديث المجلد بنجاح",
+    "folderDeleted": "تم حذف المجلد بنجاح",
+    "failedToCreate": "فشل إنشاء المجلد",
+    "failedToUpdate": "فشل تحديث المجلد",
+    "failedToDelete": "فشل حذف المجلد",
+    "save": "Save",
+    "add": "Add",
+    "saving": "جاري الحفظ...",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "deleting": "جاري الحذف...",
+    "deleteFolder": "حذف المجلد",
+    "confirmDelete": "هل أنت متأكد من رغبتك في حذف هذا المجلد؟",
+    "cannotUndo": "لا يمكن التراجع عن هذا الإجراء.",
+    "columns": {
+        "name": "NAME",
+        "numberOfTemplates": "NUMBER OF TEMPLATES",
+        "actions": "ACTIONS"
+    },
+    "actions": {
+        "edit": "تعديل",
+        "delete": "حذف"
     }
 }

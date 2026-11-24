@@ -1,6 +1,19 @@
 {
-    "title": "Roles And Permissions",
+    "title": "الأدوار والصلاحيات",
     "main": {
-        "title": "Roles And Permissions"
+        "title": "Roles and Permissions",
+        "home": "Home",
+        "addNew": "+ Add New Permission",
+        "loading": "جاري التحميل...",
+        "noData": "لا يوجد أدوار مسجلة"
+    },
+    "table": {
+        "name": "NAME",
+        "numberOfUsers": "NUMBER OF USERS",
+        "action": "ACTION"
+    },
+    "actions": {
+        "edit": "تعديل",
+        "delete": "حذف"
     }
 }

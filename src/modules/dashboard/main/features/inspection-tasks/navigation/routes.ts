@@ -13,4 +13,28 @@ export const inspectionTasksRoutes: RouteConfig[] = [
         },
         requireAllPermissions: true,
     },
+    {
+        path: "inspectionTasks",
+        lazy: () =>
+            import("../pages/main").then((m) => ({
+                default: m.default,
+            })),
+        meta: {
+            titleKey: "inspection-tasks:title",
+            requiresAuth: true,
+        },
+        requireAllPermissions: true,
+    },
+    {
+        path: "inspection_tasks",
+        lazy: () =>
+            import("../pages/main").then((m) => ({
+                default: m.default,
+            })),
+        meta: {
+            titleKey: "inspection-tasks:title",
+            requiresAuth: true,
+        },
+        requireAllPermissions: true,
+    },
 ];

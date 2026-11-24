@@ -1,24 +1,22 @@
 import { z } from "zod";
 
-export const inspectionTypesSchema = z.object({
+export const inspectionTypeSchema = z.object({
     name: z.string().min(1, "Name is required"),
-    description: z.string().optional(),
-    role: z.string().optional(),
-    email: z.string().email().optional(),
-    phone: z.string().optional(),
+    templatesCount: z.number().optional(),
 });
 
-export interface InspectionTypes {
+export interface InspectionType {
     id: string;
     name: string;
-    description?: string | null;
-    role?: string | null;
-    email?: string | null;
-    phone?: string | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
+    templatesCount?: number;
+    createdAt?: string;
+    updatedAt?: string;
 }
 
-export type InspectionTypesCreatePayload = z.infer<typeof inspectionTypesSchema>;
-export type InspectionTypesUpdatePayload = Partial<InspectionTypesCreatePayload>;
+export type InspectionTypeCreatePayload = z.infer<typeof inspectionTypeSchema>;
+export type InspectionTypeUpdatePayload = Partial<InspectionTypeCreatePayload>;
+
+// Backwards compatibility aliases
+export type InspectionTypes = InspectionType;
+export type InspectionTypesCreatePayload = InspectionTypeCreatePayload;
+export type InspectionTypesUpdatePayload = InspectionTypeUpdatePayload;

@@ -10,6 +10,8 @@ export function useCompaniessList(params?: ListQueryParams) {
     });
 }
 
+export const useCompaniesList = useCompaniessList;
+
 export function useCompanies(id: string) {
     return useQuery({
         queryKey: companiesKeys.detail(id),

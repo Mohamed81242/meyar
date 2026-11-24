@@ -3,25 +3,19 @@ import { useLanguage } from "@/shared/hooks";
 import { useDebounce } from "@/shared/observability";
 import {
     ChevronRight,
-    Search,
     Plus,
     MoreVertical,
     CheckCircle2,
     Edit2,
     Trash2,
-    RotateCcw,
     ChevronLeft,
     ChevronsLeft,
     ChevronsRight,
     Send,
 } from "lucide-react";
 import { useUserssList } from "../api";
-import {
-    CreateUsersModal,
-    EditUsersModal,
-    DeleteUsersModal,
-} from "../components";
-import type { Users } from "../types";
+import { UserFilterPanel, UserModal, DeleteUserModal } from "../components";
+import type { User, UserFilterState } from "../types";
 import { exportToExcel } from "@/utils/fileUtils";
 import {
     DropdownMenu,
@@ -29,15 +23,29 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/design-system/components/dropdown-menu";
+import { toast } from "sonner";
+
+const DEFAULT_FILTERS: UserFilterState = {
+    search: "",
+    role: "",
+    template: "",
+    entity: "",
+    task: "",
+    action: "",
+    permission: "",
+    status: "all",
+    group: "",
+    typePermission: "all",
+    showGroups: false,
+};
 
 export default function UsersPage() {
     const { t } = useLanguage("users");
 
     // Filter states
     const [isFilterOpen, setIsFilterOpen] = useState(false);
-    const [search, setSearch] = useState("");
-    const debouncedSearch = useDebounce(search, 300);
-    const [statusFilter, setStatusFilter] = useState("all");
+    const [filters, setFilters] = useState<UserFilterState>(DEFAULT_FILTERS);
+    const debouncedSearch = useDebounce(filters.search, 300);
 
     // Pagination
     const [page, setPage] = useState(1);
@@ -47,25 +55,25 @@ export default function UsersPage() {
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
     // Modals
-    const [isCreateOpen, setIsCreateOpen] = useState(false);
-    const [editingItem, setEditingItem] = useState<Users | null>(null);
-    const [deletingItem, setDeletingItem] = useState<Users | null>(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [editingUser, setEditingUser] = useState<User | null>(null);
+    const [deletingUser, setDeletingUser] = useState<User | null>(null);
 
     // Query Data
     const { data, isLoading } = useUserssList({
         page,
         perPage,
         search: debouncedSearch || undefined,
+        status: filters.status !== "all" ? filters.status : undefined,
     });
 
-    const items: Users[] = (data as any)?.items || [];
+    const items: User[] = (data as any)?.items || [];
     const totalItems: number = (data as any)?.total ?? items.length;
     const totalPages: number = (data as any)?.lastPage ?? (Math.ceil(totalItems / perPage) || 1);
 
-    // Filtered items (client status filter if applicable)
+    // Filtered items (client-side role / advanced filter refinement if set)
     const displayedItems = items.filter((item) => {
-        if (statusFilter === "active") return item.isActive;
-        if (statusFilter === "inactive") return !item.isActive;
+        if (filters.role && item.role !== filters.role) return false;
         return true;
     });
 
@@ -85,6 +93,16 @@ export default function UsersPage() {
         );
     };
 
+    const handleOpenCreate = () => {
+        setEditingUser(null);
+        setIsModalOpen(true);
+    };
+
+    const handleOpenEdit = (user: User) => {
+        setEditingUser(user);
+        setIsModalOpen(true);
+    };
+
     const handleExportExcel = () => {
         exportToExcel(
             displayedItems,
@@ -101,15 +119,17 @@ export default function UsersPage() {
         );
     };
 
+    const handleSendNotification = () => {
+        toast.info("إرسال إشعار للمستخدمين المحددين");
+    };
+
     return (
-        <div className="flex flex-col gap-4 w-full select-none text-[#1E293B]">
-            {/* Breadcrumb */}
-            <div className="flex items-center gap-1.5 text-xs text-[#64748B] font-medium">
+        <div className="space-y-4 pb-12 select-none text-[#1E293B]">
+            {/* Breadcrumb Navigation */}
+            <div className="flex items-center gap-1.5 text-xs text-[#64748B]">
                 <span>Home</span>
                 <ChevronRight className="w-3.5 h-3.5 text-[#94A3B8]" />
-                <span className="text-[#334155] font-semibold">
-                    Users
-                </span>
+                <span className="text-[#334155] font-semibold">Users</span>
             </div>
 
             {/* Page Title */}
@@ -119,70 +139,25 @@ export default function UsersPage() {
                 </h1>
             </div>
 
-            {/* Collapsible Filter Card */}
-            <div className="dashboard-card p-3.5 px-5 transition-all">
-                <button
-                    onClick={() => setIsFilterOpen(!isFilterOpen)}
-                    className="flex items-center gap-2 text-sm font-semibold text-dashboard-primary hover:opacity-80 transition-colors cursor-pointer select-none"
-                >
-                    <ChevronRight
-                        className={`w-4 h-4 text-dashboard-primary transition-transform duration-200 ${
-                            isFilterOpen ? "rotate-90" : ""
-                        }`}
-                    />
-                    <span>Filter</span>
-                </button>
-
-                {isFilterOpen && (
-                    <div className="mt-3 pt-3 border-t border-[#F1F5F9] grid grid-cols-1 sm:grid-cols-3 gap-3 animate-in fade-in duration-150">
-                        {/* Search Input */}
-                        <div className="flex items-center gap-2 px-3 h-9 rounded-lg border border-[#E2E8F0] bg-[#F8FAFC] text-xs focus-within:border-dashboard-primary transition-colors">
-                            <Search className="w-4 h-4 text-[#94A3B8] shrink-0" />
-                            <input
-                                type="text"
-                                placeholder="Search by name or email..."
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                                className="bg-transparent border-none outline-none w-full text-xs text-[#0F172A] placeholder:text-[#94A3B8]"
-                            />
-                        </div>
-
-                        {/* Status Filter */}
-                        <select
-                            value={statusFilter}
-                            onChange={(e) => {
-                                setStatusFilter(e.target.value);
-                                setPage(1);
-                            }}
-                            className="px-3 h-9 rounded-lg border border-[#E2E8F0] bg-[#F8FAFC] text-xs text-[#0F172A] outline-none cursor-pointer"
-                        >
-                            <option value="all">All Statuses</option>
-                            <option value="active">Active</option>
-                            <option value="inactive">Inactive</option>
-                        </select>
-
-                        {/* Reset Button */}
-                        <button
-                            onClick={() => {
-                                setSearch("");
-                                setStatusFilter("all");
-                                setPage(1);
-                            }}
-                            className="px-3 h-9 rounded-lg border border-[#E2E8F0] text-xs font-semibold text-[#475569] hover:bg-[#F1F5F9] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                        >
-                            <RotateCcw className="w-4 h-4" />
-                            <span>Reset Filters</span>
-                        </button>
-                    </div>
-                )}
-            </div>
+            {/* Collapsible Filter Panel */}
+            <UserFilterPanel
+                isOpen={isFilterOpen}
+                onToggle={() => setIsFilterOpen(!isFilterOpen)}
+                filters={filters}
+                onChange={setFilters}
+                onApply={() => setPage(1)}
+                onReset={() => {
+                    setFilters(DEFAULT_FILTERS);
+                    setPage(1);
+                }}
+            />
 
             {/* Table Card */}
             <div className="dashboard-card overflow-hidden flex flex-col">
                 {/* Table Header Toolbar */}
-                <div className="p-4 px-6 border-b border-[#E2E8F0] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div className="p-4 px-6 border-b border-[#F1F5F9] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     {/* Left: Total Items */}
-                    <div className="text-sm font-medium text-[#64748B]">
+                    <div className="text-xs font-medium text-[#64748B]">
                         Total Items: <span className="font-bold text-[#0F172A]">{totalItems}</span>
                     </div>
 
@@ -190,57 +165,58 @@ export default function UsersPage() {
                     <div className="flex items-center gap-2.5 flex-wrap">
                         {/* Export Excel Button */}
                         <button
+                            type="button"
                             onClick={handleExportExcel}
-                            className="h-9 px-4 text-xs font-semibold rounded-lg border border-dashboard-primary/30 bg-dashboard-secondary text-dashboard-primary hover:bg-dashboard-secondary/80 transition-colors cursor-pointer"
+                            className="h-8.5 px-4 text-xs font-semibold rounded-lg border border-[#2563EB]/40 bg-[#EFF6FF] text-[#2563EB] hover:bg-[#DBEAFE] transition-colors cursor-pointer"
                         >
                             تصدير اكسل
                         </button>
 
                         {/* Send Notification Button */}
                         <button
-                            onClick={() => alert("Send notification")}
-                            className="h-9 px-4 text-xs font-semibold rounded-lg border border-dashboard-primary/30 bg-white text-dashboard-primary hover:bg-dashboard-secondary flex items-center gap-2 transition-colors cursor-pointer"
+                            type="button"
+                            onClick={handleSendNotification}
+                            className="h-8.5 px-4 text-xs font-semibold rounded-lg border border-[#2563EB]/40 bg-white text-[#2563EB] hover:bg-[#EFF6FF] flex items-center gap-1.5 transition-colors cursor-pointer"
                         >
-                            <Send className="w-4 h-4 text-dashboard-primary" />
+                            <Send className="w-3.5 h-3.5 text-[#2563EB]" />
                             <span>Send Notification</span>
                         </button>
 
                         {/* Primary Add Button */}
                         <button
-                            onClick={() => setIsCreateOpen(true)}
-                            className="h-9 px-4.5 text-xs font-semibold rounded-lg bg-dashboard-primary hover:opacity-90 text-white flex items-center gap-2 shadow-sm transition-colors cursor-pointer"
+                            type="button"
+                            onClick={handleOpenCreate}
+                            className="h-8.5 px-4 text-xs font-semibold rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-white flex items-center gap-1.5 shadow-xs transition-colors cursor-pointer"
                         >
-                            <Plus className="w-4 h-4" />
-                            <span>+ Add New Users</span>
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Add New User</span>
                         </button>
                     </div>
                 </div>
 
                 {/* Table Viewport */}
                 <div className="overflow-x-auto w-full">
-                    <table className="w-full text-start text-xs border-collapse">
-                        {/* Columns */}
+                    <table className="w-full text-start border-collapse text-xs">
                         <thead>
-                            <tr className="border-b border-[#E2E8F0] bg-white text-xs font-bold text-[#475569] uppercase tracking-wider select-none">
-                                <th className="px-4 py-3 w-12 text-center">
+                            <tr className="border-b border-[#F1F5F9] bg-[#F8FAFC]/50 text-[11px] font-bold text-[#64748B] uppercase tracking-wider select-none">
+                                <th className="px-4 py-3.5 w-12 text-center">
                                     <input
                                         type="checkbox"
                                         checked={isAllSelected}
                                         onChange={handleSelectAll}
-                                        className="w-4 h-4 rounded border-[#CBD5E1] text-[#2563EB] focus:ring-[#2563EB] cursor-pointer"
+                                        className="w-4 h-4 rounded border-[#CBD5E1] text-[#2563EB] focus:ring-[#2563EB]/20 cursor-pointer"
+                                        aria-label="Select all"
                                     />
                                 </th>
-                                <th className="px-4 py-3 text-start font-bold">NAME</th>
-                                <th className="px-4 py-3 text-start font-bold">ROLE</th>
-                                <th className="px-4 py-3 text-start font-bold">ACCOUNT DETAILS</th>
-                                <th className="px-4 py-3 text-start font-bold">CREATION DATE</th>
-                                <th className="px-4 py-3 text-start font-bold">MODIFICATION DATE</th>
-                                <th className="px-4 py-3 text-start font-bold">STATUS</th>
-                                <th className="px-4 py-3 text-center font-bold">ACTION</th>
+                                <th className="px-4 py-3.5 text-start font-bold">NAME</th>
+                                <th className="px-4 py-3.5 text-start font-bold">ROLE</th>
+                                <th className="px-4 py-3.5 text-start font-bold">ACCOUNT DETAILS</th>
+                                <th className="px-4 py-3.5 text-start font-bold">CREATION DATE</th>
+                                <th className="px-4 py-3.5 text-start font-bold">MODIFICATION DATE</th>
+                                <th className="px-4 py-3.5 text-start font-bold">STATUS</th>
+                                <th className="px-4 py-3.5 text-center font-bold w-16">ACTION</th>
                             </tr>
                         </thead>
-
-                        {/* Rows */}
                         <tbody className="divide-y divide-[#F1F5F9]">
                             {isLoading ? (
                                 <tr>
@@ -260,7 +236,9 @@ export default function UsersPage() {
                                     return (
                                         <tr
                                             key={item.id}
-                                            className="hover:bg-[#F8FAFC] transition-colors"
+                                            className={`hover:bg-[#F8FAFC] transition-colors ${
+                                                isRowSelected ? "bg-[#EFF6FF]/40" : ""
+                                            }`}
                                         >
                                             {/* Checkbox */}
                                             <td className="px-4 py-3.5 text-center">
@@ -268,17 +246,18 @@ export default function UsersPage() {
                                                     type="checkbox"
                                                     checked={isRowSelected}
                                                     onChange={() => handleSelectRow(item.id)}
-                                                    className="w-4 h-4 rounded border-[#CBD5E1] text-dashboard-primary focus:ring-dashboard-primary cursor-pointer"
+                                                    className="w-4 h-4 rounded border-[#CBD5E1] text-[#2563EB] focus:ring-[#2563EB]/20 cursor-pointer"
+                                                    aria-label={`Select ${item.name}`}
                                                 />
                                             </td>
 
                                             {/* Name & Avatar */}
                                             <td className="px-4 py-3.5">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-9 h-9 rounded-lg bg-[#E2E8F0] text-[#64748B] font-bold flex items-center justify-center text-xs shrink-0">
-                                                        {item.name ? item.name.charAt(0) : "N/A"}
+                                                    <div className="w-8 h-8 rounded-lg bg-[#E2E8F0] text-[#64748B] font-bold flex items-center justify-center text-xs shrink-0 select-none">
+                                                        N/A
                                                     </div>
-                                                    <span className="font-bold text-[#0F172A] text-sm truncate">
+                                                    <span className="font-bold text-[#0F172A] text-xs">
                                                         {item.name}
                                                     </span>
                                                 </div>
@@ -289,24 +268,28 @@ export default function UsersPage() {
                                                 {item.role || "أدمن"}
                                             </td>
 
-                                            {/* Account Details with Activated pill */}
+                                            {/* Account Details */}
                                             <td className="px-4 py-3.5">
                                                 <div className="flex flex-col gap-1 text-xs">
-                                                    <div className="flex items-center gap-2">
-                                                        <span className="text-[#334155] font-medium">
-                                                            {item.email || "rmz.alemtithal@gmail.com"}
-                                                        </span>
-                                                        <span className="px-2 py-0.5 rounded-full bg-[#E6F4EA] text-[#137333] border border-[#CEEAD6] text-[10px] font-semibold">
-                                                            Activated
-                                                        </span>
-                                                    </div>
+                                                    {item.email && (
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="text-[#334155] font-medium">
+                                                                {item.email}
+                                                            </span>
+                                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]">
+                                                                <CheckCircle2 className="w-3 h-3 text-[#059669]" />
+                                                                <span>Activated</span>
+                                                            </span>
+                                                        </div>
+                                                    )}
                                                     {item.phone && (
                                                         <div className="flex items-center gap-2">
-                                                            <span className="text-[#64748B]">
+                                                            <span className="text-[#64748B] text-[11px]">
                                                                 {item.phone}
                                                             </span>
-                                                            <span className="px-2 py-0.5 rounded-full bg-[#E6F4EA] text-[#137333] border border-[#CEEAD6] text-[10px] font-semibold">
-                                                                Activated
+                                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]">
+                                                                <CheckCircle2 className="w-3 h-3 text-[#059669]" />
+                                                                <span>Activated</span>
                                                             </span>
                                                         </div>
                                                     )}
@@ -314,24 +297,24 @@ export default function UsersPage() {
                                             </td>
 
                                             {/* Creation Date */}
-                                            <td className="px-4 py-3.5 text-[#475569] font-medium whitespace-nowrap text-xs">
+                                            <td className="px-4 py-3.5 text-[#475569] text-xs">
                                                 {item.createdAt}
                                             </td>
 
                                             {/* Modification Date */}
-                                            <td className="px-4 py-3.5 text-[#475569] font-medium whitespace-nowrap text-xs">
+                                            <td className="px-4 py-3.5 text-[#475569] text-xs">
                                                 {item.updatedAt}
                                             </td>
 
                                             {/* Status Badge */}
-                                            <td className="px-4 py-3.5 whitespace-nowrap">
-                                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[#10B981] bg-[#ECFDF5] text-[#059669] text-xs font-semibold">
+                                            <td className="px-4 py-3.5">
+                                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]">
                                                     <CheckCircle2 className="w-3.5 h-3.5 text-[#059669]" />
-                                                    Active
+                                                    <span>Active</span>
                                                 </span>
                                             </td>
 
-                                            {/* Action Menu (3 dots) */}
+                                            {/* Action Dropdown */}
                                             <td className="px-4 py-3.5 text-center">
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger
@@ -342,21 +325,21 @@ export default function UsersPage() {
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent
                                                         align="end"
-                                                        className="w-36 bg-white border border-[#E2E8F0] rounded-xl p-1 shadow-lg text-xs"
+                                                        className="w-32 bg-white border border-[#E2E8F0] rounded-xl p-1 shadow-lg text-xs z-50"
                                                     >
                                                         <DropdownMenuItem
-                                                            onClick={() => setEditingItem(item)}
-                                                            className="flex items-center gap-2 px-3 py-2 text-xs text-[#0F172A] hover:bg-[#F1F5F9] rounded-lg cursor-pointer"
+                                                            onClick={() => handleOpenEdit(item)}
+                                                            className="flex items-center gap-2 px-3 py-2 text-[#334155] hover:bg-[#F1F5F9] rounded-lg cursor-pointer transition-colors"
                                                         >
-                                                            <Edit2 className="w-3.5 h-3.5 text-dashboard-primary" />
-                                                            <span>Edit</span>
+                                                            <Edit2 className="w-3.5 h-3.5 text-[#64748B]" />
+                                                            <span>تعديل</span>
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem
-                                                            onClick={() => setDeletingItem(item)}
-                                                            className="flex items-center gap-2 px-3 py-2 text-xs text-rose-600 hover:bg-rose-50 rounded-lg cursor-pointer"
+                                                            onClick={() => setDeletingUser(item)}
+                                                            className="flex items-center gap-2 px-3 py-2 text-[#DC2626] hover:bg-[#FEF2F2] rounded-lg cursor-pointer transition-colors"
                                                         >
-                                                            <Trash2 className="w-3.5 h-3.5 text-rose-600" />
-                                                            <span>Delete</span>
+                                                            <Trash2 className="w-3.5 h-3.5 text-[#DC2626]" />
+                                                            <span>حذف</span>
                                                         </DropdownMenuItem>
                                                     </DropdownMenuContent>
                                                 </DropdownMenu>
@@ -370,9 +353,8 @@ export default function UsersPage() {
                 </div>
 
                 {/* Pagination Footer */}
-                <div className="p-4 px-6 border-t border-[#E2E8F0] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-[#64748B] select-none">
-                    {/* Rows per page */}
-                    <div className="flex items-center gap-2">
+                <div className="p-4 px-6 border-t border-[#F1F5F9] flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-2 text-xs text-[#64748B]">
                         <span>Rows per page</span>
                         <select
                             value={perPage}
@@ -380,73 +362,75 @@ export default function UsersPage() {
                                 setPerPage(Number(e.target.value));
                                 setPage(1);
                             }}
-                            className="h-8 px-2.5 rounded-md border border-[#E2E8F0] bg-white text-xs text-[#0F172A] outline-none cursor-pointer"
+                            className="h-8 px-2 rounded-lg border border-[#E2E8F0] bg-white text-xs text-[#0F172A] outline-none cursor-pointer"
                         >
                             <option value={10}>10</option>
-                            <option value={25}>25</option>
+                            <option value={20}>20</option>
                             <option value={50}>50</option>
                         </select>
                     </div>
 
-                    {/* Page Navigation Controls */}
                     <div className="flex items-center gap-1.5">
                         <button
-                            onClick={() => setPage(1)}
+                            type="button"
                             disabled={page <= 1}
-                            className="p-1 text-[#94A3B8] hover:text-[#0F172A] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                            onClick={() => setPage(1)}
+                            className="w-8 h-8 rounded-lg border border-[#E2E8F0] flex items-center justify-center text-[#64748B] hover:bg-[#F8FAFC] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                             aria-label="First page"
                         >
-                            <ChevronsLeft className="w-4 h-4" />
+                            <ChevronsLeft className="w-3.5 h-3.5" />
                         </button>
                         <button
-                            onClick={() => setPage((p) => Math.max(p - 1, 1))}
+                            type="button"
                             disabled={page <= 1}
-                            className="p-1 text-[#94A3B8] hover:text-[#0F172A] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                            onClick={() => setPage((p) => Math.max(1, p - 1))}
+                            className="w-8 h-8 rounded-lg border border-[#E2E8F0] flex items-center justify-center text-[#64748B] hover:bg-[#F8FAFC] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                             aria-label="Previous page"
                         >
-                            <ChevronLeft className="w-4 h-4" />
+                            <ChevronLeft className="w-3.5 h-3.5" />
                         </button>
 
-                        <span className="w-7 h-7 rounded-lg bg-dashboard-primary text-white font-bold flex items-center justify-center text-xs shadow-sm">
+                        <button
+                            type="button"
+                            className="w-8 h-8 rounded-lg bg-[#2563EB] text-white font-bold text-xs flex items-center justify-center shadow-xs cursor-pointer"
+                        >
                             {page}
-                        </span>
+                        </button>
 
                         <button
-                            onClick={() => setPage((p) => Math.min(p + 1, totalPages))}
+                            type="button"
                             disabled={page >= totalPages}
-                            className="p-1 text-[#94A3B8] hover:text-[#0F172A] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                            className="w-8 h-8 rounded-lg border border-[#E2E8F0] flex items-center justify-center text-[#64748B] hover:bg-[#F8FAFC] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                             aria-label="Next page"
                         >
-                            <ChevronRight className="w-4 h-4" />
+                            <ChevronRight className="w-3.5 h-3.5" />
                         </button>
                         <button
-                            onClick={() => setPage(totalPages)}
+                            type="button"
                             disabled={page >= totalPages}
-                            className="p-1 text-[#94A3B8] hover:text-[#0F172A] disabled:opacity-30 disabled:pointer-events-none cursor-pointer"
+                            onClick={() => setPage(totalPages)}
+                            className="w-8 h-8 rounded-lg border border-[#E2E8F0] flex items-center justify-center text-[#64748B] hover:bg-[#F8FAFC] disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
                             aria-label="Last page"
                         >
-                            <ChevronsRight className="w-4 h-4" />
+                            <ChevronsRight className="w-3.5 h-3.5" />
                         </button>
                     </div>
                 </div>
             </div>
 
-            {/* Modals */}
-            <CreateUsersModal
-                isOpen={isCreateOpen}
-                onClose={() => setIsCreateOpen(false)}
+            {/* User Create / Edit Modal */}
+            <UserModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                user={editingUser}
             />
 
-            <EditUsersModal
-                isOpen={!!editingItem}
-                onClose={() => setEditingItem(null)}
-                item={editingItem}
-            />
-
-            <DeleteUsersModal
-                isOpen={!!deletingItem}
-                onClose={() => setDeletingItem(null)}
-                item={deletingItem}
+            {/* Delete Confirmation Modal */}
+            <DeleteUserModal
+                isOpen={Boolean(deletingUser)}
+                onClose={() => setDeletingUser(null)}
+                user={deletingUser}
             />
         </div>
     );

@@ -1,3 +1,2 @@
-export * from "./CreateRegistrationOfCompaniesModal";
-export * from "./EditRegistrationOfCompaniesModal";
-export * from "./DeleteRegistrationOfCompaniesModal";
+export * from "./RegistrationEmptyState";
+export * from "./RegistrationDetailsModal";

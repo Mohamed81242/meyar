@@ -1,40 +1,24 @@
-import type { InspectionTypes, InspectionTypesCreatePayload, InspectionTypesUpdatePayload } from "../types";
+import type { InspectionType, InspectionTypeCreatePayload, InspectionTypeUpdatePayload } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
-export let mockInspectionTypess: InspectionTypes[] = [
+// Initial mock data exactly matching Screenshot 1: "بنود الإعاشة" with "عدد القوالب 1"
+export let mockInspectionTypes: InspectionType[] = [
     {
         id: "1",
-        name: "عبدالرحمن قاسم",
-        description: "Standard account item",
-        role: "أدمن",
-        email: "abuqasim1427@gmail.com",
-        phone: "+966 552818590",
-        isActive: true,
+        name: "بنود الإعاشة",
+        templatesCount: 1,
         createdAt: "2026/10/14 , 08:19:28 PM",
         updatedAt: "2026/10/14 , 09:02:52 PM",
     },
-    {
-        id: "2",
-        name: "فراس حافظ",
-        description: "Administrative account",
-        role: "أدمن",
-        email: "rmz.alemtithal@gmail.com",
-        phone: "+966 500000000",
-        isActive: true,
-        createdAt: "2026/08/26 , 02:35:26 AM",
-        updatedAt: "2026/08/26 , 02:35:26 AM",
-    }
 ];
 
 export const mockInspectionTypesApi = {
     getList: async (params?: any, signal?: AbortSignal): Promise<any> => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
+        return new Promise((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
                 const { page = 1, search, perPage = 10 } = (params || {}) as any;
-                const filtered = mockInspectionTypess.filter(item => 
-                    !search || 
-                    item.name.toLowerCase().includes(search.toLowerCase()) ||
-                    (item.email && item.email.toLowerCase().includes(search.toLowerCase()))
+                const filtered = mockInspectionTypes.filter((item) =>
+                    !search || item.name.toLowerCase().includes(search.toLowerCase())
                 );
                 const p = Number(page);
                 const limit = Number(perPage);
@@ -47,68 +31,77 @@ export const mockInspectionTypesApi = {
                     nextPageUrl: null,
                     total: filtered.length,
                 });
-            }, 300);
+            }, 250);
+
+            if (signal) {
+                signal.addEventListener("abort", () => {
+                    clearTimeout(timeoutId);
+                    reject(new DOMException("Aborted", "AbortError"));
+                });
+            }
         });
     },
 
-    getById: async (id: string, signal?: AbortSignal): Promise<InspectionTypes | null> => {
+    getById: async (id: string, signal?: AbortSignal): Promise<InspectionType | null> => {
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const mock = mockInspectionTypess.find((s) => s.id === id);
+            const timeoutId = setTimeout(() => {
+                const mock = mockInspectionTypes.find((s) => s.id === id);
                 if (!mock) reject(new Error("Not found"));
                 else resolve(mock);
-            }, 300);
+            }, 250);
+
+            if (signal) {
+                signal.addEventListener("abort", () => {
+                    clearTimeout(timeoutId);
+                    reject(new DOMException("Aborted", "AbortError"));
+                });
+            }
         });
     },
-    
-    create: async (payload: InspectionTypesCreatePayload): Promise<InspectionTypes> => {
+
+    create: async (payload: InspectionTypeCreatePayload): Promise<InspectionType> => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const now = new Date().toLocaleDateString();
-                const newItem: InspectionTypes = {
+                const now = new Date().toISOString().replace("T", " ").substring(0, 19);
+                const newItem: InspectionType = {
                     id: uuidv4(),
-                    ...payload,
-                    isActive: true,
+                    name: payload.name,
+                    templatesCount: payload.templatesCount ?? 0,
                     createdAt: now,
                     updatedAt: now,
                 };
-                mockInspectionTypess = [newItem, ...mockInspectionTypess];
+                mockInspectionTypes = [newItem, ...mockInspectionTypes];
                 resolve(newItem);
-            }, 300);
+            }, 250);
         });
     },
 
-    update: async (id: string, payload: InspectionTypesUpdatePayload): Promise<InspectionTypes> => {
+    update: async (id: string, payload: InspectionTypeUpdatePayload): Promise<InspectionType> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const index = mockInspectionTypess.findIndex((s) => s.id === id);
+                const index = mockInspectionTypes.findIndex((s) => s.id === id);
                 if (index === -1) {
                     reject(new Error("Not found"));
                     return;
                 }
-                const existing = mockInspectionTypess[index];
-                const updatedItem = {
+                const existing = mockInspectionTypes[index];
+                const updatedItem: InspectionType = {
                     ...existing,
                     ...payload,
-                    updatedAt: new Date().toLocaleDateString(),
+                    updatedAt: new Date().toISOString().replace("T", " ").substring(0, 19),
                 };
-                mockInspectionTypess[index] = updatedItem;
+                mockInspectionTypes[index] = updatedItem;
                 resolve(updatedItem);
-            }, 300);
+            }, 250);
         });
     },
 
     delete: async (id: string): Promise<void> => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                const index = mockInspectionTypess.findIndex((s) => s.id === id);
-                if (index === -1) {
-                    reject(new Error("Not found"));
-                    return;
-                }
-                mockInspectionTypess = mockInspectionTypess.filter((s) => s.id !== id);
+                mockInspectionTypes = mockInspectionTypes.filter((s) => s.id !== id);
                 resolve();
-            }, 300);
+            }, 250);
         });
-    }
+    },
 };

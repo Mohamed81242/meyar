@@ -1,3 +1,2 @@
-export * from "./CreateCompanyClassificationsModal";
-export * from "./EditCompanyClassificationsModal";
-export * from "./DeleteCompanyClassificationsModal";
+export * from "./ClassificationModal";
+export * from "./DeleteClassificationModal";

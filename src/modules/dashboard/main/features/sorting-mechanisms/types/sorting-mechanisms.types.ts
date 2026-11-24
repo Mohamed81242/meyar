@@ -1,24 +1,26 @@
-import { z } from "zod";
+export type MechanismBadgeType = "automatic" | "ahead";
 
-export const sortingMechanismsSchema = z.object({
-    name: z.string().min(1, "Name is required"),
-    description: z.string().optional(),
-    role: z.string().optional(),
-    email: z.string().email().optional(),
-    phone: z.string().optional(),
-});
+export interface MechanismAction {
+    label: string;
+    href?: string;
+    onClick?: () => void;
+}
 
+export interface SortingMechanismItem {
+    id: string;
+    title: string;
+    badgeText: string;
+    badgeType: MechanismBadgeType;
+    description: string;
+    secondaryDescription: string;
+    iconType: "complete" | "values" | "time" | "location";
+    actions?: MechanismAction[];
+}
+
+// Backwards compatibility
 export interface SortingMechanisms {
     id: string;
     name: string;
-    description?: string | null;
-    role?: string | null;
-    email?: string | null;
-    phone?: string | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
 }
-
-export type SortingMechanismsCreatePayload = z.infer<typeof sortingMechanismsSchema>;
-export type SortingMechanismsUpdatePayload = Partial<SortingMechanismsCreatePayload>;
+export type SortingMechanismsCreatePayload = any;
+export type SortingMechanismsUpdatePayload = any;

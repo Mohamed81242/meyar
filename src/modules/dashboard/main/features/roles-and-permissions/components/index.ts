@@ -1,3 +1,2 @@
-export * from "./CreateRolesAndPermissionsModal";
-export * from "./EditRolesAndPermissionsModal";
-export * from "./DeleteRolesAndPermissionsModal";
+export * from "./RoleModal";
+export * from "./DeleteRoleModal";

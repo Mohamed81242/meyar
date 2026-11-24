@@ -1,3 +1,3 @@
-export * from "./CreateFoldersOrClassificationsModal";
-export * from "./EditFoldersOrClassificationsModal";
-export * from "./DeleteFoldersOrClassificationsModal";
+export * from "./FolderModal";
+export * from "./DeleteFolderModal";
+export * from "./FolderEmptyState";

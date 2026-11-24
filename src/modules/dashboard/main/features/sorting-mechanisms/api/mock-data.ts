@@ -1,114 +1,90 @@
-import type { SortingMechanisms, SortingMechanismsCreatePayload, SortingMechanismsUpdatePayload } from "../types";
-import { v4 as uuidv4 } from "uuid";
+import type { SortingMechanismItem } from "../types";
 
-export let mockSortingMechanismss: SortingMechanisms[] = [
+export const mockSortingMechanisms: SortingMechanismItem[] = [
     {
         id: "1",
-        name: "عبدالرحمن قاسم",
-        description: "Standard account item",
-        role: "أدمن",
-        email: "abuqasim1427@gmail.com",
-        phone: "+966 552818590",
-        isActive: true,
-        createdAt: "2026/10/14 , 08:19:28 PM",
-        updatedAt: "2026/10/14 , 09:02:52 PM",
+        title: "Required data complete",
+        badgeText: "Applied automatically",
+        badgeType: "automatic",
+        description:
+            "The system makes sure every required question shown in an inspection is answered before it is accepted.",
+        secondaryDescription: "Applied by the system itself, with no setting.",
+        iconType: "complete",
     },
     {
         id: "2",
-        name: "فراس حافظ",
-        description: "Administrative account",
-        role: "أدمن",
-        email: "rmz.alemtithal@gmail.com",
-        phone: "+966 500000000",
-        isActive: true,
-        createdAt: "2026/08/26 , 02:35:26 AM",
-        updatedAt: "2026/08/26 , 02:35:26 AM",
-    }
+        title: "Valid answer values",
+        badgeText: "Applied automatically",
+        badgeType: "automatic",
+        description:
+            "An answer must be one of the question's options and within its range.",
+        secondaryDescription: "Applied by the system itself, with no setting.",
+        iconType: "values",
+    },
+    {
+        id: "3",
+        title: "Measurement context match: keeping to the inspection time",
+        badgeText: "Set ahead",
+        badgeType: "ahead",
+        description:
+            "A start period and an end period for the task; when required, carrying it out outside them is refused, otherwise the task shows as late. A public link has an expiry date, after which nothing is taken.",
+        secondaryDescription:
+            "On a scheduled task when it is created, on an instant template in «Manage instant tasks» for every instant task created from it, and a public link's expiry date in «Channel links».",
+        iconType: "time",
+        actions: [
+            {
+                label: "Create A Scheduled Task",
+                href: "/dashboard/inspection-tasks",
+            },
+            {
+                label: "Manage Instant Tasks",
+                href: "/dashboard/inspection-tasks",
+            },
+        ],
+    },
+    {
+        id: "4",
+        title: "Measurement context match: keeping to the inspection location",
+        badgeText: "Set ahead",
+        badgeType: "ahead",
+        description:
+            "Taken only within a range in metres around the company's location, or around a point set on the map for a public link.",
+        secondaryDescription:
+            "The company's location on a scheduled task and on an instant template, and a set point on a public link in «Channel links».",
+        iconType: "location",
+        actions: [
+            {
+                label: "Create A Scheduled Task",
+                href: "/dashboard/inspection-tasks",
+            },
+            {
+                label: "Manage Instant Tasks",
+                href: "/dashboard/inspection-tasks",
+            },
+        ],
+    },
 ];
 
 export const mockSortingMechanismsApi = {
-    getList: async (params?: any, signal?: AbortSignal): Promise<any> => {
+    getList: async (_params?: any, _signal?: AbortSignal): Promise<any> => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const { page = 1, search, perPage = 10 } = (params || {}) as any;
-                const filtered = mockSortingMechanismss.filter(item => 
-                    !search || 
-                    item.name.toLowerCase().includes(search.toLowerCase()) ||
-                    (item.email && item.email.toLowerCase().includes(search.toLowerCase()))
-                );
-                const p = Number(page);
-                const limit = Number(perPage);
-                const start = (p - 1) * limit;
                 resolve({
-                    items: filtered.slice(start, start + limit),
-                    perPage: limit,
-                    currentPage: p,
-                    lastPage: Math.ceil(filtered.length / limit) || 1,
-                    nextPageUrl: null,
-                    total: filtered.length,
+                    items: mockSortingMechanisms,
+                    total: mockSortingMechanisms.length,
                 });
-            }, 300);
+            }, 150);
         });
     },
 
-    getById: async (id: string, signal?: AbortSignal): Promise<SortingMechanisms | null> => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const mock = mockSortingMechanismss.find((s) => s.id === id);
-                if (!mock) reject(new Error("Not found"));
-                else resolve(mock);
-            }, 300);
-        });
-    },
-    
-    create: async (payload: SortingMechanismsCreatePayload): Promise<SortingMechanisms> => {
+    getById: async (id: string, _signal?: AbortSignal): Promise<SortingMechanismItem | null> => {
         return new Promise((resolve) => {
-            setTimeout(() => {
-                const now = new Date().toLocaleDateString();
-                const newItem: SortingMechanisms = {
-                    id: uuidv4(),
-                    ...payload,
-                    isActive: true,
-                    createdAt: now,
-                    updatedAt: now,
-                };
-                mockSortingMechanismss = [newItem, ...mockSortingMechanismss];
-                resolve(newItem);
-            }, 300);
+            const found = mockSortingMechanisms.find((m) => m.id === id) || null;
+            resolve(found);
         });
     },
 
-    update: async (id: string, payload: SortingMechanismsUpdatePayload): Promise<SortingMechanisms> => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const index = mockSortingMechanismss.findIndex((s) => s.id === id);
-                if (index === -1) {
-                    reject(new Error("Not found"));
-                    return;
-                }
-                const existing = mockSortingMechanismss[index];
-                const updatedItem = {
-                    ...existing,
-                    ...payload,
-                    updatedAt: new Date().toLocaleDateString(),
-                };
-                mockSortingMechanismss[index] = updatedItem;
-                resolve(updatedItem);
-            }, 300);
-        });
-    },
-
-    delete: async (id: string): Promise<void> => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const index = mockSortingMechanismss.findIndex((s) => s.id === id);
-                if (index === -1) {
-                    reject(new Error("Not found"));
-                    return;
-                }
-                mockSortingMechanismss = mockSortingMechanismss.filter((s) => s.id !== id);
-                resolve();
-            }, 300);
-        });
-    }
+    create: async (payload: any): Promise<any> => payload,
+    update: async (_id: string, payload: any): Promise<any> => payload,
+    delete: async (_id: string): Promise<void> => {},
 };

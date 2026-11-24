@@ -1,0 +1,72 @@
+import React from "react";
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+} from "@/design-system/components/dialog";
+import { useDeleteUsers } from "../api";
+import type { User } from "../types";
+import { toast } from "sonner";
+
+interface Props {
+    isOpen: boolean;
+    onClose: () => void;
+    user: User | null;
+}
+
+export const DeleteUserModal: React.FC<Props> = ({ isOpen, onClose, user }) => {
+    const deleteMutation = useDeleteUsers();
+
+    const handleDelete = () => {
+        if (!user) return;
+        deleteMutation.mutate(user.id, {
+            onSuccess: () => {
+                toast.success("تم حذف المستخدم بنجاح");
+                onClose();
+            },
+            onError: () => {
+                toast.error("حدث خطأ أثناء حذف المستخدم");
+            },
+        });
+    };
+
+    return (
+        <Dialog open={isOpen} onOpenChange={onClose}>
+            <DialogContent className="max-w-md bg-white p-6 rounded-2xl border border-[#E2E8F0] shadow-xl select-none">
+                <DialogHeader>
+                    <DialogTitle className="text-base font-bold text-[#0F172A]">
+                        حذف المستخدم
+                    </DialogTitle>
+                </DialogHeader>
+
+                <div className="py-4 text-xs text-[#64748B]">
+                    هل أنت متأكد من حذف المستخدم{" "}
+                    <span className="font-bold text-[#0F172A]">
+                        "{user?.name}"
+                    </span>
+                    ؟ لا يمكن التراجع عن هذا الإجراء.
+                </div>
+
+                <DialogFooter className="gap-2 pt-2">
+                    <button
+                        type="button"
+                        onClick={onClose}
+                        className="px-4 py-2 text-xs font-semibold rounded-xl border border-[#E2E8F0] text-[#64748B] hover:bg-[#F8FAFC] transition-colors cursor-pointer"
+                    >
+                        إلغاء
+                    </button>
+                    <button
+                        type="button"
+                        onClick={handleDelete}
+                        disabled={deleteMutation.isPending}
+                        className="px-4 py-2 text-xs font-semibold rounded-xl bg-[#DC2626] hover:bg-[#B91C1C] disabled:opacity-50 text-white transition-colors cursor-pointer"
+                    >
+                        {deleteMutation.isPending ? "جاري الحذف..." : "حذف"}
+                    </button>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
+    );
+};

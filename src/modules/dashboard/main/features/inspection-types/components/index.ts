@@ -1,3 +1,3 @@
-export * from "./CreateInspectionTypesModal";
-export * from "./EditInspectionTypesModal";
-export * from "./DeleteInspectionTypesModal";
+export * from "./InspectionTypeModal";
+export * from "./DeleteInspectionTypeModal";
+export * from "./InspectionTypeEmptyState";

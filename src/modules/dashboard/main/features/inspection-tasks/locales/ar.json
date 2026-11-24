@@ -1,6 +1,41 @@
 {
-    "title": "Inspection Tasks",
-    "main": {
-        "title": "Inspection Tasks"
+    "title": "مهام التفتيش",
+    "home": "الرئيسية",
+    "filter": "تصفية",
+    "evalScoreCategory": "درجة التقييم",
+    "selectUser": "اختر المستخدم",
+    "selectGroup": "اختر المجموعة",
+    "status": "الحالة",
+    "evalTemplate": "قالب التقييم",
+    "entities": "الجهات",
+    "specialName": "Special Name",
+    "entityTags": "وسوم الجهات",
+    "execution": "التنفيذ:",
+    "startedLate": "Started Late",
+    "startedOnTime": "Started On Time",
+    "startedEarly": "Started Early",
+    "completion": "الإكتمال:",
+    "endedLate": "Ended Late",
+    "endedOnTime": "Ended On Time",
+    "endedEarly": "Ended Early",
+    "archivedTasks": "المهام المؤرشفة",
+    "instantOnly": "عرض المهام اللحظية فقط",
+    "saveFilter": "Save Filter",
+    "apply": "Apply",
+    "totalItems": "Total Items:",
+    "orderList": "قائمة الترتيب",
+    "completed": "Completed",
+    "showReport": "Show Report",
+    "viewReport": "View Report",
+    "noTasks": "لا توجد مهام تفتيش مسجلة",
+    "columns": {
+        "tasks": "TASKS",
+        "status": "STATUS",
+        "score": "SCORE",
+        "action": "ACTION"
+    },
+    "actions": {
+        "delete": "حذف",
+        "edit": "تعديل"
     }
 }

@@ -1,40 +1,57 @@
-import type { RolesAndPermissions, RolesAndPermissionsCreatePayload, RolesAndPermissionsUpdatePayload } from "../types";
+import type { Role, RoleCreatePayload, RoleUpdatePayload } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
-export let mockRolesAndPermissionss: RolesAndPermissions[] = [
+export let mockRoles: Role[] = [
     {
         id: "1",
-        name: "عبدالرحمن قاسم",
-        description: "Standard account item",
-        role: "أدمن",
-        email: "abuqasim1427@gmail.com",
-        phone: "+966 552818590",
-        isActive: true,
-        createdAt: "2026/10/14 , 08:19:28 PM",
-        updatedAt: "2026/10/14 , 09:02:52 PM",
+        name: "أدمن",
+        numberOfUsers: 2,
+        isFinalEvaluator: false,
+        permissions: [
+            "sys_login_dashboard",
+            "sys_login_app",
+            "statistics_live",
+            "roles_view",
+            "roles_add",
+            "roles_edit",
+            "roles_delete",
+            "users_view",
+            "users_add",
+            "users_edit",
+            "users_delete",
+            "inspection_tasks_view",
+            "inspection_tasks_add",
+            "reports_view",
+            "actions_view",
+        ],
+        createdAt: "2026/10/14",
+        updatedAt: "2026/10/14",
     },
     {
         id: "2",
-        name: "فراس حافظ",
-        description: "Administrative account",
-        role: "أدمن",
-        email: "rmz.alemtithal@gmail.com",
-        phone: "+966 500000000",
-        isActive: true,
-        createdAt: "2026/08/26 , 02:35:26 AM",
-        updatedAt: "2026/08/26 , 02:35:26 AM",
-    }
+        name: "مراقب",
+        numberOfUsers: 1,
+        isFinalEvaluator: true,
+        permissions: [
+            "sys_login_dashboard",
+            "inspection_tasks_view",
+            "inspection_tasks_conduct",
+            "reports_view",
+        ],
+        createdAt: "2026/08/26",
+        updatedAt: "2026/08/26",
+    },
 ];
 
 export const mockRolesAndPermissionsApi = {
-    getList: async (params?: any, signal?: AbortSignal): Promise<any> => {
+    getList: async (params?: any, _signal?: AbortSignal): Promise<any> => {
         return new Promise((resolve) => {
             setTimeout(() => {
                 const { page = 1, search, perPage = 10 } = (params || {}) as any;
-                const filtered = mockRolesAndPermissionss.filter(item => 
-                    !search || 
-                    item.name.toLowerCase().includes(search.toLowerCase()) ||
-                    (item.email && item.email.toLowerCase().includes(search.toLowerCase()))
+                const filtered = mockRoles.filter(
+                    (item) =>
+                        !search ||
+                        item.name.toLowerCase().includes(search.toLowerCase())
                 );
                 const p = Number(page);
                 const limit = Number(perPage);
@@ -47,68 +64,73 @@ export const mockRolesAndPermissionsApi = {
                     nextPageUrl: null,
                     total: filtered.length,
                 });
-            }, 300);
+            }, 250);
         });
     },
 
-    getById: async (id: string, signal?: AbortSignal): Promise<RolesAndPermissions | null> => {
+    getById: async (id: string, _signal?: AbortSignal): Promise<Role | null> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const mock = mockRolesAndPermissionss.find((s) => s.id === id);
+                const mock = mockRoles.find((s) => s.id === id);
                 if (!mock) reject(new Error("Not found"));
                 else resolve(mock);
-            }, 300);
+            }, 200);
         });
     },
-    
-    create: async (payload: RolesAndPermissionsCreatePayload): Promise<RolesAndPermissions> => {
+
+    create: async (payload: RoleCreatePayload): Promise<Role> => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const now = new Date().toLocaleDateString();
-                const newItem: RolesAndPermissions = {
+                const now = new Date().toISOString().split("T")[0];
+                const newItem: Role = {
                     id: uuidv4(),
-                    ...payload,
-                    isActive: true,
+                    name: payload.name,
+                    numberOfUsers: 0,
+                    isFinalEvaluator: payload.isFinalEvaluator || false,
+                    permissions: payload.permissions || [],
                     createdAt: now,
                     updatedAt: now,
                 };
-                mockRolesAndPermissionss = [newItem, ...mockRolesAndPermissionss];
+                mockRoles = [newItem, ...mockRoles];
                 resolve(newItem);
-            }, 300);
+            }, 250);
         });
     },
 
-    update: async (id: string, payload: RolesAndPermissionsUpdatePayload): Promise<RolesAndPermissions> => {
+    update: async (id: string, payload: RoleUpdatePayload): Promise<Role> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const index = mockRolesAndPermissionss.findIndex((s) => s.id === id);
+                const index = mockRoles.findIndex((s) => s.id === id);
                 if (index === -1) {
                     reject(new Error("Not found"));
                     return;
                 }
-                const existing = mockRolesAndPermissionss[index];
-                const updatedItem = {
+                const existing = mockRoles[index];
+                const updatedItem: Role = {
                     ...existing,
-                    ...payload,
-                    updatedAt: new Date().toLocaleDateString(),
+                    name: payload.name !== undefined ? payload.name : existing.name,
+                    isFinalEvaluator:
+                        payload.isFinalEvaluator !== undefined
+                            ? payload.isFinalEvaluator
+                            : existing.isFinalEvaluator,
+                    permissions:
+                        payload.permissions !== undefined
+                            ? payload.permissions
+                            : existing.permissions,
+                    updatedAt: new Date().toISOString().split("T")[0],
                 };
-                mockRolesAndPermissionss[index] = updatedItem;
+                mockRoles[index] = updatedItem;
                 resolve(updatedItem);
-            }, 300);
+            }, 250);
         });
     },
 
     delete: async (id: string): Promise<void> => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                const index = mockRolesAndPermissionss.findIndex((s) => s.id === id);
-                if (index === -1) {
-                    reject(new Error("Not found"));
-                    return;
-                }
-                mockRolesAndPermissionss = mockRolesAndPermissionss.filter((s) => s.id !== id);
+                mockRoles = mockRoles.filter((s) => s.id !== id);
                 resolve();
-            }, 300);
+            }, 200);
         });
-    }
+    },
 };

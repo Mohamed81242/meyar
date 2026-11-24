@@ -1,24 +1,41 @@
 import { z } from "zod";
 
-export const proceduresSchema = z.object({
-    name: z.string().min(1, "Name is required"),
-    description: z.string().optional(),
-    role: z.string().optional(),
-    email: z.string().email().optional(),
-    phone: z.string().optional(),
+export type ProcedurePriority = "High" | "Medium" | "Low";
+export type ProcedureStatus = "Completed" | "In Progress" | "Pending";
+
+export const procedureSchema = z.object({
+    taskTitle: z.string().min(1, "Task title is required"),
+    companyName: z.string().min(1, "Company name is required"),
+    status: z.enum(["Completed", "In Progress", "Pending"]).default("Completed"),
+    delayDays: z.number().default(0),
+    priority: z.enum(["High", "Medium", "Low"]).default("Medium"),
+    notes: z.string().optional(),
 });
 
-export interface Procedures {
+export interface Procedure {
     id: string;
-    name: string;
-    description?: string | null;
-    role?: string | null;
-    email?: string | null;
-    phone?: string | null;
-    isActive: boolean;
+    taskTitle: string;
+    companyName: string;
+    status: ProcedureStatus;
+    delayDays: number;
+    priority: ProcedurePriority;
     createdAt: string;
-    updatedAt: string;
+    modifiedAt: string;
+    notes?: string;
 }
 
-export type ProceduresCreatePayload = z.infer<typeof proceduresSchema>;
-export type ProceduresUpdatePayload = Partial<ProceduresCreatePayload>;
+// Backwards compatibility alias
+export type Procedures = Procedure;
+
+export type ProcedureCreatePayload = z.infer<typeof procedureSchema>;
+export type ProceduresCreatePayload = ProcedureCreatePayload;
+
+export type ProcedureUpdatePayload = Partial<ProcedureCreatePayload>;
+export type ProceduresUpdatePayload = ProcedureUpdatePayload;
+
+export interface ProcedureFilterState {
+    search: string;
+    company: string;
+    status: string;
+    priority: string;
+}

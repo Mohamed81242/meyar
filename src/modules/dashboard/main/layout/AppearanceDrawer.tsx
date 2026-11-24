@@ -41,7 +41,7 @@ export const AppearanceDrawer: React.FC<AppearanceDrawerProps> = ({ isOpen, onCl
         } catch {
             // ignore
         }
-        save();
+        save(color);
     };
 
     return (
@@ -169,10 +169,10 @@ export const AppearanceDrawer: React.FC<AppearanceDrawerProps> = ({ isOpen, onCl
                 {/* Section 4: Menu Orientation */}
                 <div className="flex flex-col gap-2">
                     <h3 className="text-sm font-bold text-dashboard-foreground">
-                        menu-orientation
+                        Menu Orientation
                     </h3>
                     <p className="text-xs text-dashboard-muted-foreground">
-                        menu-orientation-desc
+                        Choose vertical or horizontal navigation layout
                     </p>
                     <div className="grid grid-cols-2 gap-3 mt-1">
                         {/* Vertical Preview Card */}

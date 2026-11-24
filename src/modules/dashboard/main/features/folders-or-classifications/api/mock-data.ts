@@ -1,40 +1,41 @@
-import type { FoldersOrClassifications, FoldersOrClassificationsCreatePayload, FoldersOrClassificationsUpdatePayload } from "../types";
+import type { TemplateFolder, TemplateFolderCreatePayload, TemplateFolderUpdatePayload } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
-export let mockFoldersOrClassificationss: FoldersOrClassifications[] = [
+export const AVAILABLE_TEMPLATES = [
+    { id: "template-1", name: "قالب جديد" },
+    { id: "template-2", name: "بنود تفتيش المطاعم" },
+    { id: "template-3", name: "بنود تفتيش سلامة الغذاء للمصانع" },
+    { id: "template-4", name: "بنود تأهيل نظام HACCAP" },
+    { id: "template-5", name: "بنود تفتيش الإعاشة" },
+];
+
+// Initial mock data matching Screenshot 1: "بنود الإعاشة" (1) and "بنود المطاعم" (1)
+export let mockTemplateFolders: TemplateFolder[] = [
     {
         id: "1",
-        name: "عبدالرحمن قاسم",
-        description: "Standard account item",
-        role: "أدمن",
-        email: "abuqasim1427@gmail.com",
-        phone: "+966 552818590",
-        isActive: true,
+        name: "بنود الإعاشة",
+        numberOfTemplates: 1,
+        selectedTemplateIds: ["template-5"],
         createdAt: "2026/10/14 , 08:19:28 PM",
         updatedAt: "2026/10/14 , 09:02:52 PM",
     },
     {
         id: "2",
-        name: "فراس حافظ",
-        description: "Administrative account",
-        role: "أدمن",
-        email: "rmz.alemtithal@gmail.com",
-        phone: "+966 500000000",
-        isActive: true,
+        name: "بنود المطاعم",
+        numberOfTemplates: 1,
+        selectedTemplateIds: ["template-2"],
         createdAt: "2026/08/26 , 02:35:26 AM",
         updatedAt: "2026/08/26 , 02:35:26 AM",
-    }
+    },
 ];
 
 export const mockFoldersOrClassificationsApi = {
     getList: async (params?: any, signal?: AbortSignal): Promise<any> => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
+        return new Promise((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
                 const { page = 1, search, perPage = 10 } = (params || {}) as any;
-                const filtered = mockFoldersOrClassificationss.filter(item => 
-                    !search || 
-                    item.name.toLowerCase().includes(search.toLowerCase()) ||
-                    (item.email && item.email.toLowerCase().includes(search.toLowerCase()))
+                const filtered = mockTemplateFolders.filter((item) =>
+                    !search || item.name.toLowerCase().includes(search.toLowerCase())
                 );
                 const p = Number(page);
                 const limit = Number(perPage);
@@ -47,68 +48,82 @@ export const mockFoldersOrClassificationsApi = {
                     nextPageUrl: null,
                     total: filtered.length,
                 });
-            }, 300);
+            }, 250);
+
+            if (signal) {
+                signal.addEventListener("abort", () => {
+                    clearTimeout(timeoutId);
+                    reject(new DOMException("Aborted", "AbortError"));
+                });
+            }
         });
     },
 
-    getById: async (id: string, signal?: AbortSignal): Promise<FoldersOrClassifications | null> => {
+    getById: async (id: string, signal?: AbortSignal): Promise<TemplateFolder | null> => {
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const mock = mockFoldersOrClassificationss.find((s) => s.id === id);
+            const timeoutId = setTimeout(() => {
+                const mock = mockTemplateFolders.find((s) => s.id === id);
                 if (!mock) reject(new Error("Not found"));
                 else resolve(mock);
-            }, 300);
+            }, 250);
+
+            if (signal) {
+                signal.addEventListener("abort", () => {
+                    clearTimeout(timeoutId);
+                    reject(new DOMException("Aborted", "AbortError"));
+                });
+            }
         });
     },
-    
-    create: async (payload: FoldersOrClassificationsCreatePayload): Promise<FoldersOrClassifications> => {
+
+    create: async (payload: TemplateFolderCreatePayload): Promise<TemplateFolder> => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const now = new Date().toLocaleDateString();
-                const newItem: FoldersOrClassifications = {
+                const now = new Date().toISOString().replace("T", " ").substring(0, 19);
+                const selected = payload.selectedTemplateIds || [];
+                const newItem: TemplateFolder = {
                     id: uuidv4(),
-                    ...payload,
-                    isActive: true,
+                    name: payload.name,
+                    numberOfTemplates: selected.length,
+                    selectedTemplateIds: selected,
                     createdAt: now,
                     updatedAt: now,
                 };
-                mockFoldersOrClassificationss = [newItem, ...mockFoldersOrClassificationss];
+                mockTemplateFolders = [newItem, ...mockTemplateFolders];
                 resolve(newItem);
-            }, 300);
+            }, 250);
         });
     },
 
-    update: async (id: string, payload: FoldersOrClassificationsUpdatePayload): Promise<FoldersOrClassifications> => {
+    update: async (id: string, payload: TemplateFolderUpdatePayload): Promise<TemplateFolder> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const index = mockFoldersOrClassificationss.findIndex((s) => s.id === id);
+                const index = mockTemplateFolders.findIndex((s) => s.id === id);
                 if (index === -1) {
                     reject(new Error("Not found"));
                     return;
                 }
-                const existing = mockFoldersOrClassificationss[index];
-                const updatedItem = {
+                const existing = mockTemplateFolders[index];
+                const selected = payload.selectedTemplateIds !== undefined ? payload.selectedTemplateIds : existing.selectedTemplateIds || [];
+                const updatedItem: TemplateFolder = {
                     ...existing,
                     ...payload,
-                    updatedAt: new Date().toLocaleDateString(),
+                    numberOfTemplates: selected.length,
+                    selectedTemplateIds: selected,
+                    updatedAt: new Date().toISOString().replace("T", " ").substring(0, 19),
                 };
-                mockFoldersOrClassificationss[index] = updatedItem;
+                mockTemplateFolders[index] = updatedItem;
                 resolve(updatedItem);
-            }, 300);
+            }, 250);
         });
     },
 
     delete: async (id: string): Promise<void> => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                const index = mockFoldersOrClassificationss.findIndex((s) => s.id === id);
-                if (index === -1) {
-                    reject(new Error("Not found"));
-                    return;
-                }
-                mockFoldersOrClassificationss = mockFoldersOrClassificationss.filter((s) => s.id !== id);
+                mockTemplateFolders = mockTemplateFolders.filter((s) => s.id !== id);
                 resolve();
-            }, 300);
+            }, 250);
         });
-    }
+    },
 };

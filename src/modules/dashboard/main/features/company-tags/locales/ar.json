@@ -1,6 +1,33 @@
 {
+    "home": "الرئيسية",
     "title": "Company Tags",
-    "main": {
-        "title": "Company Tags"
+    "subtitle": "أضف وسوم مثل تصنيفات خاصة، تُستخدم لتمييز الجهات",
+    "addTag": "+ Add New Tag",
+    "addType": "Add type",
+    "editTag": "تعديل الوسم",
+    "name": "Name",
+    "nameRequired": "الاسم مطلوب",
+    "tagCreated": "تم إنشاء الوسم بنجاح",
+    "tagUpdated": "تم تحديث الوسم بنجاح",
+    "tagDeleted": "تم حذف الوسم بنجاح",
+    "failedToCreate": "فشل إنشاء الوسم",
+    "failedToUpdate": "فشل تحديث الوسم",
+    "failedToDelete": "فشل حذف الوسم",
+    "save": "حفظ",
+    "add": "Add",
+    "saving": "جاري الحفظ...",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "deleting": "جاري الحذف...",
+    "deleteTag": "حذف الوسم",
+    "confirmDelete": "هل أنت متأكد من رغبتك في حذف هذا الوسم؟",
+    "cannotUndo": "لا يمكن التراجع عن هذا الإجراء.",
+    "columns": {
+        "name": "NAME",
+        "action": "ACTION"
+    },
+    "actions": {
+        "edit": "تعديل",
+        "delete": "حذف"
     }
 }

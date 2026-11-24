@@ -1,54 +1,45 @@
 import { api } from "@/shared/api/client";
-import type { ApiResponse, ListQueryParams, PaginatedData } from "@/shared/api";
+import type { ApiResponse } from "@/shared/api";
 import { API_CONFIG } from "@/shared/api/config/env";
-import type { StatisticsLive, StatisticsLiveCreatePayload, StatisticsLiveUpdatePayload } from "../types";
+import type { StatisticsLiveOverview, StatisticsLiveQueryParams } from "../types";
 import { mockStatisticsLiveApi } from "./mock-data";
 
-const BASE_URL = "/statistics-live";
-const IS_MOCKDATA = true;
+const BASE_URL = "/system-managements/statistics/live";
+const USE_MOCK_DATA = true; // Dual-mode strategy default
 
 export const statisticsLiveApi = {
-    getList: async (params?: ListQueryParams, signal?: AbortSignal): Promise<PaginatedData<StatisticsLive>> => {
-        if (API_CONFIG.USE_MOCK_DATA || IS_MOCKDATA) {
-            return mockStatisticsLiveApi.getList(params, signal);
+    getOverview: async (
+        params?: StatisticsLiveQueryParams,
+        signal?: AbortSignal
+    ): Promise<StatisticsLiveOverview> => {
+        if (API_CONFIG.USE_MOCK_DATA || USE_MOCK_DATA) {
+            return mockStatisticsLiveApi.getOverview(params, signal);
         }
 
-        const response = await api.get<ApiResponse<PaginatedData<StatisticsLive>>>(BASE_URL, {
+        const response = await api.get<ApiResponse<StatisticsLiveOverview>>(BASE_URL, {
             params,
             signal,
         });
 
-        if (response.error) throw response.error;
-        return response.data?.data as PaginatedData<StatisticsLive>;
+        if (response.error || !response.data?.data) {
+            throw new Error(response.error?.message || "Failed to fetch live statistics");
+        }
+        return response.data.data;
     },
 
-    getById: async (id: string, signal?: AbortSignal): Promise<StatisticsLive> => {
-        if (API_CONFIG.USE_MOCK_DATA || IS_MOCKDATA) {
-            return mockStatisticsLiveApi.getById(id, signal) as Promise<StatisticsLive>;
+    exportReport: async (format: "excel" | "pdf"): Promise<{ downloadUrl: string }> => {
+        if (API_CONFIG.USE_MOCK_DATA || USE_MOCK_DATA) {
+            return mockStatisticsLiveApi.exportReport(format);
         }
 
-        const response = await api.get<ApiResponse<StatisticsLive>>(`${BASE_URL}/${id}`, { signal });
-        if (response.error || !response.data?.data) throw new Error(response.error?.message || "Not found");
-        return response.data.data;
-    },
-    
-    create: async (payload: StatisticsLiveCreatePayload): Promise<StatisticsLive> => {
-        if (API_CONFIG.USE_MOCK_DATA || IS_MOCKDATA) return mockStatisticsLiveApi.create(payload);
-        const response = await api.post<ApiResponse<StatisticsLive>>(BASE_URL, payload);
-        if (response.error || !response.data?.data) throw new Error(response.error?.message || "Failed");
-        return response.data.data;
-    },
+        const response = await api.post<ApiResponse<{ downloadUrl: string }>>(
+            `${BASE_URL}/export`,
+            { format }
+        );
 
-    update: async (id: string, payload: StatisticsLiveUpdatePayload): Promise<StatisticsLive> => {
-        if (API_CONFIG.USE_MOCK_DATA || IS_MOCKDATA) return mockStatisticsLiveApi.update(id, payload);
-        const response = await api.put<ApiResponse<StatisticsLive>>(`${BASE_URL}/${id}`, payload);
-        if (response.error || !response.data?.data) throw new Error(response.error?.message || "Failed");
+        if (response.error || !response.data?.data) {
+            throw new Error(response.error?.message || "Failed to export report");
+        }
         return response.data.data;
     },
-
-    delete: async (id: string): Promise<void> => {
-        if (API_CONFIG.USE_MOCK_DATA || IS_MOCKDATA) return mockStatisticsLiveApi.delete(id);
-        const response = await api.delete(`${BASE_URL}/${id}`);
-        if (response.error) throw new Error(response.error.message || "Failed");
-    }
 };

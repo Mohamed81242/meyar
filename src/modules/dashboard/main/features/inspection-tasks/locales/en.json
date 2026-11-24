@@ -1,6 +1,41 @@
 {
     "title": "Inspection Tasks",
-    "main": {
-        "title": "Inspection Tasks"
+    "home": "Home",
+    "filter": "Filter",
+    "evalScoreCategory": "Evaluation Score",
+    "selectUser": "Select User",
+    "selectGroup": "Select Group",
+    "status": "Status",
+    "evalTemplate": "Evaluation Template",
+    "entities": "Entities",
+    "specialName": "Special Name",
+    "entityTags": "Entity Tags",
+    "execution": "Execution:",
+    "startedLate": "Started Late",
+    "startedOnTime": "Started On Time",
+    "startedEarly": "Started Early",
+    "completion": "Completion:",
+    "endedLate": "Ended Late",
+    "endedOnTime": "Ended On Time",
+    "endedEarly": "Ended Early",
+    "archivedTasks": "Archived Tasks",
+    "instantOnly": "Show Instant Tasks Only",
+    "saveFilter": "Save Filter",
+    "apply": "Apply",
+    "totalItems": "Total Items:",
+    "orderList": "قائمة الترتيب",
+    "completed": "Completed",
+    "showReport": "Show Report",
+    "viewReport": "View Report",
+    "noTasks": "No inspection tasks found",
+    "columns": {
+        "tasks": "TASKS",
+        "status": "STATUS",
+        "score": "SCORE",
+        "action": "ACTION"
+    },
+    "actions": {
+        "delete": "Delete",
+        "edit": "Edit"
     }
 }

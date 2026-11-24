@@ -1,6 +1,36 @@
 {
-    "title": "Folders Or Classifications",
-    "main": {
-        "title": "Folders Or Classifications"
+    "home": "Home",
+    "title": "Folders or Classifications",
+    "createFolder": "Create Folder",
+    "addFolder": "Add Template Folder",
+    "editFolder": "Edit Template Folder",
+    "name": "Name",
+    "nameRequired": "Name is required",
+    "selectTemplates": "Select Templates",
+    "searchTemplate": "Search Template",
+    "selectAllTemplates": "Select All templates",
+    "folderCreated": "Folder created successfully",
+    "folderUpdated": "Folder updated successfully",
+    "folderDeleted": "Folder deleted successfully",
+    "failedToCreate": "Failed to create folder",
+    "failedToUpdate": "Failed to update folder",
+    "failedToDelete": "Failed to delete folder",
+    "save": "Save",
+    "add": "Add",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "deleteFolder": "Delete Folder",
+    "confirmDelete": "Are you sure you want to delete this folder?",
+    "cannotUndo": "This action cannot be undone.",
+    "columns": {
+        "name": "NAME",
+        "numberOfTemplates": "NUMBER OF TEMPLATES",
+        "actions": "ACTIONS"
+    },
+    "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
     }
 }

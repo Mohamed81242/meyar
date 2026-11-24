@@ -1,6 +1,35 @@
 {
-    "title": "Sorting Mechanisms",
-    "main": {
-        "title": "Sorting Mechanisms"
+    "title": "آليات الترتيب",
+    "home": "الرئيسية",
+    "description": "الآليات التي يستخدمها النظام لترتيب عمليات التفتيش والحفاظ على سلامة بياناتها: ما يعنيه كل منها، ونوعها، ومكان تعيينها.",
+    "cards": {
+        "requiredData": {
+            "title": "Required data complete",
+            "badge": "Applied automatically",
+            "desc": "The system makes sure every required question shown in an inspection is answered before it is accepted.",
+            "sub": "Applied by the system itself, with no setting."
+        },
+        "validAnswer": {
+            "title": "Valid answer values",
+            "badge": "Applied automatically",
+            "desc": "An answer must be one of the question's options and within its range.",
+            "sub": "Applied by the system itself, with no setting."
+        },
+        "contextTime": {
+            "title": "Measurement context match: keeping to the inspection time",
+            "badge": "Set ahead",
+            "desc": "A start period and an end period for the task; when required, carrying it out outside them is refused, otherwise the task shows as late. A public link has an expiry date, after which nothing is taken.",
+            "sub": "On a scheduled task when it is created, on an instant template in «Manage instant tasks» for every instant task created from it, and a public link's expiry date in «Channel links»."
+        },
+        "contextLocation": {
+            "title": "Measurement context match: keeping to the inspection location",
+            "badge": "Set ahead",
+            "desc": "Taken only within a range in metres around the company's location, or around a point set on the map for a public link.",
+            "sub": "The company's location on a scheduled task and on an instant template, and a set point on a public link in «Channel links»."
+        }
+    },
+    "actions": {
+        "createScheduled": "Create A Scheduled Task",
+        "manageInstant": "Manage Instant Tasks"
     }
 }

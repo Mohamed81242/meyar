@@ -1,6 +1,32 @@
 {
+    "home": "Home",
     "title": "Inspection Types",
-    "main": {
-        "title": "Inspection Types"
+    "addType": "+ Add New Type",
+    "editType": "Edit type",
+    "name": "Name",
+    "nameRequired": "Name is required",
+    "typeCreated": "Inspection type created successfully",
+    "typeUpdated": "Inspection type updated successfully",
+    "typeDeleted": "Inspection type deleted successfully",
+    "failedToCreate": "Failed to create inspection type",
+    "failedToUpdate": "Failed to update inspection type",
+    "failedToDelete": "Failed to delete inspection type",
+    "templatesCount": "{{count}} Templates",
+    "save": "Save",
+    "add": "Add",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "deleteType": "Delete Inspection Type",
+    "confirmDelete": "Are you sure you want to delete this inspection type?",
+    "cannotUndo": "This action cannot be undone.",
+    "columns": {
+        "name": "NAME",
+        "action": "ACTION"
+    },
+    "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
     }
 }

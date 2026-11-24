@@ -1,114 +1,148 @@
-import type { StatisticsLive, StatisticsLiveCreatePayload, StatisticsLiveUpdatePayload } from "../types";
-import { v4 as uuidv4 } from "uuid";
+import type { StatisticsLiveOverview, StatisticsLiveQueryParams } from "../types";
 
-export let mockStatisticsLives: StatisticsLive[] = [
-    {
-        id: "1",
-        name: "عبدالرحمن قاسم",
-        description: "Standard account item",
-        role: "أدمن",
-        email: "abuqasim1427@gmail.com",
-        phone: "+966 552818590",
-        isActive: true,
-        createdAt: "2026/10/14 , 08:19:28 PM",
-        updatedAt: "2026/10/14 , 09:02:52 PM",
+export const mockStatisticsLiveData: StatisticsLiveOverview = {
+    // Row 1: Donut Cards
+    assessmentStatuses: {
+        title: "حالات مهام التقييم",
+        total: 1,
+        centerLabel: "اجمالي",
+        segments: [
+            { label: "Wait to Start", count: 0, percentage: 0, color: "#EAB308" },
+            { label: "In Progress", count: 0, percentage: 0, color: "#8B5CF6" },
+            { label: "Complete", count: 1, percentage: 100, color: "#059669" },
+        ],
     },
-    {
-        id: "2",
-        name: "فراس حافظ",
-        description: "Administrative account",
-        role: "أدمن",
-        email: "rmz.alemtithal@gmail.com",
-        phone: "+966 500000000",
-        isActive: true,
-        createdAt: "2026/08/26 , 02:35:26 AM",
-        updatedAt: "2026/08/26 , 02:35:26 AM",
-    }
-];
+    successRate: {
+        title: "نسبة نجاح المهام",
+        total: 1,
+        centerLabel: "الإجمالي",
+        segments: [
+            { label: "مهام ممتثلة", count: 0, percentage: 0, color: "#059669" },
+            { label: "مهام غير ممتثلة", count: 1, percentage: 100, color: "#DC2626" },
+        ],
+    },
+    scoreDistribution: null,
+
+    // Row 2: Tasks by result
+    tasksByResult: {
+        compliant: [],
+        nonCompliant: [
+            {
+                id: "task-1",
+                title: "سيلفش - Sellfish",
+                entityName: "سيلفش - Sellfish",
+                category: "بنود تفتيش المطاعم",
+                score: 85,
+                timestamp: "PM 01:14:46 , 2026/11/24",
+                badgeText: "رمز الامتثال",
+                status: "non_compliant",
+            },
+        ],
+        unable: [],
+    },
+
+    // Row 3
+    templateResults: {
+        compliant: 0,
+        nonCompliant: 1,
+        unable: 0,
+        barValue: 1,
+    },
+    districtResults: null,
+
+    // Row 4
+    allTasks: [
+        {
+            id: "task-1",
+            title: "سيلفش - Sellfish",
+            entityName: "سيلفش - Sellfish",
+            category: "بنود تفتيش المطاعم",
+            score: 85,
+            timestamp: "PM 01:14:46 , 2026/11/24",
+            badgeText: "رمز الامتثال",
+            status: "non_compliant",
+        },
+    ],
+    scheduleAdherence: null,
+
+    // Row 5
+    topViolations: {
+        entityName: "سيلفش - Sellfish",
+        count: 14,
+    },
+    commonViolations: [
+        {
+            id: "viol-1",
+            count: 1,
+            text: "توفير مقياس حرارة مناسب لقياس درجات حرارة الأغذية عند الاستلام والتحضير وعند الحاجة",
+        },
+        {
+            id: "viol-2",
+            count: 1,
+            text: "عدم تكديس الأغذية داخل الثلاجات والفريزرات بما يعيق دوران الهواء والتبريد",
+        },
+        {
+            id: "viol-3",
+            count: 1,
+            text: "خلو المنشأة ومناطق التحضير والتخزين من الحشرات والقوارض والطيور وآثارها",
+        },
+        {
+            id: "viol-4",
+            count: 1,
+            text: "إغلاق الفتحات ومصادر دخول الحشرات والقوارض والمحافظة على الأبواب والنوافذ بحالة سليمة",
+        },
+        {
+            id: "viol-5",
+            count: 1,
+            text: "أن تكون معدات وأدوات التحضير بحالة جيدة وسهلة التنظيف والتعقيم",
+        },
+    ],
+
+    // Row 6
+    districtComplianceAverage: null,
+
+    // Row 7
+    sitesAverageCompliance: {
+        siteName: "سيلفش - Sellfish",
+        ratingText: "جيدة 1",
+        barValue: 1,
+        status: "non_compliant",
+    },
+
+    // Row 8
+    sitePerformanceOverTime: [
+        {
+            date: "24 نوفمبر 2026 , 01:14 م",
+            rate: 85.42,
+            statusText: "غير ممتثلة",
+            details: "نسبة الإنجاز الحالية",
+        },
+    ],
+
+    // Row 9
+    entitiesPerformance: {
+        entityName: "سيلفش - Sellfish",
+        score: 85,
+    },
+};
 
 export const mockStatisticsLiveApi = {
-    getList: async (params?: any, signal?: AbortSignal): Promise<any> => {
+    getOverview: async (
+        _params?: StatisticsLiveQueryParams,
+        _signal?: AbortSignal
+    ): Promise<StatisticsLiveOverview> => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const { page = 1, search, perPage = 10 } = (params || {}) as any;
-                const filtered = mockStatisticsLives.filter(item => 
-                    !search || 
-                    item.name.toLowerCase().includes(search.toLowerCase()) ||
-                    (item.email && item.email.toLowerCase().includes(search.toLowerCase()))
-                );
-                const p = Number(page);
-                const limit = Number(perPage);
-                const start = (p - 1) * limit;
-                resolve({
-                    items: filtered.slice(start, start + limit),
-                    perPage: limit,
-                    currentPage: p,
-                    lastPage: Math.ceil(filtered.length / limit) || 1,
-                    nextPageUrl: null,
-                    total: filtered.length,
-                });
-            }, 300);
+                resolve(mockStatisticsLiveData);
+            }, 250);
         });
     },
 
-    getById: async (id: string, signal?: AbortSignal): Promise<StatisticsLive | null> => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const mock = mockStatisticsLives.find((s) => s.id === id);
-                if (!mock) reject(new Error("Not found"));
-                else resolve(mock);
-            }, 300);
-        });
-    },
-    
-    create: async (payload: StatisticsLiveCreatePayload): Promise<StatisticsLive> => {
+    exportReport: async (format: "excel" | "pdf"): Promise<{ downloadUrl: string }> => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const now = new Date().toLocaleDateString();
-                const newItem: StatisticsLive = {
-                    id: uuidv4(),
-                    ...payload,
-                    isActive: true,
-                    createdAt: now,
-                    updatedAt: now,
-                };
-                mockStatisticsLives = [newItem, ...mockStatisticsLives];
-                resolve(newItem);
+                resolve({ downloadUrl: `#export-${format}` });
             }, 300);
         });
     },
-
-    update: async (id: string, payload: StatisticsLiveUpdatePayload): Promise<StatisticsLive> => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const index = mockStatisticsLives.findIndex((s) => s.id === id);
-                if (index === -1) {
-                    reject(new Error("Not found"));
-                    return;
-                }
-                const existing = mockStatisticsLives[index];
-                const updatedItem = {
-                    ...existing,
-                    ...payload,
-                    updatedAt: new Date().toLocaleDateString(),
-                };
-                mockStatisticsLives[index] = updatedItem;
-                resolve(updatedItem);
-            }, 300);
-        });
-    },
-
-    delete: async (id: string): Promise<void> => {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const index = mockStatisticsLives.findIndex((s) => s.id === id);
-                if (index === -1) {
-                    reject(new Error("Not found"));
-                    return;
-                }
-                mockStatisticsLives = mockStatisticsLives.filter((s) => s.id !== id);
-                resolve();
-            }, 300);
-        });
-    }
 };

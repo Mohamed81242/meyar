@@ -1,24 +1,27 @@
 import { z } from "zod";
 
-export const foldersOrClassificationsSchema = z.object({
+export const templateFolderSchema = z.object({
     name: z.string().min(1, "Name is required"),
-    description: z.string().optional(),
-    role: z.string().optional(),
-    email: z.string().email().optional(),
-    phone: z.string().optional(),
+    selectedTemplateIds: z.array(z.string()).optional(),
 });
 
-export interface FoldersOrClassifications {
+export interface TemplateFolder {
     id: string;
     name: string;
-    description?: string | null;
-    role?: string | null;
-    email?: string | null;
-    phone?: string | null;
-    isActive: boolean;
-    createdAt: string;
-    updatedAt: string;
+    numberOfTemplates: number;
+    selectedTemplateIds?: string[];
+    createdAt?: string;
+    updatedAt?: string;
 }
 
-export type FoldersOrClassificationsCreatePayload = z.infer<typeof foldersOrClassificationsSchema>;
-export type FoldersOrClassificationsUpdatePayload = Partial<FoldersOrClassificationsCreatePayload>;
+export type TemplateFolderCreatePayload = {
+    name: string;
+    selectedTemplateIds?: string[];
+};
+
+export type TemplateFolderUpdatePayload = Partial<TemplateFolderCreatePayload>;
+
+// Backwards compatibility aliases
+export type FoldersOrClassifications = TemplateFolder;
+export type FoldersOrClassificationsCreatePayload = TemplateFolderCreatePayload;
+export type FoldersOrClassificationsUpdatePayload = TemplateFolderUpdatePayload;

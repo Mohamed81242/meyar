@@ -1,6 +1,7 @@
 {
-    "title": "Company Classifications",
+    "title": "تصنيفات المنشآت",
     "main": {
-        "title": "Company Classifications"
+        "title": "Company Classifications",
+        "addNew": "+ Add New Classification"
     }
 }

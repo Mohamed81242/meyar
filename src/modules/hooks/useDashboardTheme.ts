@@ -472,8 +472,10 @@ export function useThemeCustomizer() {
         applyTheme({ primary: draftPrimary }, darkMode);
     }, [draftPrimary, darkMode, applyTheme]);
 
-    const save = () => {
-        setPrimaryColor(draftPrimary);
+    const save = (colorToSave?: string) => {
+        const targetColor = colorToSave || draftPrimary;
+        setDraftPrimary(targetColor);
+        setPrimaryColor(targetColor);
     };
 
     const reset = () => {

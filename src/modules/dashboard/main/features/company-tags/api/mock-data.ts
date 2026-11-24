@@ -1,40 +1,16 @@
-import type { CompanyTags, CompanyTagsCreatePayload, CompanyTagsUpdatePayload } from "../types";
+import type { CompanyTag, CompanyTagCreatePayload, CompanyTagUpdatePayload } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
-export let mockCompanyTagss: CompanyTags[] = [
-    {
-        id: "1",
-        name: "عبدالرحمن قاسم",
-        description: "Standard account item",
-        role: "أدمن",
-        email: "abuqasim1427@gmail.com",
-        phone: "+966 552818590",
-        isActive: true,
-        createdAt: "2026/10/14 , 08:19:28 PM",
-        updatedAt: "2026/10/14 , 09:02:52 PM",
-    },
-    {
-        id: "2",
-        name: "فراس حافظ",
-        description: "Administrative account",
-        role: "أدمن",
-        email: "rmz.alemtithal@gmail.com",
-        phone: "+966 500000000",
-        isActive: true,
-        createdAt: "2026/08/26 , 02:35:26 AM",
-        updatedAt: "2026/08/26 , 02:35:26 AM",
-    }
-];
+// Default empty array matching reference Screenshot 1
+export let mockCompanyTags: CompanyTag[] = [];
 
 export const mockCompanyTagsApi = {
     getList: async (params?: any, signal?: AbortSignal): Promise<any> => {
-        return new Promise((resolve) => {
-            setTimeout(() => {
+        return new Promise((resolve, reject) => {
+            const timeoutId = setTimeout(() => {
                 const { page = 1, search, perPage = 10 } = (params || {}) as any;
-                const filtered = mockCompanyTagss.filter(item => 
-                    !search || 
-                    item.name.toLowerCase().includes(search.toLowerCase()) ||
-                    (item.email && item.email.toLowerCase().includes(search.toLowerCase()))
+                const filtered = mockCompanyTags.filter((item) =>
+                    !search || item.name.toLowerCase().includes(search.toLowerCase())
                 );
                 const p = Number(page);
                 const limit = Number(perPage);
@@ -47,68 +23,76 @@ export const mockCompanyTagsApi = {
                     nextPageUrl: null,
                     total: filtered.length,
                 });
-            }, 300);
+            }, 250);
+
+            if (signal) {
+                signal.addEventListener("abort", () => {
+                    clearTimeout(timeoutId);
+                    reject(new DOMException("Aborted", "AbortError"));
+                });
+            }
         });
     },
 
-    getById: async (id: string, signal?: AbortSignal): Promise<CompanyTags | null> => {
+    getById: async (id: string, signal?: AbortSignal): Promise<CompanyTag | null> => {
         return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                const mock = mockCompanyTagss.find((s) => s.id === id);
+            const timeoutId = setTimeout(() => {
+                const mock = mockCompanyTags.find((s) => s.id === id);
                 if (!mock) reject(new Error("Not found"));
                 else resolve(mock);
-            }, 300);
+            }, 250);
+
+            if (signal) {
+                signal.addEventListener("abort", () => {
+                    clearTimeout(timeoutId);
+                    reject(new DOMException("Aborted", "AbortError"));
+                });
+            }
         });
     },
-    
-    create: async (payload: CompanyTagsCreatePayload): Promise<CompanyTags> => {
+
+    create: async (payload: CompanyTagCreatePayload): Promise<CompanyTag> => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const now = new Date().toLocaleDateString();
-                const newItem: CompanyTags = {
+                const now = new Date().toISOString().replace("T", " ").substring(0, 19);
+                const newItem: CompanyTag = {
                     id: uuidv4(),
-                    ...payload,
-                    isActive: true,
+                    name: payload.name,
                     createdAt: now,
                     updatedAt: now,
                 };
-                mockCompanyTagss = [newItem, ...mockCompanyTagss];
+                mockCompanyTags = [newItem, ...mockCompanyTags];
                 resolve(newItem);
-            }, 300);
+            }, 250);
         });
     },
 
-    update: async (id: string, payload: CompanyTagsUpdatePayload): Promise<CompanyTags> => {
+    update: async (id: string, payload: CompanyTagUpdatePayload): Promise<CompanyTag> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                const index = mockCompanyTagss.findIndex((s) => s.id === id);
+                const index = mockCompanyTags.findIndex((s) => s.id === id);
                 if (index === -1) {
                     reject(new Error("Not found"));
                     return;
                 }
-                const existing = mockCompanyTagss[index];
-                const updatedItem = {
+                const existing = mockCompanyTags[index];
+                const updatedItem: CompanyTag = {
                     ...existing,
                     ...payload,
-                    updatedAt: new Date().toLocaleDateString(),
+                    updatedAt: new Date().toISOString().replace("T", " ").substring(0, 19),
                 };
-                mockCompanyTagss[index] = updatedItem;
+                mockCompanyTags[index] = updatedItem;
                 resolve(updatedItem);
-            }, 300);
+            }, 250);
         });
     },
 
     delete: async (id: string): Promise<void> => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                const index = mockCompanyTagss.findIndex((s) => s.id === id);
-                if (index === -1) {
-                    reject(new Error("Not found"));
-                    return;
-                }
-                mockCompanyTagss = mockCompanyTagss.filter((s) => s.id !== id);
+                mockCompanyTags = mockCompanyTags.filter((s) => s.id !== id);
                 resolve();
-            }, 300);
+            }, 250);
         });
-    }
+    },
 };

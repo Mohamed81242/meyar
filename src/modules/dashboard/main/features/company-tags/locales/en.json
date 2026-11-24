@@ -1,6 +1,33 @@
 {
+    "home": "Home",
     "title": "Company Tags",
-    "main": {
-        "title": "Company Tags"
+    "subtitle": "أضف وسوم مثل تصنيفات خاصة، تُستخدم لتمييز الجهات",
+    "addTag": "+ Add New Tag",
+    "addType": "Add type",
+    "editTag": "Edit tag",
+    "name": "Name",
+    "nameRequired": "Name is required",
+    "tagCreated": "Tag created successfully",
+    "tagUpdated": "Tag updated successfully",
+    "tagDeleted": "Tag deleted successfully",
+    "failedToCreate": "Failed to create tag",
+    "failedToUpdate": "Failed to update tag",
+    "failedToDelete": "Failed to delete tag",
+    "save": "Save",
+    "add": "Add",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "deleting": "Deleting...",
+    "deleteTag": "Delete Tag",
+    "confirmDelete": "Are you sure you want to delete this tag?",
+    "cannotUndo": "This action cannot be undone.",
+    "columns": {
+        "name": "NAME",
+        "action": "ACTION"
+    },
+    "actions": {
+        "edit": "Edit",
+        "delete": "Delete"
     }
 }

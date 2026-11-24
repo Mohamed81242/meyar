@@ -1,6 +1,46 @@
 {
-    "title": "Procedures",
-    "main": {
-        "title": "Procedures"
-    }
+    "title": "الإجراءات",
+    "home": "الرئيسية",
+    "filter": "تصفية",
+    "totalItems": "Total Items:",
+    "orderList": "قائمة الترتيب",
+    "searchPlaceholder": "بحث عن مهمة أو جهة...",
+    "allCompanies": "جميع الجهات والشركات",
+    "allStatuses": "جميع الحالات",
+    "allPriorities": "جميع الأولويات",
+    "reset": "إعادة تعيين",
+    "apply": "تطبيق",
+    "noProcedures": "لا توجد إجراءات مسجلة",
+    "columns": {
+        "tasks": "TASKS",
+        "status": "STATUS",
+        "priority": "PRIORITY",
+        "action": "ACTION"
+    },
+    "actions": {
+        "edit": "تعديل",
+        "delete": "حذف"
+    },
+    "addProcedure": "إضافة إجراء جديد",
+    "editProcedure": "تعديل الإجراء",
+    "taskTitleLabel": "وصف الإجراء / المهمة",
+    "taskTitlePlaceholder": "مثال: يجب فصل غرف تحضير الدواجن عن الاسماك",
+    "companyLabel": "الجهة / الشركة",
+    "companyPlaceholder": "مثال: شركة سامي سليمان سندي",
+    "priorityLabel": "الأولوية",
+    "statusLabel": "الحالة",
+    "delayDaysLabel": "أيام التأخير",
+    "cancel": "إلغاء",
+    "save": "حفظ التغييرات",
+    "add": "إضافة الإجراء",
+    "saving": "جاري الحفظ...",
+    "deleting": "جاري الحذف...",
+    "delete": "حذف",
+    "deleteConfirmTitle": "حذف الإجراء",
+    "deleteConfirmDesc": "هل أنت متأكد من رغبتك في حذف هذا الإجراء؟ لا يمكن التراجع عن هذا الإجراء.",
+    "fillRequired": "يرجى تعبئة جميع الحقول المطلوبة",
+    "createdSuccess": "تم إنشاء الإجراء بنجاح",
+    "updatedSuccess": "تم تحديث الإجراء بنجاح",
+    "deletedSuccess": "تم حذف الإجراء بنجاح",
+    "actionFailed": "حدث خطأ أثناء تنفيذ العملية"
 }

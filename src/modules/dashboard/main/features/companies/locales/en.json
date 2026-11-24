@@ -1,6 +1,7 @@
 {
-    "title": "Companies",
+    "title": "companies",
     "main": {
-        "title": "Companies"
+        "title": "companies",
+        "addNew": "Add Company"
     }
 }

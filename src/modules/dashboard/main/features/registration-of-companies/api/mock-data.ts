@@ -1,44 +1,24 @@
-import type { RegistrationOfCompanies, RegistrationOfCompaniesCreatePayload, RegistrationOfCompaniesUpdatePayload } from "../types";
+import type { CompanyRegistration, CompanyRegistrationCreatePayload, CompanyRegistrationUpdatePayload } from "../types";
 import { v4 as uuidv4 } from "uuid";
 
-export let mockRegistrationOfCompaniess: RegistrationOfCompanies[] = [
-    {
-        id: "1",
-        name: "عبدالرحمن قاسم",
-        description: "Standard account item",
-        role: "أدمن",
-        email: "abuqasim1427@gmail.com",
-        phone: "+966 552818590",
-        isActive: true,
-        createdAt: "2026/10/14 , 08:19:28 PM",
-        updatedAt: "2026/10/14 , 09:02:52 PM",
-    },
-    {
-        id: "2",
-        name: "فراس حافظ",
-        description: "Administrative account",
-        role: "أدمن",
-        email: "rmz.alemtithal@gmail.com",
-        phone: "+966 500000000",
-        isActive: true,
-        createdAt: "2026/08/26 , 02:35:26 AM",
-        updatedAt: "2026/08/26 , 02:35:26 AM",
-    }
-];
+// Default empty list matching the live reference
+export let mockRegistrationOfCompaniess: CompanyRegistration[] = [];
 
 export const mockRegistrationOfCompaniesApi = {
-    getList: async (params?: any, signal?: AbortSignal): Promise<any> => {
+    getList: async (params?: any, _signal?: AbortSignal): Promise<any> => {
         return new Promise((resolve) => {
             setTimeout(() => {
                 const { page = 1, search, perPage = 10 } = (params || {}) as any;
-                const filtered = mockRegistrationOfCompaniess.filter(item => 
-                    !search || 
-                    item.name.toLowerCase().includes(search.toLowerCase()) ||
-                    (item.email && item.email.toLowerCase().includes(search.toLowerCase()))
+                const filtered = mockRegistrationOfCompaniess.filter(
+                    (item) =>
+                        !search ||
+                        item.companyName.toLowerCase().includes(search.toLowerCase()) ||
+                        item.category.toLowerCase().includes(search.toLowerCase())
                 );
                 const p = Number(page);
                 const limit = Number(perPage);
                 const start = (p - 1) * limit;
+
                 resolve({
                     items: filtered.slice(start, start + limit),
                     perPage: limit,
@@ -47,38 +27,50 @@ export const mockRegistrationOfCompaniesApi = {
                     nextPageUrl: null,
                     total: filtered.length,
                 });
-            }, 300);
+            }, 200);
         });
     },
 
-    getById: async (id: string, signal?: AbortSignal): Promise<RegistrationOfCompanies | null> => {
+    getById: async (id: string, _signal?: AbortSignal): Promise<CompanyRegistration | null> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 const mock = mockRegistrationOfCompaniess.find((s) => s.id === id);
                 if (!mock) reject(new Error("Not found"));
                 else resolve(mock);
-            }, 300);
+            }, 200);
         });
     },
-    
-    create: async (payload: RegistrationOfCompaniesCreatePayload): Promise<RegistrationOfCompanies> => {
+
+    create: async (payload: CompanyRegistrationCreatePayload): Promise<CompanyRegistration> => {
         return new Promise((resolve) => {
             setTimeout(() => {
-                const now = new Date().toLocaleDateString();
-                const newItem: RegistrationOfCompanies = {
+                const now = new Date().toISOString().split("T")[0];
+                const newItem: CompanyRegistration = {
                     id: uuidv4(),
-                    ...payload,
+                    companyName: payload.companyName,
+                    category: payload.category,
+                    ownerName: payload.ownerName || null,
+                    email: payload.email || null,
+                    phone: payload.phone || null,
+                    commercialFileUrl: payload.commercialFileUrl || null,
+                    licenseFileUrl: payload.licenseFileUrl || null,
+                    identityFileUrl: payload.identityFileUrl || null,
+                    addressFileUrl: payload.addressFileUrl || null,
+                    certFileUrl: payload.certFileUrl || null,
+                    defenseLicenseFileUrl: payload.defenseLicenseFileUrl || null,
+                    qualityFileUrl: payload.qualityFileUrl || null,
+                    status: payload.status || "pending",
                     isActive: true,
                     createdAt: now,
                     updatedAt: now,
                 };
                 mockRegistrationOfCompaniess = [newItem, ...mockRegistrationOfCompaniess];
                 resolve(newItem);
-            }, 300);
+            }, 250);
         });
     },
 
-    update: async (id: string, payload: RegistrationOfCompaniesUpdatePayload): Promise<RegistrationOfCompanies> => {
+    update: async (id: string, payload: CompanyRegistrationUpdatePayload): Promise<CompanyRegistration> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 const index = mockRegistrationOfCompaniess.findIndex((s) => s.id === id);
@@ -87,28 +79,23 @@ export const mockRegistrationOfCompaniesApi = {
                     return;
                 }
                 const existing = mockRegistrationOfCompaniess[index];
-                const updatedItem = {
+                const updatedItem: CompanyRegistration = {
                     ...existing,
                     ...payload,
-                    updatedAt: new Date().toLocaleDateString(),
+                    updatedAt: new Date().toISOString().split("T")[0],
                 };
                 mockRegistrationOfCompaniess[index] = updatedItem;
                 resolve(updatedItem);
-            }, 300);
+            }, 250);
         });
     },
 
     delete: async (id: string): Promise<void> => {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             setTimeout(() => {
-                const index = mockRegistrationOfCompaniess.findIndex((s) => s.id === id);
-                if (index === -1) {
-                    reject(new Error("Not found"));
-                    return;
-                }
                 mockRegistrationOfCompaniess = mockRegistrationOfCompaniess.filter((s) => s.id !== id);
                 resolve();
-            }, 300);
+            }, 200);
         });
-    }
+    },
 };
