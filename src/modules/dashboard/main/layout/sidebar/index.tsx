@@ -150,7 +150,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                 {sidebarSections.map((section) => (
                     <div key={section.sectionTitle} className="space-y-1">
                         {!isCollapsed && (
-                            <div className="px-3 py-1 text-[10px] font-bold text-[#94A3B8] tracking-wider uppercase">
+                            <div className="px-3 py-1.5 text-xs font-bold text-[#94A3B8] tracking-wider uppercase">
                                 {section.sectionTitle}
                             </div>
                         )}
@@ -169,33 +169,33 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                 );
 
                                 return (
-                                    <div key={item.title} className="space-y-0.5">
+                                    <div key={item.title} className="space-y-1">
                                         <button
                                             type="button"
                                             onClick={() => toggleGroup(item.title)}
                                             className={cn(
-                                                "w-full flex items-center gap-3 px-3 py-1.5 text-xs rounded-xl transition-colors cursor-pointer",
+                                                "w-full flex items-center gap-3 px-3.5 py-2 text-sm rounded-xl transition-colors cursor-pointer",
                                                 isGroupActive
-                                                    ? "bg-[#EFF6FF] text-[#2563EB] font-semibold"
-                                                    : "text-[#475569] hover:bg-[#F8FAFC] hover:text-[#0F172A] font-medium",
+                                                    ? "bg-[#EFF6FF] text-[#2563EB] font-bold"
+                                                    : "text-[#475569] hover:bg-[#F8FAFC] hover:text-[#0F172A] font-semibold",
                                                 isCollapsed && "justify-center px-0"
                                             )}
                                             title={isCollapsed ? item.title : undefined}
                                         >
                                             <ItemIcon
                                                 className={cn(
-                                                    "w-3.5 h-3.5 shrink-0",
+                                                    "w-4 h-4 shrink-0",
                                                     isGroupActive ? "text-[#2563EB]" : "text-[#64748B]"
                                                 )}
                                             />
                                             {!isCollapsed && (
                                                 <>
-                                                    <span className="flex-1 text-start truncate text-xs">
+                                                    <span className="flex-1 text-start truncate text-sm">
                                                         {item.title}
                                                     </span>
                                                     <ChevronDown
                                                         className={cn(
-                                                            "w-3 h-3 transition-transform duration-200",
+                                                            "w-3.5 h-3.5 transition-transform duration-200",
                                                             isGroupActive ? "text-[#2563EB]" : "text-[#94A3B8]",
                                                             isExpanded && "rotate-180"
                                                         )}
@@ -219,7 +219,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                                             key={sub.title}
                                                             to={sub.href}
                                                             className={cn(
-                                                                "flex items-center gap-2 px-2.5 py-1 text-[11px] rounded-lg transition-all",
+                                                                "flex items-center gap-2.5 px-3 py-1.5 text-xs rounded-lg transition-all",
                                                                 isActive
                                                                     ? "text-[#2563EB] font-bold"
                                                                     : "text-[#64748B] hover:text-[#0F172A] hover:bg-[#F8FAFC] font-medium"
@@ -228,7 +228,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                                             {SubIcon && (
                                                                 <SubIcon
                                                                     className={cn(
-                                                                        "w-3 h-3 shrink-0",
+                                                                        "w-3.5 h-3.5 shrink-0",
                                                                         isActive ? "text-[#2563EB]" : "text-[#94A3B8]"
                                                                     )}
                                                                 />
@@ -272,8 +272,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                 ))}
             </div>
 
-            {/* Bottom Profile & Subscription Cards matching Image 2 */}
-            <div className="shrink-0 border-t border-[#E2E8F0] p-2 space-y-1.5">
+            {/* Bottom Profile & Subscription Cards */}
+            <div className="shrink-0 border-t border-[#E2E8F0] p-2.5 space-y-2">
                 {/* User Profile Card */}
                 <DropdownMenu>
                     <DropdownMenuTrigger
@@ -282,24 +282,24 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                     >
                         <div
                             className={cn(
-                                "flex items-center gap-2 p-1.5 rounded-lg hover:bg-[#F8FAFC] transition-colors",
+                                "flex items-center gap-2.5 p-2 rounded-xl hover:bg-[#F8FAFC] transition-colors",
                                 isCollapsed && "justify-center p-1"
                             )}
                         >
-                            <div className="w-7 h-7 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] flex items-center justify-center text-xs shrink-0 overflow-hidden shadow-2xs">
+                            <div className="w-9 h-9 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] flex items-center justify-center text-sm shrink-0 overflow-hidden shadow-2xs">
                                 👦
                             </div>
                             {!isCollapsed && (
                                 <>
                                     <div className="flex flex-col text-start overflow-hidden min-w-0 flex-1 leading-tight">
-                                        <span className="text-[11px] font-bold text-[#0F172A] truncate">
+                                        <span className="text-xs font-bold text-[#0F172A] truncate">
                                             {user?.name || "فراس حافظ"}
                                         </span>
-                                        <span className="text-[9px] text-[#64748B]">
+                                        <span className="text-[11px] text-[#64748B]">
                                             أدمن
                                         </span>
                                     </div>
-                                    <ChevronRight className="w-3.5 h-3.5 text-[#94A3B8] shrink-0" />
+                                    <ChevronRight className="w-4 h-4 text-[#94A3B8] shrink-0" />
                                 </>
                             )}
                         </div>
@@ -322,16 +322,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
 
                 {/* Subscription Plan Card */}
                 {!isCollapsed && (
-                    <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg p-2 space-y-0.5">
+                    <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-2.5 space-y-1">
                         <div className="flex items-center justify-between">
-                            <span className="text-[11px] font-bold text-[#0F172A]">
+                            <span className="text-xs font-bold text-[#0F172A]">
                                 Basic Plan
                             </span>
-                            <span className="px-1.5 py-0.2 rounded-full bg-[#E6F4EA] text-[#137333] border border-[#CEEAD6] text-[9px] font-semibold">
+                            <span className="px-2 py-0.5 rounded-full bg-[#E6F4EA] text-[#137333] border border-[#CEEAD6] text-[10px] font-semibold">
                                 Active
                             </span>
                         </div>
-                        <p className="text-[9px] text-[#64748B] tracking-tight">
+                        <p className="text-[10px] text-[#64748B] tracking-tight">
                             [27 Days] تاريخ الاستحقاق: 2026/12/22
                         </p>
                     </div>

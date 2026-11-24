@@ -46,11 +46,11 @@
   --radius-dashboard: 16px;
 
   --font-sans:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Cairo", "Tajawal", "Almarai", ui-sans-serif, system-ui, sans-serif;
+    "Cairo", "Tajawal", "Almarai", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, ui-sans-serif, system-ui, sans-serif;
   --font-display:
-    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Cairo", "Tajawal", sans-serif;
+    "Cairo", "Tajawal", "Almarai", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-arabic:
-    "Cairo", "Tajawal", "Almarai", "Inter", sans-serif;
+    "Cairo", "Tajawal", "Almarai", sans-serif;
   --font-serif: "Amiri", "Playfair Display", serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
@@ -281,7 +281,7 @@ a {
 }
 
 body {
-  @apply bg-[#F4F6F8] text-[#1E293B] antialiased font-sans;
+  @apply bg-[#F4F6F8] text-[#1E293B] antialiased font-sans text-sm;
   font-family: var(--font-sans);
 }
 
