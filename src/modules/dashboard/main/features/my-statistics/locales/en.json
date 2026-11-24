@@ -1,0 +1,46 @@
+{
+    "title": "My Statistics",
+    "home": "Home",
+    "summary": {
+        "inProgressTasks": "In Progress Tasks",
+        "completedTasks": "Completed Tasks",
+        "openActions": "Open Actions"
+    },
+    "inspectionTasks": {
+        "title": "Inspection Tasks",
+        "centerLabel": "Complete",
+        "waitToStart": "Wait to Start",
+        "inProgress": "In Progress",
+        "complete": "Complete"
+    },
+    "actions": {
+        "title": "Actions",
+        "centerLabel": "Total",
+        "waitToStart": "Wait to Start",
+        "inProgress": "In Progress",
+        "complete": "Complete",
+        "impossible": "Impossible"
+    },
+    "openCards": {
+        "tasksOpen": "Tasks Open",
+        "actionsOpen": "Actions Open",
+        "issuesOpen": "Issues Open",
+        "noTasks": "No tasks open",
+        "noActions": "لا توجد اجراءات",
+        "noIssues": "لا توجد مشاكل"
+    },
+    "analytics": {
+        "inspectionTasks": "Inspection Tasks",
+        "procedures": "Procedures",
+        "waitToStart": "Wait to Start",
+        "inProgress": "In Progress",
+        "complete": "Complete",
+        "tasks": "Tasks",
+        "waitToStartTasks": "Wait to start inspection tasks",
+        "inProgressTasks": "inProgress inspection tasks",
+        "completedTasks": "Completed inspection task",
+        "actions": "Actions",
+        "actionsAwaiting": "Actions awaiting start",
+        "ongoingActions": "Ongoing actions"
+    }
+}

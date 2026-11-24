@@ -4,7 +4,9 @@ import {
     useDashboardTheme,
     useThemeCustomizer,
     PRESET_COLORS,
+    getSecondaryTint,
 } from "../../../hooks/useDashboardTheme";
+import { useLayoutStore } from "@/shared/hooks/useLayoutStore";
 
 interface AppearanceDrawerProps {
     isOpen: boolean;
@@ -14,13 +16,16 @@ interface AppearanceDrawerProps {
 export const AppearanceDrawer: React.FC<AppearanceDrawerProps> = ({ isOpen, onClose }) => {
     const { darkMode, setDarkMode } = useDashboardTheme();
     const { draftPrimary, setDraftPrimary, save } = useThemeCustomizer();
-    const [contrastMode, setContrastMode] = React.useState<"contrast" | "shadow">("shadow");
-    const [orientation, setOrientation] = React.useState<"vertical" | "horizontal">("vertical");
+    const orientation = useLayoutStore((state) => state.orientation);
+    const setOrientation = useLayoutStore((state) => state.setOrientation);
+    const contrastMode = useLayoutStore((state) => state.contrastMode);
+    const setContrastMode = useLayoutStore((state) => state.setContrastMode);
 
     if (!isOpen) return null;
 
     const handleSelectColor = (color: string) => {
         setDraftPrimary(color);
+        const secondary = getSecondaryTint(color, darkMode);
         // Persist immediately for responsive preview
         try {
             const raw = localStorage.getItem("dashboard-theme-config-v3");
@@ -28,8 +33,11 @@ export const AppearanceDrawer: React.FC<AppearanceDrawerProps> = ({ isOpen, onCl
             config.primary = color;
             localStorage.setItem("dashboard-theme-config-v3", JSON.stringify(config));
             document.documentElement.style.setProperty("--color-dashboard-primary", color);
-            document.documentElement.style.setProperty("--color-dashboard-ring", color);
+            document.documentElement.style.setProperty("--color-dashboard-secondary", secondary);
             document.documentElement.style.setProperty("--color-dashboard-sidebar-primary", color);
+            document.documentElement.style.setProperty("--color-dashboard-sidebar-accent", secondary);
+            document.documentElement.style.setProperty("--color-dashboard-ring", color);
+            document.documentElement.style.setProperty("--color-dashboard-sidebar-ring", color);
         } catch {
             // ignore
         }
@@ -66,7 +74,7 @@ export const AppearanceDrawer: React.FC<AppearanceDrawerProps> = ({ isOpen, onCl
                         onClick={() => setDarkMode(false)}
                         className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-semibold gap-2 transition-all cursor-pointer ${
                             !darkMode
-                                ? "border-blue-600 bg-blue-50/50 text-blue-600 dark:bg-blue-950/30"
+                                ? "border-dashboard-primary bg-dashboard-secondary text-dashboard-primary"
                                 : "border-dashboard-border bg-dashboard-card text-dashboard-muted-foreground hover:border-dashboard-primary/40"
                         }`}
                     >
@@ -78,7 +86,7 @@ export const AppearanceDrawer: React.FC<AppearanceDrawerProps> = ({ isOpen, onCl
                         onClick={() => setDarkMode(true)}
                         className={`flex flex-col items-center justify-center p-3 rounded-xl border text-xs font-semibold gap-2 transition-all cursor-pointer ${
                             darkMode
-                                ? "border-blue-600 bg-blue-50/50 text-blue-600 dark:bg-blue-950/30"
+                                ? "border-dashboard-primary bg-dashboard-secondary text-dashboard-primary"
                                 : "border-dashboard-border bg-dashboard-card text-dashboard-muted-foreground hover:border-dashboard-primary/40"
                         }`}
                     >
@@ -111,7 +119,7 @@ export const AppearanceDrawer: React.FC<AppearanceDrawerProps> = ({ isOpen, onCl
                             onClick={() => setContrastMode("contrast")}
                             className={`flex flex-col items-center justify-center p-3.5 rounded-xl border text-xs font-semibold gap-2 transition-all cursor-pointer ${
                                 contrastMode === "contrast"
-                                    ? "border-blue-600 bg-blue-50/30 text-blue-600"
+                                    ? "border-dashboard-primary bg-dashboard-secondary text-dashboard-primary"
                                     : "border-dashboard-border text-dashboard-muted-foreground hover:border-dashboard-primary/40"
                             }`}
                         >
@@ -122,7 +130,7 @@ export const AppearanceDrawer: React.FC<AppearanceDrawerProps> = ({ isOpen, onCl
                             onClick={() => setContrastMode("shadow")}
                             className={`flex flex-col items-center justify-center p-3.5 rounded-xl border text-xs font-semibold gap-2 transition-all cursor-pointer ${
                                 contrastMode === "shadow"
-                                    ? "border-blue-600 bg-blue-50/30 text-blue-600"
+                                    ? "border-dashboard-primary bg-dashboard-secondary text-dashboard-primary"
                                     : "border-dashboard-border text-dashboard-muted-foreground hover:border-dashboard-primary/40"
                             }`}
                         >
@@ -172,12 +180,12 @@ export const AppearanceDrawer: React.FC<AppearanceDrawerProps> = ({ isOpen, onCl
                             onClick={() => setOrientation("vertical")}
                             className={`p-2.5 rounded-xl border flex flex-col gap-2 transition-all cursor-pointer ${
                                 orientation === "vertical"
-                                    ? "border-blue-600 bg-blue-50/30"
+                                    ? "border-dashboard-primary bg-dashboard-secondary/40 ring-1 ring-dashboard-primary"
                                     : "border-dashboard-border hover:border-dashboard-primary/40"
                             }`}
                         >
                             <div className="w-full h-14 bg-dashboard-muted rounded-lg flex p-1 gap-1 border border-dashboard-border">
-                                <div className="w-1/4 h-full bg-blue-600 rounded-xs" />
+                                <div className="w-1/4 h-full bg-dashboard-primary rounded-xs" />
                                 <div className="flex-1 h-full bg-white dark:bg-dashboard-card rounded-xs border border-dashboard-border" />
                             </div>
                             <span className="text-xs font-semibold text-center text-dashboard-foreground">
@@ -190,12 +198,12 @@ export const AppearanceDrawer: React.FC<AppearanceDrawerProps> = ({ isOpen, onCl
                             onClick={() => setOrientation("horizontal")}
                             className={`p-2.5 rounded-xl border flex flex-col gap-2 transition-all cursor-pointer ${
                                 orientation === "horizontal"
-                                    ? "border-blue-600 bg-blue-50/30"
+                                    ? "border-dashboard-primary bg-dashboard-secondary/40 ring-1 ring-dashboard-primary"
                                     : "border-dashboard-border hover:border-dashboard-primary/40"
                             }`}
                         >
                             <div className="w-full h-14 bg-dashboard-muted rounded-lg flex flex-col p-1 gap-1 border border-dashboard-border">
-                                <div className="w-full h-3 bg-blue-600 rounded-xs" />
+                                <div className="w-full h-3 bg-dashboard-primary rounded-xs" />
                                 <div className="flex-1 w-full bg-white dark:bg-dashboard-card rounded-xs border border-dashboard-border" />
                             </div>
                             <span className="text-xs font-semibold text-center text-dashboard-foreground">

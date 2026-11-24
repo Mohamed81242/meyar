@@ -470,7 +470,7 @@ export const Create${featurePascal}Modal: React.FC<Props> = ({ isOpen, onClose }
                         <button
                             type="submit"
                             disabled={createMutation.isPending}
-                            className="px-4 py-2 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-colors cursor-pointer disabled:opacity-50"
+                            className="px-4 py-2 text-xs font-semibold rounded-xl bg-dashboard-primary hover:opacity-90 text-white transition-colors cursor-pointer disabled:opacity-50"
                         >
                             {createMutation.isPending ? "Creating..." : "Save"}
                         </button>
@@ -577,7 +577,7 @@ export const Edit${featurePascal}Modal: React.FC<Props> = ({ isOpen, onClose, it
                         <button
                             type="submit"
                             disabled={updateMutation.isPending}
-                            className="px-4 py-2 text-xs font-semibold rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition-colors cursor-pointer disabled:opacity-50"
+                            className="px-4 py-2 text-xs font-semibold rounded-xl bg-dashboard-primary hover:opacity-90 text-white transition-colors cursor-pointer disabled:opacity-50"
                         >
                             {updateMutation.isPending ? "Saving..." : "Save"}
                         </button>
@@ -679,6 +679,7 @@ import {
     ChevronLeft,
     ChevronsLeft,
     ChevronsRight,
+    Send,
 } from "lucide-react";
 import { use${featurePascal}sList } from "../api";
 import {
@@ -725,7 +726,7 @@ export default function ${featurePascal}Page() {
 
     const items: ${featurePascal}[] = (data as any)?.items || [];
     const totalItems: number = (data as any)?.total ?? items.length;
-    const totalPages: number = (data as any)?.lastPage ?? Math.ceil(totalItems / perPage) || 1;
+    const totalPages: number = (data as any)?.lastPage ?? (Math.ceil(totalItems / perPage) || 1);
 
     // Filtered items (client status filter if applicable)
     const displayedItems = items.filter((item) => {
@@ -773,25 +774,25 @@ export default function ${featurePascal}Page() {
                 <span>Home</span>
                 <ChevronRight className="w-3.5 h-3.5 text-[#94A3B8]" />
                 <span className="text-[#334155] font-semibold">
-                    \${featureTitle}
+                    ${featureTitle}
                 </span>
             </div>
 
             {/* Page Title */}
             <div>
                 <h1 className="text-2xl font-bold text-[#0F172A] tracking-tight">
-                    \${featureTitle}
+                    ${featureTitle}
                 </h1>
             </div>
 
             {/* Collapsible Filter Card */}
-            <div className="bg-white rounded-xl border border-[#E2E8F0] shadow-2xs p-3.5 px-5 transition-all">
+            <div className="dashboard-card p-3.5 px-5 transition-all">
                 <button
                     onClick={() => setIsFilterOpen(!isFilterOpen)}
-                    className="flex items-center gap-2 text-sm font-semibold text-[#2563EB] hover:text-[#1D4ED8] transition-colors cursor-pointer select-none"
+                    className="flex items-center gap-2 text-sm font-semibold text-dashboard-primary hover:opacity-80 transition-colors cursor-pointer select-none"
                 >
                     <ChevronRight
-                        className={\`w-4 h-4 text-[#2563EB] transition-transform duration-200 \${
+                        className={\`w-4 h-4 text-dashboard-primary transition-transform duration-200 \${
                             isFilterOpen ? "rotate-90" : ""
                         }\`}
                     />
@@ -801,7 +802,7 @@ export default function ${featurePascal}Page() {
                 {isFilterOpen && (
                     <div className="mt-3 pt-3 border-t border-[#F1F5F9] grid grid-cols-1 sm:grid-cols-3 gap-3 animate-in fade-in duration-150">
                         {/* Search Input */}
-                        <div className="flex items-center gap-2 px-3 h-9 rounded-lg border border-[#E2E8F0] bg-[#F8FAFC] text-xs">
+                        <div className="flex items-center gap-2 px-3 h-9 rounded-lg border border-[#E2E8F0] bg-[#F8FAFC] text-xs focus-within:border-dashboard-primary transition-colors">
                             <Search className="w-4 h-4 text-[#94A3B8] shrink-0" />
                             <input
                                 type="text"
@@ -843,7 +844,7 @@ export default function ${featurePascal}Page() {
             </div>
 
             {/* Table Card */}
-            <div className="bg-white rounded-xl border border-[#E2E8F0] shadow-2xs overflow-hidden flex flex-col">
+            <div className="dashboard-card overflow-hidden flex flex-col">
                 {/* Table Header Toolbar */}
                 <div className="p-4 px-6 border-b border-[#E2E8F0] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     {/* Left: Total Items */}
@@ -856,7 +857,7 @@ export default function ${featurePascal}Page() {
                         {/* Export Excel Button */}
                         <button
                             onClick={handleExportExcel}
-                            className="h-9 px-4 text-xs font-semibold rounded-lg border border-[#BFDBFE] bg-[#EFF6FF] text-[#2563EB] hover:bg-[#DBEAFE] transition-colors cursor-pointer"
+                            className="h-9 px-4 text-xs font-semibold rounded-lg border border-dashboard-primary/30 bg-dashboard-secondary text-dashboard-primary hover:bg-dashboard-secondary/80 transition-colors cursor-pointer"
                         >
                             تصدير اكسل
                         </button>
@@ -864,19 +865,19 @@ export default function ${featurePascal}Page() {
                         {/* Send Notification Button */}
                         <button
                             onClick={() => alert("Send notification")}
-                            className="h-9 px-4 text-xs font-semibold rounded-lg border border-[#BFDBFE] bg-white text-[#2563EB] hover:bg-[#EFF6FF] flex items-center gap-2 transition-colors cursor-pointer"
+                            className="h-9 px-4 text-xs font-semibold rounded-lg border border-dashboard-primary/30 bg-white text-dashboard-primary hover:bg-dashboard-secondary flex items-center gap-2 transition-colors cursor-pointer"
                         >
-                            <Send className="w-4 h-4 text-[#2563EB]" />
+                            <Send className="w-4 h-4 text-dashboard-primary" />
                             <span>Send Notification</span>
                         </button>
 
                         {/* Primary Add Button */}
                         <button
                             onClick={() => setIsCreateOpen(true)}
-                            className="h-9 px-4.5 text-xs font-semibold rounded-lg bg-[#2563EB] hover:bg-[#1D4ED8] text-white flex items-center gap-2 shadow-2xs transition-colors cursor-pointer"
+                            className="h-9 px-4.5 text-xs font-semibold rounded-lg bg-dashboard-primary hover:opacity-90 text-white flex items-center gap-2 shadow-sm transition-colors cursor-pointer"
                         >
                             <Plus className="w-4 h-4" />
-                            <span>+ Add New \${featureTitle}</span>
+                            <span>+ Add New ${featureTitle}</span>
                         </button>
                     </div>
                 </div>
@@ -933,7 +934,7 @@ export default function ${featurePascal}Page() {
                                                     type="checkbox"
                                                     checked={isRowSelected}
                                                     onChange={() => handleSelectRow(item.id)}
-                                                    className="w-4 h-4 rounded border-[#CBD5E1] text-[#2563EB] focus:ring-[#2563EB] cursor-pointer"
+                                                    className="w-4 h-4 rounded border-[#CBD5E1] text-dashboard-primary focus:ring-dashboard-primary cursor-pointer"
                                                 />
                                             </td>
 
@@ -1013,7 +1014,7 @@ export default function ${featurePascal}Page() {
                                                             onClick={() => setEditingItem(item)}
                                                             className="flex items-center gap-2 px-3 py-2 text-xs text-[#0F172A] hover:bg-[#F1F5F9] rounded-lg cursor-pointer"
                                                         >
-                                                            <Edit2 className="w-3.5 h-3.5 text-[#2563EB]" />
+                                                            <Edit2 className="w-3.5 h-3.5 text-dashboard-primary" />
                                                             <span>Edit</span>
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem
@@ -1072,7 +1073,7 @@ export default function ${featurePascal}Page() {
                             <ChevronLeft className="w-4 h-4" />
                         </button>
 
-                        <span className="w-7 h-7 rounded-lg bg-[#2563EB] text-white font-bold flex items-center justify-center text-xs shadow-2xs">
+                        <span className="w-7 h-7 rounded-lg bg-dashboard-primary text-white font-bold flex items-center justify-center text-xs shadow-sm">
                             {page}
                         </span>
 
@@ -1120,7 +1121,7 @@ export default function ${featurePascal}Page() {
 };
 
 // Execution
-console.log(\`Scaffolding \${featurePascal} feature...\`);
+console.log(`Scaffolding ${featurePascal} feature...`);
 
 if (!fs.existsSync(BASE_DIR)) {
     fs.mkdirSync(BASE_DIR, { recursive: true });
@@ -1133,14 +1134,16 @@ directories.forEach((dir) => {
     }
 });
 
+const isForce = process.argv.includes('--force') || process.argv.includes('-f');
+
 Object.entries(files).forEach(([filePath, content]) => {
     const fullPath = path.join(BASE_DIR, filePath);
-    if (!fs.existsSync(fullPath)) {
+    if (!fs.existsSync(fullPath) || isForce) {
         fs.writeFileSync(fullPath, content, 'utf8');
-        console.log(\`✅ Created \${filePath}\`);
+        console.log(`✅ ${fs.existsSync(fullPath) ? 'Overwrote' : 'Created'} ${filePath}`);
     } else {
-        console.log(\`⚠️ Skipped \${filePath} (already exists)\`);
+        console.log(`⚠️ Skipped ${filePath} (already exists)`);
     }
 });
 
-console.log(\`\\n🎉 Scaffolding complete for \${featurePascal}!\\n\`);
+console.log(`\n🎉 Scaffolding complete for ${featurePascal}!\n`);

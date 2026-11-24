@@ -8,8 +8,17 @@ import {
     Users,
     ShieldCheck,
     Building2,
+    Building,
+    FileText,
+    Tag,
     CheckSquare,
     LayoutGrid,
+    Type,
+    FolderCheck,
+    AlertTriangle,
+    CheckCircle2,
+    GitBranch,
+    ArrowUpDown,
     CreditCard,
     Bell,
     ChevronDown,
@@ -57,10 +66,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
 
     // Track expanded sub-menus (User Management expanded by default as in Image 1 & 2)
     const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
-        Statistics: false,
-        "User Management": true,
-        "Company Management": false,
-        "Inspection Settings": false,
+        Statistics: location.pathname.includes("statistics"),
+        "User Management": location.pathname.includes("user") || location.pathname.includes("role") || location.pathname === "/dashboard/billing",
+        "Company Management": location.pathname.includes("compan"),
+        "Inspection Settings": location.pathname.includes("inspection") || location.pathname.includes("folder") || location.pathname.includes("evaluation"),
     });
 
     const toggleGroup = (title: string) => {
@@ -78,8 +87,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                     title: "Statistics",
                     icon: LineChart,
                     subItems: [
-                        { title: "My Statistics", href: "/dashboard/billing?tab=my-statistics", icon: TrendingUp },
-                        { title: "Statistics Live", href: "/dashboard/billing?tab=statistics-live", icon: BarChart2 },
+                        { title: "My Statistics", href: "/dashboard/my-statistics", icon: TrendingUp },
+                        { title: "Statistics Live", href: "/dashboard/statistics-live", icon: BarChart2 },
                     ],
                 },
             ],
@@ -91,8 +100,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                     title: "User Management",
                     icon: Users,
                     subItems: [
-                        { title: "Roles and Permissions", href: "/dashboard/billing?tab=roles", icon: ShieldCheck },
-                        { title: "Users", href: "/dashboard/billing", icon: Users },
+                        { title: "Roles and Permissions", href: "/dashboard/roles-and-permissions", icon: ShieldCheck },
+                        { title: "Users", href: "/dashboard/users", icon: Users },
                     ],
                 },
             ],
@@ -104,7 +113,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                     title: "Company Management",
                     icon: Building2,
                     subItems: [
-                        { title: "Company Profile", href: "/dashboard/billing?tab=company", icon: Building2 },
+                        { title: "Company Classifications", href: "/dashboard/company-classifications", icon: Building2 },
+                        { title: "companies", href: "/dashboard/companies", icon: Building },
+                        { title: "Registration Of Companies", href: "/dashboard/registration-of-companies", icon: FileText },
+                        { title: "Company Tags", href: "/dashboard/company-tags", icon: Tag },
                     ],
                 },
             ],
@@ -116,13 +128,36 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                     title: "Inspection Settings",
                     icon: CheckSquare,
                     subItems: [
-                        { title: "Settings List", href: "/dashboard/billing?tab=inspection-settings", icon: CheckSquare },
+                        { title: "Inspection Types", href: "/dashboard/inspection-types", icon: Type },
+                        { title: "Folders or Classifications", href: "/dashboard/folders-or-classifications", icon: FolderCheck },
+                        { title: "Inspection Templates", href: "/dashboard/inspection-templates", icon: LayoutGrid },
+                        { title: "Options could not be evaluated", href: "/dashboard/evaluation-options", icon: AlertTriangle },
                     ],
                 },
                 {
                     title: "Inspection Templates",
                     icon: LayoutGrid,
-                    href: "/dashboard/billing?tab=inspection-templates",
+                    href: "/dashboard/inspection-templates",
+                },
+                {
+                    title: "Inspection Tasks",
+                    icon: CheckCircle2,
+                    href: "/dashboard/inspection-tasks",
+                },
+                {
+                    title: "Procedures",
+                    icon: GitBranch,
+                    href: "/dashboard/procedures",
+                },
+            ],
+        },
+        {
+            sectionTitle: "REVIEW CRITERIA",
+            items: [
+                {
+                    title: "Sorting mechanisms",
+                    icon: ArrowUpDown,
+                    href: "/dashboard/sorting-mechanisms",
                 },
             ],
         },
@@ -164,8 +199,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                             if (hasSubItems) {
                                 const isGroupActive = item.subItems?.some(
                                     (sub) =>
-                                        location.pathname === sub.href &&
-                                        (!sub.href.includes("?") || location.search === sub.href.split("?")[1] || (sub.title === "Users" && (!location.search || location.search === "" || location.search === "?tab=users")))
+                                        location.pathname === sub.href ||
+                                        (sub.href !== "/dashboard" && location.pathname.startsWith(sub.href))
                                 );
 
                                 return (
@@ -176,7 +211,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                             className={cn(
                                                 "w-full flex items-center gap-3 px-3.5 py-2 text-sm rounded-xl transition-colors cursor-pointer",
                                                 isGroupActive
-                                                    ? "bg-[#EFF6FF] text-[#2563EB] font-bold"
+                                                    ? "bg-dashboard-secondary text-dashboard-primary font-bold"
                                                     : "text-[#475569] hover:bg-[#F8FAFC] hover:text-[#0F172A] font-semibold",
                                                 isCollapsed && "justify-center px-0"
                                             )}
@@ -185,7 +220,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                             <ItemIcon
                                                 className={cn(
                                                     "w-4 h-4 shrink-0",
-                                                    isGroupActive ? "text-[#2563EB]" : "text-[#64748B]"
+                                                    isGroupActive ? "text-dashboard-primary" : "text-[#64748B]"
                                                 )}
                                             />
                                             {!isCollapsed && (
@@ -196,7 +231,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                                     <ChevronDown
                                                         className={cn(
                                                             "w-3.5 h-3.5 transition-transform duration-200",
-                                                            isGroupActive ? "text-[#2563EB]" : "text-[#94A3B8]",
+                                                            isGroupActive ? "text-dashboard-primary" : "text-[#94A3B8]",
                                                             isExpanded && "rotate-180"
                                                         )}
                                                     />
@@ -210,9 +245,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                                 {item.subItems!.map((sub) => {
                                                     const SubIcon = sub.icon;
                                                     const isActive =
-                                                        (sub.title === "Users" && (!location.search || location.search === "" || location.search === "?tab=users")) ||
-                                                        (location.pathname === sub.href &&
-                                                            (!sub.href.includes("?") || location.search === sub.href.split("?")[1]));
+                                                        location.pathname === sub.href ||
+                                                        (sub.href !== "/dashboard" && location.pathname.startsWith(sub.href));
 
                                                     return (
                                                         <Link
@@ -221,7 +255,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                                             className={cn(
                                                                 "flex items-center gap-2.5 px-3 py-1.5 text-xs rounded-lg transition-all",
                                                                 isActive
-                                                                    ? "text-[#2563EB] font-bold"
+                                                                    ? "text-dashboard-primary font-bold bg-dashboard-secondary/50"
                                                                     : "text-[#64748B] hover:text-[#0F172A] hover:bg-[#F8FAFC] font-medium"
                                                             )}
                                                         >
@@ -229,7 +263,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                                                 <SubIcon
                                                                     className={cn(
                                                                         "w-3.5 h-3.5 shrink-0",
-                                                                        isActive ? "text-[#2563EB]" : "text-[#94A3B8]"
+                                                                        isActive ? "text-dashboard-primary" : "text-[#94A3B8]"
                                                                     )}
                                                                 />
                                                             )}
@@ -244,24 +278,28 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                             }
 
                             // Single link item
-                            const isActive = location.pathname === item.href && (!item.href.includes("?") || location.search === item.href.split("?")[1]);
+                            const isActive = Boolean(
+                                item.href &&
+                                    (location.pathname === item.href ||
+                                        (item.href !== "/dashboard" && location.pathname.startsWith(item.href)))
+                            );
                             return (
                                 <Link
                                     key={item.title}
                                     to={item.href || "#"}
                                     className={cn(
-                                        "flex items-center gap-2.5 px-2.5 py-1.5 text-xs font-semibold rounded-lg transition-all",
+                                        "flex items-center gap-3 px-3.5 py-2 text-sm rounded-xl transition-all",
                                         isCollapsed && "justify-center px-0",
                                         isActive
-                                            ? "bg-[#EFF6FF] text-[#2563EB]"
-                                            : "text-[#475569] hover:bg-[#F8FAFC] hover:text-[#0F172A]"
+                                            ? "bg-dashboard-secondary text-dashboard-primary font-bold"
+                                            : "text-[#475569] hover:bg-[#F8FAFC] hover:text-[#0F172A] font-semibold"
                                     )}
                                     title={isCollapsed ? item.title : undefined}
                                 >
                                     <ItemIcon
                                         className={cn(
-                                            "w-3.5 h-3.5 shrink-0",
-                                            isActive ? "text-[#2563EB]" : "text-[#64748B]"
+                                            "w-4 h-4 shrink-0",
+                                            isActive ? "text-dashboard-primary" : "text-[#64748B]"
                                         )}
                                     />
                                     {!isCollapsed && <span className="truncate">{item.title}</span>}

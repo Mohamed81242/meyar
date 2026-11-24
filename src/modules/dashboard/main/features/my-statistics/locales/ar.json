@@ -1,0 +1,46 @@
+{
+    "title": "إحصائياتي",
+    "home": "الرئيسية",
+    "summary": {
+        "inProgressTasks": "المهام الجارية",
+        "completedTasks": "المهام المكتملة",
+        "openActions": "الإجراءات المفتوحة"
+    },
+    "inspectionTasks": {
+        "title": "مهام التفتيش",
+        "centerLabel": "مكتمل",
+        "waitToStart": "في انتظار البدء",
+        "inProgress": "قيد التنفيذ",
+        "complete": "مكتمل"
+    },
+    "actions": {
+        "title": "الإجراءات",
+        "centerLabel": "اجمالي",
+        "waitToStart": "في انتظار البدء",
+        "inProgress": "قيد التنفيذ",
+        "complete": "مكتمل",
+        "impossible": "غير ممكن"
+    },
+    "openCards": {
+        "tasksOpen": "المهام المفتوحة",
+        "actionsOpen": "الإجراءات المفتوحة",
+        "issuesOpen": "المشاكل المفتوحة",
+        "noTasks": "لا توجد مهام مفتوحة",
+        "noActions": "لا توجد اجراءات",
+        "noIssues": "لا توجد مشاكل"
+    },
+    "analytics": {
+        "inspectionTasks": "مهام التفتيش",
+        "procedures": "الإجراءات",
+        "waitToStart": "في انتظار البدء",
+        "inProgress": "قيد التنفيذ",
+        "complete": "مكتمل",
+        "tasks": "المهام",
+        "waitToStartTasks": "في انتظار بدء مهام التفتيش",
+        "inProgressTasks": "مهام التفتيش قيد التنفيذ",
+        "completedTasks": "مهمة التفتيش المكتملة",
+        "actions": "الإجراءات",
+        "actionsAwaiting": "إجراءات في انتظار البدء",
+        "ongoingActions": "الإجراءات الجارية"
+    }
+}

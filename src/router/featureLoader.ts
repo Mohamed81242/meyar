@@ -15,19 +15,23 @@
  */
 
 import {
-
-    // channelsNav,
-
-    // dashboardNav,
     dashboardRouteModule,
-    // marketplaceNav,
- 
     billingNav,
-
-    // peopleNavModule,
-
-    // serviceDeskNav,
-
+    myStatisticsNav,
+    statisticsLiveNav,
+    rolesAndPermissionsNav,
+    usersNav,
+    companyClassificationsNav,
+    companiesNav,
+    registrationOfCompaniesNav,
+    companyTagsNav,
+    inspectionTypesNav,
+    foldersOrClassificationsNav,
+    inspectionTemplatesNav,
+    evaluationOptionsNav,
+    inspectionTasksNav,
+    proceduresNav,
+    sortingMechanismsNav,
 } from "@/modules/dashboard/main/navigation";
 
 import {
@@ -180,6 +184,21 @@ export const loadFeatures = (): void => {
     navRegistry.register(settingsNavModule);
 
 
+    navRegistry.register(myStatisticsNav);
+    navRegistry.register(statisticsLiveNav);
+    navRegistry.register(rolesAndPermissionsNav);
+    navRegistry.register(usersNav);
+    navRegistry.register(companyClassificationsNav);
+    navRegistry.register(companiesNav);
+    navRegistry.register(registrationOfCompaniesNav);
+    navRegistry.register(companyTagsNav);
+    navRegistry.register(inspectionTypesNav);
+    navRegistry.register(foldersOrClassificationsNav);
+    navRegistry.register(inspectionTemplatesNav);
+    navRegistry.register(evaluationOptionsNav);
+    navRegistry.register(inspectionTasksNav);
+    navRegistry.register(proceduresNav);
+    navRegistry.register(sortingMechanismsNav);
     navRegistry.register(billingNav);
 
 

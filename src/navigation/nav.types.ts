@@ -16,6 +16,11 @@ import type { ComponentType } from "react";
  * Navigation sections for grouping items in sidebar
  */
 export type NavSection =
+    | "STATISTICS"
+    | "USER MANAGEMENT"
+    | "COMPANY MANAGEMENT"
+    | "INSPECTION MANAGEMENT"
+    | "REVIEW CRITERIA"
     | "Organization"
     | "Overview"
     | "Users"
@@ -25,7 +30,8 @@ export type NavSection =
     | "Faq"
     | "Banners"
     | "Story Tags"
-    | "Settings";
+    | "Settings"
+    | (string & {});
 
 
 // ============================================================================

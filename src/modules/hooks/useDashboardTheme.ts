@@ -175,6 +175,25 @@ export function getOppositeColor(primaryHex: string, isDark: boolean): string {
     }
 }
 
+const SECONDARY_TINT_MAP: Record<string, string> = {
+    "#2563eb": "#EFF6FF", // Blue 50
+    "#7c3aed": "#F5F3FF", // Purple 50
+    "#1e3a8a": "#EFF6FF", // Navy / Blue tint
+    "#0d9488": "#F0FDFA", // Teal 50
+    "#ea580c": "#FFF7ED", // Orange 50
+    "#16a34a": "#F0FDF4", // Green 50
+    "#059669": "#ECFDF5", // Emerald 50
+};
+
+export function getSecondaryTint(primaryHex: string, isDark: boolean): string {
+    if (isDark) return "#1E293B";
+    const clean = primaryHex.toLowerCase();
+    if (SECONDARY_TINT_MAP[clean]) {
+        return SECONDARY_TINT_MAP[clean];
+    }
+    return `color-mix(in srgb, ${primaryHex} 10%, white)`;
+}
+
 export function generatePalette(
     primaryHex: string,
     isDark: boolean,
@@ -190,10 +209,11 @@ export function generatePalette(
             border: "#334155",
         };
     } else {
+        const sec = getSecondaryTint(primaryHex, false);
         return {
             primary: primaryHex,
-            secondary: "#EFF6FF",
-            accent: "#EFF6FF",
+            secondary: sec,
+            accent: sec,
             background: "#F4F6F8",
             foreground: "#1E293B",
             card: "#FFFFFF",

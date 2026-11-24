@@ -75,6 +75,29 @@
 
 @theme inline {
   --font-heading: var(--font-sans);
+  --color-dashboard-primary: var(--color-dashboard-primary);
+  --color-dashboard-primary-foreground: var(--color-dashboard-primary-foreground);
+  --color-dashboard-secondary: var(--color-dashboard-secondary);
+  --color-dashboard-secondary-foreground: var(--color-dashboard-secondary-foreground);
+  --color-dashboard-background: var(--color-dashboard-background);
+  --color-dashboard-foreground: var(--color-dashboard-foreground);
+  --color-dashboard-card: var(--color-dashboard-card);
+  --color-dashboard-card-foreground: var(--color-dashboard-card-foreground);
+  --color-dashboard-popover: var(--color-dashboard-popover);
+  --color-dashboard-popover-foreground: var(--color-dashboard-popover-foreground);
+  --color-dashboard-muted: var(--color-dashboard-muted);
+  --color-dashboard-muted-foreground: var(--color-dashboard-muted-foreground);
+  --color-dashboard-border: var(--color-dashboard-border);
+  --color-dashboard-ring: var(--color-dashboard-ring);
+  --color-dashboard-sidebar: var(--color-dashboard-sidebar);
+  --color-dashboard-sidebar-foreground: var(--color-dashboard-sidebar-foreground);
+  --color-dashboard-sidebar-primary: var(--color-dashboard-sidebar-primary);
+  --color-dashboard-sidebar-primary-foreground: var(--color-dashboard-sidebar-primary-foreground);
+  --color-dashboard-sidebar-accent: var(--color-dashboard-sidebar-accent);
+  --color-dashboard-sidebar-accent-foreground: var(--color-dashboard-sidebar-accent-foreground);
+  --color-dashboard-sidebar-border: var(--color-dashboard-sidebar-border);
+  --color-dashboard-sidebar-ring: var(--color-dashboard-sidebar-ring);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -195,6 +218,52 @@
   --color-dashboard-sidebar-accent-foreground: #2563EB;
   --color-dashboard-sidebar-border: #E5E7EB;
   --color-dashboard-sidebar-ring: #2563EB;
+
+  --dashboard-card-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05), 0 2px 6px -1px rgba(15, 23, 42, 0.03);
+  --dashboard-card-border: #E2E8F0;
+  --dashboard-card-hover-shadow: 0 10px 25px -4px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+}
+
+[data-contrast="contrast"] {
+  --dashboard-card-shadow: 0 0 0 1px rgba(0, 0, 0, 0.06);
+  --dashboard-card-border: #CBD5E1;
+  --dashboard-card-hover-shadow: 0 0 0 1.5px rgba(0, 0, 0, 0.12);
+}
+
+[data-contrast="shadow"] {
+  --dashboard-card-shadow: 0 6px 24px -2px rgba(15, 23, 42, 0.08), 0 2px 8px -1px rgba(15, 23, 42, 0.04);
+  --dashboard-card-border: #E2E8F0;
+  --dashboard-card-hover-shadow: 0 14px 32px -4px rgba(15, 23, 42, 0.14), 0 6px 14px -2px rgba(15, 23, 42, 0.06);
+}
+
+.dark {
+  --dashboard-card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.35);
+  --dashboard-card-border: #334155;
+  --dashboard-card-hover-shadow: 0 10px 25px -4px rgba(0, 0, 0, 0.5);
+}
+
+.dark[data-contrast="contrast"],
+[data-contrast="contrast"].dark {
+  --dashboard-card-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  --dashboard-card-border: #475569;
+}
+
+.dark[data-contrast="shadow"],
+[data-contrast="shadow"].dark {
+  --dashboard-card-shadow: 0 8px 30px -4px rgba(0, 0, 0, 0.55);
+  --dashboard-card-border: #334155;
+}
+
+.dashboard-card {
+  background-color: var(--color-dashboard-card, #FFFFFF);
+  border: 1px solid var(--dashboard-card-border, #E2E8F0);
+  box-shadow: var(--dashboard-card-shadow);
+  border-radius: 1rem;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dashboard-card:hover {
+  box-shadow: var(--dashboard-card-hover-shadow, var(--dashboard-card-shadow));
 }
 
 html {

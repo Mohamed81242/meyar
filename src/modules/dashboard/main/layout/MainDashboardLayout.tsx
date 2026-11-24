@@ -3,8 +3,9 @@ import { Outlet } from "react-router-dom";
 import { useLanguage } from "@/shared/hooks";
 import { ServerErrorGuard } from "@/shared/observability";
 import { useSidebarStore } from "@/shared/hooks/useSidebarStore";
+import { useLayoutStore } from "@/shared/hooks/useLayoutStore";
 import { useDashboardTheme } from "../../../hooks/useDashboardTheme";
-import { Navbar } from "./navbar";
+import { Navbar, HorizontalNavbar } from "./navbar";
 import { Sidebar } from "./sidebar";
 import { AppearanceDrawer } from "./AppearanceDrawer";
 import { TemplateStyles } from "./styles";
@@ -16,6 +17,7 @@ export function MainDashboardLayout() {
     const lang = currentLanguage as "en" | "ar";
     const isSidebarCollapsed = useSidebarStore((state) => state.isSidebarCollapsed);
     const setIsSidebarCollapsed = useSidebarStore((state) => state.setIsSidebarCollapsed);
+    const orientation = useLayoutStore((state) => state.orientation);
 
     // Initialize custom dashboard theme
     useDashboardTheme();
@@ -41,19 +43,27 @@ export function MainDashboardLayout() {
             <ThemeTransitionOverlay />
 
             <div
-                className="flex flex-row font-sans h-screen w-full overflow-hidden bg-white dark:bg-dashboard-background"
+                className={`flex font-sans h-screen w-full overflow-hidden bg-white dark:bg-dashboard-background ${
+                    orientation === "horizontal" ? "flex-col" : "flex-row"
+                }`}
                 dir={lang === "ar" ? "rtl" : "ltr"}
             >
-                {/* Left Sidebar */}
-                <Sidebar
-                    isCollapsed={isSidebarCollapsed}
-                    onExpand={() => setIsSidebarCollapsed(false)}
-                />
+                {/* When Vertical: Render Left Sidebar */}
+                {orientation === "vertical" && (
+                    <Sidebar
+                        isCollapsed={isSidebarCollapsed}
+                        onExpand={() => setIsSidebarCollapsed(false)}
+                    />
+                )}
 
                 {/* Main View Area */}
                 <main className="flex-1 flex flex-col min-h-0 overflow-hidden relative bg-[#F4F6F8] dark:bg-dashboard-background">
-                    {/* Top Global Header (Navbar) */}
-                    <Navbar />
+                    {/* Header: Horizontal Navbar when horizontal mode, otherwise standard Navbar */}
+                    {orientation === "horizontal" ? (
+                        <HorizontalNavbar />
+                    ) : (
+                        <Navbar />
+                    )}
 
                     {/* Scrollable Page Content */}
                     <div className="flex-1 min-h-0 overflow-y-auto p-6 md:p-8">
@@ -70,14 +80,14 @@ export function MainDashboardLayout() {
                         </Suspense>
                     </div>
 
-                    {/* Floating Appearance Settings Button matching Image 1 & 3 */}
+                    {/* Floating Appearance Settings Button matching Image 1, 3, 4 */}
                     <button
                         onClick={() => setIsAppearanceOpen(true)}
-                        className="fixed right-3 top-36 z-40 w-10 h-10 rounded-full bg-[#EBF3FE] hover:bg-[#DBEAFE] text-[#2563EB] shadow-md cursor-pointer transition-transform hover:scale-105 flex items-center justify-center border border-[#BFDBFE]/60"
+                        className="fixed right-3 top-36 z-40 w-10 h-10 rounded-full bg-[#EBF3FE] hover:bg-[#DBEAFE] text-dashboard-primary shadow-md cursor-pointer transition-transform hover:scale-105 flex items-center justify-center border border-[#BFDBFE]/60"
                         aria-label="Customize site appearance"
                         title="Customize site appearance"
                     >
-                        <Settings className="w-5 h-5" />
+                        <Settings className="w-5 h-5 text-dashboard-primary" />
                     </button>
 
                     {/* Appearance Customizer Slide-over Drawer */}

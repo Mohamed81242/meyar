@@ -147,4 +147,5 @@ export const Navbar: React.FC = () => {
     );
 };
 
+export { HorizontalNavbar } from "./HorizontalNavbar";
 export default Navbar;
