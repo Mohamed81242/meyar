@@ -46,9 +46,11 @@
   --radius-dashboard: 16px;
 
   --font-sans:
-    "Noto Kufi Arabic", "Cairo", "Tajawal", "Almarai", "Baloo 2", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Noto Kufi Arabic", "Cairo", "Space Grotesk", "Outfit", sans-serif;
-  --font-arabic: "Noto Kufi Arabic", "Cairo", "Tajawal", "Almarai", sans-serif;
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Cairo", "Tajawal", "Almarai", ui-sans-serif, system-ui, sans-serif;
+  --font-display:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Cairo", "Tajawal", sans-serif;
+  --font-arabic:
+    "Cairo", "Tajawal", "Almarai", "Inter", sans-serif;
   --font-serif: "Amiri", "Playfair Display", serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 
@@ -280,14 +282,12 @@ a {
 
 body {
   @apply bg-[#F4F6F8] text-[#1E293B] antialiased font-sans;
+  font-family: var(--font-sans);
 }
 
 /* Global Arabic font switch when the document language is Arabic */
 html:lang(ar) {
-  --font-sans: var(--font-arabic) !important;
-  --font-display: var(--font-arabic) !important;
   --font-heading: var(--font-arabic) !important;
-  font-family: var(--font-arabic) !important;
 }
 
 .glass {
