@@ -105,7 +105,7 @@ export function RouteErrorBoundary() {
                         <span>{t("actions.retry", "Try Again")}</span>
                     </Button>
                     <Link
-                        to="/dashboard/overview"
+                        to="/dashboard/billing"
                         className="inline-flex items-center justify-center rounded-xl bg-dashboard-primary hover:bg-dashboard-primary/90 text-white text-xs h-10 px-4 gap-2 font-semibold shadow-xs transition-colors"
                     >
                         <Home className="w-3.5 h-3.5" />
