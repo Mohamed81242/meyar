@@ -1,0 +1,437 @@
+{
+    "common": {
+        "dashboard": "Dashboard"
+    },
+    "sidebar": {
+        "sections": {
+            "serviceManagement": "Service Management",
+            "serviceDesk": "Service Desk",
+            "assetManagement": "Asset Management",
+            "projectManagement": "Project Management",
+            "marketplace": "Marketplace",
+            "organization": "Organization",
+            "aiAutomation": "AI & Automation",
+            "people": "People",
+            "settings": "Settings",
+            "initiation": "Initiation",
+            "planning": "Planning",
+            "execution": "Execution",
+            "monitoring": "Monitoring",
+            "closure": "Closure",
+            "contracts": "Contracts"
+        }
+    },
+    "navbar": {
+        "notification": "Notification",
+        "viewAllNotifications": "View All Notifications",
+        "editProfile": "Edit profile",
+        "accountSettings": "Account settings",
+        "support": "Support",
+        "signOut": "Sign out"
+    },
+    "error": {
+        "defaultTitle": "Something went wrong",
+        "howToFix": "How to fix this",
+        "tryAgain": "Try Again",
+        "getHelp": "Get Help",
+        "reloadPage": "Reload Page",
+        "contactSupport": "If this problem persists, please contact support"
+    },
+    "errors": {
+        "unexpected": "Something went wrong",
+        "tryAgain": "Please try again later.",
+        "notFound": "Page Not Found",
+        "notFoundMessage": "The page you're looking for doesn't exist.",
+        "unauthorized": "Unauthorized",
+        "unauthorizedMessage": "You need to log in to access this page.",
+        "forbidden": "Access Denied",
+        "forbiddenMessage": "You don't have permission to access this page.",
+        "serverError": "Server Error",
+        "serverErrorMessage": "Something went wrong on our end.",
+        "errorLabel": "Error"
+    },
+    "serverError": {
+        "title": "Server Error",
+        "message": "Something went wrong on our end. Please try again later.\n If this problem persists, please contact support",
+        "contact": "Contact Support",
+        "retry": "Retry"
+    },
+    "actions": {
+        "retry": "Try Again",
+        "goHome": "Go Home"
+    },
+    "tour": {
+        "buttons": {
+            "next": "Next",
+            "back": "Back",
+            "skip": "Skip",
+            "finish": "Finish"
+        },
+        "stepCount": "{{current}} / {{total}}",
+        "dashboard": {
+            "sidebar": {
+                "title": "Navigation Center",
+                "content": "Access all areas of your NOTA workspace from here, including Service Management, Asset Management, and Settings."
+            },
+            "header": {
+                "title": "Welcome Back!",
+                "content": "This is your main dashboard control center. You can view critical executive updates and platform health summary."
+            },
+            "stats": {
+                "title": "Platform Analytics",
+                "content": "Track total active developers, projects, properties, and active platform rate at a glance."
+            },
+            "period": {
+                "title": "Time Period",
+                "content": "Filter all dashboard statistics dynamically by Daily, Weekly, Monthly, or Yearly ranges."
+            }
+        },
+        "catalog": {
+            "tabs": {
+                "title": "Multi-tab Workspace",
+                "content": "Work on multiple items simultaneously without losing progress. Close, drag, or reorder tabs just like a web browser."
+            },
+            "filters": {
+                "title": "Quick Category Filters",
+                "content": "Filter the catalog dynamically by categories like Hardware, Software, Network, or Support."
+            },
+            "grid": {
+                "title": "Service Listings",
+                "content": "Right-click any service card or row to access quick context operations like Open Tab or Delete."
+            },
+            "create": {
+                "title": "Create a Service",
+                "content": "Click the '+' button to open a new service creation workspace tab."
+            }
+        },
+        "sla": {
+            "table": {
+                "title": "SLA Policies",
+                "content": "Monitor and control all service levels agreements (SLA) response and resolution targets."
+            },
+            "filters": {
+                "title": "Service Type Filter",
+                "content": "Toggle view dynamically to focus on network, support, or managed services SLAs."
+            },
+            "create": {
+                "title": "New SLA Policy",
+                "content": "Define a new SLA contract policy target with resolution timelines by clicking the add button."
+            }
+        },
+        "contracts": {
+            "tabs": {
+                "title": "Contract Statuses",
+                "content": "Categorize and view all contracts dynamically based on their lifecycles: draft, active, expired, or terminated."
+            },
+            "toolbar": {
+                "title": "Search & Actions",
+                "content": "Search for specific contract files, toggle between list and grid views, or add a new contract."
+            },
+            "table": {
+                "title": "Contracts List",
+                "content": "Right-click or select any contract row to review payments, dates, values, and details."
+            }
+        },
+        "media": {
+            "header": {
+                "title": "Media Manager",
+                "content": "This is your centralized media library dashboard. Explore files, graphics, assets, and folders."
+            },
+            "upload": {
+                "title": "Upload Assets",
+                "content": "Drag-and-drop or select documents and assets to upload them directly to your storage bucket."
+            },
+            "files": {
+                "title": "Files Library Grid",
+                "content": "Manage uploaded assets: click to preview, download, rename, or remove files dynamically."
+            }
+        },
+        "orgs": {
+            "tabs": {
+                "title": "Organizations Listing",
+                "content": "Explore all customer, vendor, and partner organizations registered in the NOTA portal."
+            },
+            "table": {
+                "title": "Organizations Registry",
+                "content": "View organization domains, SLAs, and active status checks. Select any row to open detailed profiles."
+            },
+            "new": {
+                "title": "Add Organization",
+                "content": "Click here to add a new organization profile with primary domain settings."
+            }
+        },
+        "orgDetails": {
+            "header": {
+                "title": "Organization Profile",
+                "content": "This is the primary profile dashboard for the selected organization, containing domains and contact information."
+            },
+            "tabs": {
+                "title": "Profile Sections",
+                "content": "Toggle between overview stats, contact directories, asset linkages, SLAs, and contracts."
+            },
+            "content": {
+                "title": "Detailed Workspace",
+                "content": "Explore linked tickets, active SLAs, members list, and organizational settings inside this pane."
+            }
+        },
+
+        "people": {
+            "tabs": {
+                "title": "People Directory",
+                "content": "Access all personnel directory items. View active agents, contractors, and admin accounts."
+            },
+            "toolbar": {
+                "title": "Search & Filters",
+                "content": "Search by name or email, toggle layouts, and filter roles to find team members."
+            },
+            "table": {
+                "title": "Users Registry Table",
+                "content": "Click any member row to check their group assignments, active status, roles, and profile."
+            }
+        },
+        "peopleDetails": {
+            "card": {
+                "title": "User Profile Card",
+                "content": "Displays primary user coordinates: contact email, phone, assignment groups, and role details."
+            },
+            "activity": {
+                "title": "User Activity Log",
+                "content": "Check active audits, assigned tasks, open incidents, and performance indicators."
+            }
+        },
+        "teams": {
+            "tabs": {
+                "title": "Teams Management",
+                "content": "Review structural groups, assignment divisions, and operational helpdesk teams."
+            },
+            "toolbar": {
+                "title": "Filters and Addition",
+                "content": "Create new assignment divisions or search and filter existing ones instantly."
+            },
+            "grid": {
+                "title": "Teams Layout Grid",
+                "content": "Displays teams with user counts, active queues, and focus indicators. Right-click to manage options."
+            }
+        },
+        "teamsDetails": {
+            "header": {
+                "title": "Team Workspace",
+                "content": "Explore team queues, active incident counts, SLA indicators, and primary details."
+            },
+            "members": {
+                "title": "Team Members",
+                "content": "Assign new technicians, view current members, and manage access privileges."
+            }
+        },
+        "roles": {
+            "tabs": {
+                "title": "Security Roles",
+                "content": "Define workspace permissions and check overall role categorization definitions."
+            },
+            "matrix": {
+                "title": "Access Matrix Table",
+                "content": "Configure detailed permission matrices (Read/Write/Delete) for standard roles: Admin, Agent, and User."
+            }
+        },
+        "settings": {
+            "sidebar": {
+                "title": "Settings Navigation",
+                "content": "Access different setting tabs: Profile details, Integrations configuration, Security parameters, and System defaults."
+            },
+            "navbar": {
+                "title": "Settings Context Header",
+                "content": "Displays the current active setting section name and save reminders."
+            },
+            "viewport": {
+                "title": "Configuration Console",
+                "content": "Adjust and modify specific rules, default themes, API integrations, and password rules here."
+            }
+        },
+        "projects": {
+            "sidebar": {
+                "title": "Project Phases",
+                "content": "Navigate between PMBOK project lifecycle stages: Initiation, Planning, Execution, Monitoring, and Closure."
+            },
+            "navbar": {
+                "title": "Project Context Header",
+                "content": "Displays the active project name, workspace segments, and collaboration options."
+            },
+            "viewport": {
+                "title": "Project Workspace Viewport",
+                "content": "Manage charters, stakeholders, budgets, communications, risk logs, and WBS schedules inside this container."
+            }
+        },
+        "classification": {
+            "tabs": {
+                "title": "Module Tabs",
+                "content": "Switch between Incidents, Problems, Changes, and Service Catalog classification trees."
+            },
+            "add": {
+                "title": "Add Classification",
+                "content": "Click here to add a new root-level classification category."
+            },
+            "view": {
+                "title": "View Toggle",
+                "content": "Switch between structured tree list view and interactive node flow diagram view."
+            },
+            "tree": {
+                "title": "Classification Hierarchy",
+                "content": "Manage classification trees, parent-child levels, and assign default fulfillment teams."
+            }
+        },
+        "kb": {
+            "search": {
+                "title": "Search Articles",
+                "content": "Search knowledge articles by title, keywords, or resolution steps dynamically."
+            },
+            "filters": {
+                "title": "Metadata Filters",
+                "content": "Filter articles by author, category, tags, or approval status."
+            },
+            "view": {
+                "title": "View Layout",
+                "content": "Toggle between list view and grid card layout."
+            },
+            "create": {
+                "title": "Create Article",
+                "content": "Launch the Known Error & Knowledge Wizard to publish new resolution guides."
+            },
+            "table": {
+                "title": "Knowledge Articles",
+                "content": "Browse, manage, and publish knowledge base articles and resolution guides."
+            }
+        },
+        "incidents": {
+            "search": {
+                "title": "Search Incidents",
+                "content": "Search incident numbers, titles, or descriptions dynamically."
+            },
+            "status": {
+                "title": "Status Filter",
+                "content": "Filter tickets by status: New, Assigned, In Progress, Resolved, or Closed."
+            },
+            "filters": {
+                "title": "Advanced Filters",
+                "content": "Open the right-hand filter drawer to apply multi-field metadata filters."
+            },
+            "view": {
+                "title": "View Mode Toggle",
+                "content": "Switch between table list view and compact visual card grid view."
+            },
+            "create": {
+                "title": "Report New Incident",
+                "content": "Click here to open the new incident creation wizard."
+            },
+            "table": {
+                "title": "Incidents Queue",
+                "content": "Track, prioritize, and resolve service interruptions and incident tickets."
+            }
+        },
+        "problems": {
+            "search": {
+                "title": "Search Problems",
+                "content": "Search problem IDs, root cause analysis titles, or descriptions."
+            },
+            "status": {
+                "title": "Status Filter",
+                "content": "Filter problem records by Open, Under Investigation, Resolved, or Closed."
+            },
+            "filters": {
+                "title": "Advanced Filters",
+                "content": "Filter by priority, impact, root causes, or custom attributes using metadata parameters."
+            },
+            "view": {
+                "title": "View Layout Toggle",
+                "content": "Toggle between structured table rows and grid cards."
+            },
+            "create": {
+                "title": "New Problem Record",
+                "content": "Log a new problem record to investigate underlying root causes."
+            },
+            "table": {
+                "title": "Problems Registry",
+                "content": "Investigate root causes, record workarounds, and manage problem records."
+            }
+        },
+        "changes": {
+            "search": {
+                "title": "Search Changes",
+                "content": "Search change requests by title, code, or description."
+            },
+            "status": {
+                "title": "Priority & Status Filter",
+                "content": "Filter change requests across Draft, Submitted, Approved, Scheduled, and Closed stages."
+            },
+            "view": {
+                "title": "View Mode",
+                "content": "Switch layout modes between table grid and card layout."
+            },
+            "create": {
+                "title": "Request New Change",
+                "content": "Click to launch the Change Request Wizard for risk assessment and approval."
+            },
+            "table": {
+                "title": "Change Requests",
+                "content": "Review, risk-assess, approve, and schedule infrastructure change requests."
+            }
+        },
+        "requests": {
+            "search": {
+                "title": "Search Requests",
+                "content": "Find request tickets by title, requester name, or catalog item."
+            },
+            "view": {
+                "title": "Layout Mode",
+                "content": "Toggle between list table and card layout."
+            },
+            "create": {
+                "title": "New Service Request",
+                "content": "Create a new service fulfillment request for users or equipment."
+            },
+            "table": {
+                "title": "Service Requests",
+                "content": "Manage service request catalog orders, approvals, and fulfillment status."
+            }
+        },
+        "contacts": {
+            "search": {
+                "title": "Search Contacts",
+                "content": "Search contacts by name, email address, or organization."
+            },
+            "vip": {
+                "title": "VIP Filter",
+                "content": "Toggle to instantly focus on VIP high-priority contacts."
+            },
+            "filters": {
+                "title": "Advanced Filters",
+                "content": "Filter contacts by custom metadata parameters, job titles, or departments."
+            },
+            "create": {
+                "title": "Add Contact",
+                "content": "Add a new contact profile with personal coordinates and organization links."
+            },
+            "table": {
+                "title": "Contacts Directory",
+                "content": "Access user contact details, customer profiles, and communication preferences."
+            }
+        },
+        "partners": {
+            "tabs": {
+                "title": "Multi-tab Workspace",
+                "content": "Switch active partner workspaces or open new partner forms in tabs."
+            },
+            "new": {
+                "title": "New Partner Tab",
+                "content": "Open a new tab to create vendor and partner organization profiles."
+            },
+            "toolbar": {
+                "title": "Search & View Mode",
+                "content": "Search partner names, tax IDs, or toggle between list and grid views."
+            },
+            "table": {
+                "title": "Partners & Vendors",
+                "content": "Manage third-party vendor relationships, contracts, and service providers."
+            }
+        }
+    }
+}

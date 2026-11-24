@@ -1,0 +1,94 @@
+{
+    "title": "Finance & Billing Management",
+    "subtitle": "Financial performance overview, revenue streams, and wallet transactions queue",
+    "tabs": {
+        "overview": "Financial Overview & Transactions",
+        "walletQueue": "Wallet Settlements Queue"
+    },
+    "searchPlaceholder": "Search by reference number, lawyer name, or email...",
+    "typeFilter": "Transaction Type",
+    "allTypes": "All Types",
+    "statusFilter": "Transaction Status",
+    "allStatuses": "All Statuses",
+    "types": {
+        "commission": "Platform Commission",
+        "subscription": "Plan Subscription",
+        "delegation_commission": "Delegation Commission",
+        "advertisement": "Sponsored Ads",
+        "refund": "Refund",
+        "credit": "Wallet Deposit (Credit)",
+        "debit": "Wallet Withdrawal (Debit)"
+    },
+    "stats": {
+        "annualRevenue": "Annual Revenue",
+        "pendingPayments": "Pending Payments",
+        "platformCommission": "Commission Rate",
+        "refundedAmounts": "Refunded Amounts"
+    },
+    "chart": {
+        "title": "Monthly Revenue Performance",
+        "subtitle": "Platform net revenues over recent operational months (EGP)",
+        "categories": {
+            "subscriptions": "Subscriptions",
+            "poa": "Delegations & Commissions",
+            "ads": "Sponsored Ads"
+        }
+    },
+    "table": {
+        "title": "Recent Financial Transactions",
+        "subtitle": "Comprehensive record of incoming platform commissions and charges",
+        "walletTitle": "Lawyer Wallet Settlement Queue",
+        "walletSubtitle": "Deposit verifications and payout requests requiring administrative action",
+        "exportReport": "Export CSV",
+        "transactionId": "Transaction ID",
+        "reference": "Reference #",
+        "lawyer": "Lawyer / Practitioner",
+        "service": "Service Channel",
+        "type": "Type",
+        "amount": "Amount",
+        "occurredAt": "Date & Time",
+        "date": "Date",
+        "notes": "Remarks",
+        "status": "Status",
+        "actions": "Actions",
+        "noData": "No transactions found."
+    },
+    "status": {
+        "completed": "Completed",
+        "successful": "Completed",
+        "pending": "Pending Review",
+        "failed": "Failed",
+        "rejected": "Rejected",
+        "refunded": "Refunded"
+    },
+    "actions": {
+        "view": "View Details",
+        "approve": "Approve",
+        "reject": "Reject",
+        "cancel": "Cancel",
+        "close": "Close"
+    },
+    "modal": {
+        "transactionTitle": "Financial Transaction Inspection"
+    },
+    "wallet": {
+        "approveTitle": "Approve Wallet Settlement",
+        "rejectTitle": "Reject Wallet Settlement",
+        "deposit": "Deposit Request (Credit)",
+        "withdrawal": "Withdrawal Request (Debit)",
+        "userNotes": "User Submission Notes",
+        "approvalNotes": "Approval Remarks (Optional)",
+        "rejectionReason": "Rejection Reason",
+        "approvePlaceholder": "Add verification confirmation notes...",
+        "rejectPlaceholder": "Explain why this request is rejected...",
+        "rejectionRequired": "Rejection reason is required",
+        "confirmApprove": "Approve Transaction",
+        "confirmReject": "Reject Transaction"
+    },
+    "pagination": {
+        "showing": "Showing",
+        "to": "to",
+        "of": "of",
+        "results": "transactions"
+    }
+}

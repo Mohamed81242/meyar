@@ -1,0 +1,100 @@
+{
+    "title": "Notifications & Alerts",
+    "subtitle": "Configure automated notification triggers across Email, SMS, WhatsApp, and manage system broadcast alerts",
+    "tabs": {
+        "rules": "Automated Trigger Rules",
+        "logs": "Broadcasts & Dispatch History"
+    },
+    "searchPlaceholder": {
+        "rules": "Search trigger rules by event, description...",
+        "logs": "Search broadcast logs by title or recipient..."
+    },
+    "actions": {
+        "sendBroadcast": "Send Broadcast Alert",
+        "editRule": "Edit Template & Rules",
+        "view": "View Details",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "saveChanges": "Save Changes",
+        "dispatchBroadcast": "Dispatch Notification",
+        "close": "Close"
+    },
+    "channels": {
+        "email": "Email",
+        "sms": "SMS",
+        "whatsapp": "WhatsApp",
+        "inApp": "In-App Push"
+    },
+    "categories": {
+        "all": "All Categories",
+        "requests": "Notary Requests",
+        "legal": "Legal & Counselors",
+        "billing": "Billing & Payments",
+        "security": "Security & Auth",
+        "system": "System Operations"
+    },
+    "audience": {
+        "all_admins": "All Administrators",
+        "counselors": "Legal Counselors Only",
+        "clients": "Active Clients",
+        "individual": "Single Recipient"
+    },
+    "status": {
+        "all": "All Statuses",
+        "active": "Active",
+        "inactive": "Disabled",
+        "delivered": "Delivered",
+        "failed": "Failed",
+        "pending": "Pending"
+    },
+    "table": {
+        "eventTrigger": "Event & Trigger Rule",
+        "category": "Category",
+        "channels": "Active Channels",
+        "status": "Status",
+        "actions": "Actions",
+        "broadcastTitle": "Broadcast Title & Message",
+        "targetAudience": "Target Audience",
+        "recipients": "Recipients",
+        "sentAt": "Dispatched At",
+        "noData": "No notification rules or dispatch records found."
+    },
+    "modal": {
+        "editRule": "Configure Trigger Rule & Templates",
+        "editRuleSubtitle": "Customize delivery channels and message templates for this event",
+        "sendBroadcast": "Send Announcement / Manual Broadcast",
+        "sendBroadcastSubtitle": "Dispatch an urgent announcement or memo across selected channels"
+    },
+    "form": {
+        "deliveryChannels": "Enabled Delivery Channels",
+        "emailTemplateConfig": "Email Subject & Body Template",
+        "emailSubject": "Email Subject",
+        "emailBody": "Email Body Template",
+        "shortMessageTemplate": "SMS / WhatsApp Message Template",
+        "ruleActiveStatus": "Rule Trigger Enabled",
+        "ruleActiveStatusDesc": "When disabled, no automated notifications will be fired for this event.",
+        "targetAudience": "Target Audience",
+        "selectAudience": "Select audience group",
+        "targetContact": "Target Phone or Email",
+        "dispatchChannels": "Dispatch Via Channels",
+        "broadcastTitle": "Notification Title",
+        "broadcastMessage": "Message Content"
+    },
+    "validation": {
+        "titleRequired": "Notification title is required",
+        "messageRequired": "Message content is required",
+        "channelRequired": "Select at least one delivery channel"
+    },
+    "dialog": {
+        "deleteTitle": "Delete Notification Record",
+        "deleteDescription": "Are you sure you want to remove this log record from history?",
+        "confirm": "Delete",
+        "cancel": "Cancel"
+    },
+    "pagination": {
+        "showing": "Showing",
+        "to": "To",
+        "of": "of",
+        "results": "results"
+    }
+}

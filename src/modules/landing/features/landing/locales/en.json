@@ -1,0 +1,91 @@
+{
+    "nav": {
+        "home": "Home",
+        "features": "Features",
+        "pricing": "Pricing",
+        "dashboard": "Go to Workspace",
+        "login": "Sign In"
+    },
+    "hero": {
+        "title": "The Operational Nervous System",
+        "titleHighlight": "for IT Service Management",
+        "subtitle": "A premium workspace designed to manage incidents, automate requests, and map IT infrastructure. Built for modern organizations demanding zero downtime and advanced AI auto-resolution.",
+        "ctaStart": "Get Started",
+        "ctaDemo": "Watch Demo",
+        "triggerAlert": "Simulate Live Incident Outage",
+        "alertBanner": "CRITICAL INCIDENT TRIGGERED",
+        "alertDetails": "VPN Gateway Loops in US-East region. Core services unreachable.",
+        "resolving": "AI Responder analyzing logs & drafting resolution...",
+        "resolved": "RESOLVED: AI suggested Hotfix #9842 successfully deployed. Restoring VPN service.",
+        "breachTimer": "SLA Response Timer: 15m 00s"
+    },
+    "kanban": {
+        "title": "Streamlined ITIL Workflows",
+        "subtitle": "Drag and drop incidents into Problem Analysis or the AI Resolver to investigate root causes and implement changes instantly.",
+        "todo": "Unassigned Incidents",
+        "inProgress": "Problem Analysis",
+        "done": "AI Automated Resolver",
+        "dragHint": "Drag me to another column",
+        "dropHere": "Drop ticket here to trigger auto-resolution",
+        "resolvedToast": "Hotfix deployed! Ticket resolved and archived.",
+        "investigatingToast": "Incident linked to Problem Investigation #5842."
+    },
+    "tenancy": {
+        "title": "SaaS Multi-Tenancy Infrastructure Tiers",
+        "subtitle": "Each pricing tier is physically matched with a dedicated data isolation strategy to guarantee SOC 2 and GDPR compliance.",
+        "poolTitle": "Pool (Standard)",
+        "poolDesc": "Shared database and shared schema. Isolated logically using PostgreSQL Row-Level Security (RLS). High performance at lower overhead.",
+        "poolIso": "Isolation: Logical (RLS)",
+        "bridgeTitle": "Bridge (Default)",
+        "bridgeDesc": "Shared database with isolated schemas per tenant (`schema_{slug}`). Best of both worlds, avoiding connection pool exhaust.",
+        "bridgeIso": "Isolation: Schema Slug",
+        "siloTitle": "Silo (Enterprise)",
+        "siloDesc": "Physically separated database instance (`nota_tenant_{slug}`). High security, dedicated backups, custom domain, and isolated memory.",
+        "siloIso": "Isolation: Physical Instance"
+    },
+    "whatsapp": {
+        "title": "Inbound Omnichannel AI Helpdesk",
+        "subtitle": "Employees report issues instantly via WhatsApp. The AI responder resolves tickets or routes them to specialized IT agents with Break-Glass access protocols.",
+        "whatsappActive": "WhatsApp Support Active",
+        "online": "Online",
+        "typePrompt": "Choose an issue to report:",
+        "option1": "Report VPN Outage",
+        "option2": "Request New Laptop",
+        "user1": "Hey, I cannot connect to the VPN on my macOS laptop.",
+        "bot1": "Hello! I've opened ticket INC-842. Analyzing current system status...",
+        "bot1_res": "I detected a routing loop on the US-East VPN Gateway. Applying custom Hotfix #9842. Can you please check if it works now?",
+        "user2": "I need to order a replacement MacBook Pro M3 for my project.",
+        "bot2": "Request received. Opening Service Request REQ-930 for equipment fulfillment. Routing for Manager approval...",
+        "escalate": "Escalate to Human Agent",
+        "escalating": "Escalating...",
+        "escalated": "Ticket escalated. Tier 2 Support specialist assigned. Audit log session initiated."
+    },
+    "footer": {
+        "rights": "All rights reserved. nota SaaS Platform Inc."
+    },
+    "playground": {
+        "title": "Interactive Teams Workspace",
+        "subtitle": "Explore the interactive Teams Workspace: manage members, assign reporting org tree managers, update project priorities, and log daily timesheet hours exactly as seen inside the dashboard.",
+        "tabTeams": "Teams Manager",
+        "tabCatalog": "Service Catalog",
+        "tabKanban": "ITIL Kanban",
+        "createTeam": "Create Team",
+        "teamName": "Team Name",
+        "teamNamePlaceholder": "e.g. Incident Command Team",
+        "deleteTeam": "Delete Team",
+        "confirmDelete": "Are you sure you want to delete this team? This action is permanent and cannot be undone.",
+        "submit": "Submit",
+        "cancel": "Cancel",
+        "catalogTitle": "Fulfillment Service Catalog",
+        "catalogDesc": "Browse ITIL-compliant catalog items. Order assets or access request items.",
+        "orderAsset": "Order MacBook Pro",
+        "orderAccess": "Request VPN Access",
+        "orderLicense": "Request Slack License",
+        "orderSubmitted": "Service Request submitted successfully! Status: Pending Approval.",
+        "orderApproved": "Service Request approved by manager. Provisioning automated task...",
+        "orderCompleted": "Service Request completed. Access keys dispatched.",
+        "teamsTitle": "Company Teams Directory",
+        "teamsDesc": "Create cross-functional ITIL teams to assign incidents, problems, and change rollouts.",
+        "members": "members"
+    }
+}

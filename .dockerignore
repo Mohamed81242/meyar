@@ -1,0 +1,41 @@
+# ── Version control ─────────────────────────────────────────────────────────
+.git
+.gitattributes
+.gitignore
+
+# ── IDE / Editor ────────────────────────────────────────────────────────────
+.idea
+.vscode
+*.swp
+*.swo
+.DS_Store
+
+# ── CI / Agent configs ──────────────────────────────────────────────────────
+AGENTS.md
+ANTIGRAVITY.md
+CLAUDE.md
+GEMINI.md
+.agents
+skills-lock.json
+
+# ── Node dependencies & build ────────────────────────────────────────────────
+node_modules
+dist
+test-results.json
+accessibility-report.json
+performance-report.json
+security-report.json
+quality-score-report.md
+diff.txt
+
+# ── Environment ─────────────────────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Tests & Tooling ─────────────────────────────────────────────────────────
+tests
+playwright.config.ts
+scripts
+temp_navbar.txt
+sla.html
