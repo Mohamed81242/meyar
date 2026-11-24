@@ -19,7 +19,6 @@ import ErrorBoundaryClass from "./shared/observability/ErrorBoundary.tsx";
 import HomePage from "./modules/landing/features/landing/pages/LandingPage.tsx";
 
 import MainDashboardLayout from "./modules/dashboard/main/layout/MainDashboardLayout";
-import SettingsDashboardLayout from "./modules/dashboard/settings/layout/SettingsDashboardLayout.tsx";
 
 function AppRouter() {
     const router = useMemo(() => {
@@ -67,24 +66,17 @@ function AppRouter() {
                         element: <AuthLayout />,
                         children: routesByLayout.auth,
                     },
-                    // Main dashboard module
+                    // Unified Dashboard & Settings module (using main layout)
                     {
                         element: (
                             <ProtectedRoute>
                                 <MainDashboardLayout />
                             </ProtectedRoute>
                         ),
-                        children: routesByLayout['dashboard-main'] || [],
-                    },
-                    
-                    // Settings dashboard module
-                    {
-                        element: (
-                            <ProtectedRoute>
-                                <SettingsDashboardLayout />
-                            </ProtectedRoute>
-                        ),
-                        children: routesByLayout['dashboard-settings'] || [],
+                        children: [
+                            ...(routesByLayout['dashboard-main'] || []),
+                            ...(routesByLayout['dashboard-settings'] || []),
+                        ],
                     },
                    
                     // Routes without layout wrapper

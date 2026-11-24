@@ -5,29 +5,15 @@ import {
     Bell,
     Maximize2,
     Minimize2,
-    LogOut,
-    Settings,
     Languages,
 } from "lucide-react";
 import { useSidebarStore } from "@/shared/hooks/useSidebarStore";
 import { useLanguage } from "@/shared/hooks";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/design-system/components/dropdown-menu";
-import { authStore } from "@/auth";
-import { useLogout } from "@/modules/auth/features/auth/api";
-import { useNavigate } from "react-router-dom";
+import { UserAvatarMenu } from "./UserAvatarMenu";
 
 export const Navbar: React.FC = () => {
     const toggleSidebar = useSidebarStore((state) => state.toggleSidebar);
     const { currentLanguage, changeLanguage } = useLanguage();
-    const user = authStore((state) => state.user);
-    const { mutate: logout } = useLogout();
-    const navigate = useNavigate();
 
     const [isFullscreen, setIsFullscreen] = useState(false);
 
@@ -103,45 +89,8 @@ export const Navbar: React.FC = () => {
                     )}
                 </button>
 
-                {/* User Avatar with Dropdown */}
-                <DropdownMenu>
-                    <DropdownMenuTrigger
-                        className="flex items-center gap-1.5 cursor-pointer outline-none ml-1"
-                        aria-label="User profile menu"
-                    >
-                        <div className="w-8.5 h-8.5 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] flex items-center justify-center text-sm overflow-hidden shrink-0 shadow-2xs">
-                            👦
-                        </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                        align="end"
-                        className="w-48 bg-white border border-[#E2E8F0] rounded-xl p-1 shadow-lg text-xs"
-                    >
-                        <div className="px-3 py-2 border-b border-[#F1F5F9]">
-                            <p className="text-xs font-bold text-[#0F172A]">
-                                {user?.name || "فراس حافظ"}
-                            </p>
-                            <p className="text-[10px] text-[#64748B] truncate">
-                                {user?.email || "rmz.alemtithal@gmail.com"}
-                            </p>
-                        </div>
-                        <DropdownMenuItem
-                            onClick={() => navigate("/dashboard/billing")}
-                            className="flex items-center gap-2 text-xs py-2 px-3 text-[#0F172A] hover:bg-[#F8FAFC] rounded-lg cursor-pointer"
-                        >
-                            <Settings className="w-3.5 h-3.5" />
-                            <span>Billing & Plans</span>
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator className="bg-[#F1F5F9] my-1" />
-                        <DropdownMenuItem
-                            onClick={() => logout()}
-                            className="flex items-center gap-2 text-xs py-2 px-3 text-rose-600 hover:bg-rose-50 rounded-lg cursor-pointer"
-                        >
-                            <LogOut className="w-3.5 h-3.5" />
-                            <span>Sign Out</span>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                {/* User Avatar with Dropdown Menu */}
+                <UserAvatarMenu align="end" side="bottom" />
             </div>
         </header>
     );

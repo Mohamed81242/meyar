@@ -24,17 +24,12 @@ import {
     ChevronDown,
     ChevronRight,
     LogOut,
+    Settings,
 } from "lucide-react";
 import { cn } from "@/utils";
 import { MeayarLogo } from "@/assets/MeayarLogo";
 import { authStore } from "@/auth";
-import { useLogout } from "@/modules/auth/features/auth/api";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuTrigger,
-} from "@/design-system/components/dropdown-menu";
+import { UserAvatarMenu } from "../navbar/UserAvatarMenu";
 
 interface SidebarProps {
     isCollapsed?: boolean;
@@ -62,7 +57,6 @@ interface NavSection {
 export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
     const location = useLocation();
     const user = authStore((state) => state.user);
-    const { mutate: logout } = useLogout();
 
     // Track expanded sub-menus (User Management expanded by default as in Image 1 & 2)
     const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({
@@ -312,55 +306,43 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
 
             {/* Bottom Profile & Subscription Cards */}
             <div className="shrink-0 border-t border-[#E2E8F0] p-2.5 space-y-2">
-                {/* User Profile Card */}
-                <DropdownMenu>
-                    <DropdownMenuTrigger
-                        className="w-full focus:outline-none cursor-pointer"
-                        aria-label="User Profile"
+                {/* User Profile Card with Menu */}
+                <UserAvatarMenu
+                    side="right"
+                    align={isCollapsed ? "center" : "end"}
+                    className="w-full text-start block"
+                >
+                    <div
+                        className={cn(
+                            "flex items-center gap-2.5 p-2 rounded-xl hover:bg-[#F8FAFC] dark:hover:bg-dashboard-secondary transition-colors cursor-pointer",
+                            isCollapsed && "justify-center p-1"
+                        )}
                     >
-                        <div
-                            className={cn(
-                                "flex items-center gap-2.5 p-2 rounded-xl hover:bg-[#F8FAFC] transition-colors",
-                                isCollapsed && "justify-center p-1"
-                            )}
-                        >
-                            <div className="w-9 h-9 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] flex items-center justify-center text-sm shrink-0 overflow-hidden shadow-2xs">
-                                👦
-                            </div>
-                            {!isCollapsed && (
-                                <>
-                                    <div className="flex flex-col text-start overflow-hidden min-w-0 flex-1 leading-tight">
-                                        <span className="text-xs font-bold text-[#0F172A] truncate">
-                                            {user?.name || "فراس حافظ"}
-                                        </span>
-                                        <span className="text-[11px] text-[#64748B]">
-                                            أدمن
-                                        </span>
-                                    </div>
-                                    <ChevronRight className="w-4 h-4 text-[#94A3B8] shrink-0" />
-                                </>
-                            )}
+                        <div className="w-9 h-9 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] flex items-center justify-center text-sm shrink-0 overflow-hidden shadow-2xs">
+                            👦
                         </div>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                        align={isCollapsed ? "center" : "start"}
-                        side="right"
-                        sideOffset={12}
-                        className="w-48 p-1 rounded-xl border border-[#E2E8F0] shadow-xl bg-white text-xs"
-                    >
-                        <DropdownMenuItem
-                            onClick={() => logout()}
-                            className="gap-2 px-2.5 py-2 text-rose-600 hover:bg-rose-50 rounded-lg cursor-pointer"
-                        >
-                            <LogOut className="w-3.5 h-3.5" />
-                            <span>تسجيل الخروج</span>
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
+                        {!isCollapsed && (
+                            <>
+                                <div className="flex flex-col text-start overflow-hidden min-w-0 flex-1 leading-tight">
+                                    <span className="text-xs font-bold text-[#0F172A] dark:text-dashboard-foreground truncate">
+                                        {user?.name || "فراس حافظ"}
+                                    </span>
+                                    <span className="text-[11px] text-[#64748B]">
+                                        أدمن
+                                    </span>
+                                </div>
+                                <ChevronRight className="w-4 h-4 text-[#94A3B8] shrink-0" />
+                            </>
+                        )}
+                    </div>
+                </UserAvatarMenu>
 
                 {/* Subscription Plan Card */}
                 {!isCollapsed && (
-                    <div className="bg-[#F8FAFC] border border-[#E2E8F0] rounded-xl p-2.5 space-y-1">
+                    <Link
+                        to="/dashboard/settings?tab=subscriptions"
+                        className="block bg-[#F8FAFC] hover:bg-[#F1F5F9] border border-[#E2E8F0] rounded-xl p-2.5 space-y-1 transition-colors cursor-pointer"
+                    >
                         <div className="flex items-center justify-between">
                             <span className="text-xs font-bold text-[#0F172A]">
                                 Basic Plan
@@ -372,7 +354,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                         <p className="text-[10px] text-[#64748B] tracking-tight">
                             [27 Days] تاريخ الاستحقاق: 2026/12/22
                         </p>
-                    </div>
+                    </Link>
                 )}
             </div>
         </motion.aside>

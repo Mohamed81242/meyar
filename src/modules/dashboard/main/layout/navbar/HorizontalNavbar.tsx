@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
     LineChart,
     TrendingUp,
@@ -25,21 +25,11 @@ import {
     Bell,
     Maximize2,
     Minimize2,
-    LogOut,
-    Settings,
 } from "lucide-react";
 import { cn } from "@/utils";
 import { MeayarLogo } from "@/assets/MeayarLogo";
 import { useLanguage } from "@/shared/hooks";
-import { authStore } from "@/auth";
-import { useLogout } from "@/modules/auth/features/auth/api";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/design-system/components/dropdown-menu";
+import { UserAvatarMenu } from "./UserAvatarMenu";
 
 interface SubItem {
     title: string;
@@ -57,10 +47,7 @@ interface HorizontalNavItem {
 
 export const HorizontalNavbar: React.FC = () => {
     const location = useLocation();
-    const navigate = useNavigate();
     const { currentLanguage, changeLanguage } = useLanguage();
-    const user = authStore((state) => state.user);
-    const { mutate: logout } = useLogout();
 
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [openMenu, setOpenMenu] = useState<string | null>(null);
@@ -246,45 +233,8 @@ export const HorizontalNavbar: React.FC = () => {
                         {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
                     </button>
 
-                    {/* User Avatar with Dropdown */}
-                    <DropdownMenu>
-                        <DropdownMenuTrigger
-                            className="flex items-center gap-1.5 cursor-pointer outline-none ml-1"
-                            aria-label="User profile menu"
-                        >
-                            <div className="w-8.5 h-8.5 rounded-full bg-[#E0F2FE] border border-[#BAE6FD] flex items-center justify-center text-sm overflow-hidden shrink-0 shadow-2xs">
-                                👦
-                            </div>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent
-                            align="end"
-                            className="w-48 bg-white dark:bg-dashboard-card border border-[#E2E8F0] dark:border-dashboard-border rounded-xl p-1 shadow-lg text-xs z-50"
-                        >
-                            <div className="px-3 py-2 border-b border-[#F1F5F9] dark:border-dashboard-border">
-                                <p className="text-xs font-bold text-[#0F172A] dark:text-dashboard-foreground">
-                                    {user?.name || "فراس حافظ"}
-                                </p>
-                                <p className="text-[10px] text-[#64748B] truncate">
-                                    {user?.email || "rmz.alemtithal@gmail.com"}
-                                </p>
-                            </div>
-                            <DropdownMenuItem
-                                onClick={() => navigate("/dashboard/billing")}
-                                className="flex items-center gap-2 text-xs py-2 px-3 text-[#0F172A] dark:text-dashboard-foreground hover:bg-dashboard-secondary rounded-lg cursor-pointer"
-                            >
-                                <Settings className="w-3.5 h-3.5" />
-                                <span>Billing & Plans</span>
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator className="bg-[#F1F5F9] dark:bg-dashboard-border my-1" />
-                            <DropdownMenuItem
-                                onClick={() => logout()}
-                                className="flex items-center gap-2 text-xs py-2 px-3 text-rose-600 hover:bg-rose-50 rounded-lg cursor-pointer"
-                            >
-                                <LogOut className="w-3.5 h-3.5" />
-                                <span>Sign Out</span>
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    {/* User Avatar with Dropdown Menu */}
+                    <UserAvatarMenu align="end" side="bottom" />
                 </div>
             </div>
 
