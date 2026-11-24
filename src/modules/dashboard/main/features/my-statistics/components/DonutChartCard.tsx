@@ -24,11 +24,11 @@ export const DonutChartCard: React.FC<Props> = ({ icon: HeaderIcon, data }) => {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                    <HeaderIcon className="w-4 h-4 text-[#0F172A]" />
-                    <h2 className="text-sm font-bold text-[#0F172A]">{title}</h2>
+                    <HeaderIcon className="w-4 h-4 text-[#0F172A] dark:text-dashboard-foreground" />
+                    <h2 className="text-sm font-bold text-[#0F172A] dark:text-dashboard-foreground">{title}</h2>
                 </div>
                 <button
-                    className="w-7 h-7 rounded-lg text-[#94A3B8] hover:text-[#0F172A] hover:bg-[#F1F5F9] flex items-center justify-center transition-colors cursor-pointer"
+                    className="w-7 h-7 rounded-lg text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-dashboard-foreground hover:bg-[#F1F5F9] dark:hover:bg-dashboard-secondary flex items-center justify-center transition-colors cursor-pointer"
                     aria-label={`Options for ${title}`}
                 >
                     <MoreHorizontal className="w-4 h-4" />
@@ -44,7 +44,8 @@ export const DonutChartCard: React.FC<Props> = ({ icon: HeaderIcon, data }) => {
                         cy={size / 2}
                         r={radius}
                         fill="transparent"
-                        stroke="#F1F5F9"
+                        stroke="currentColor"
+                        className="text-[#F1F5F9] dark:text-dashboard-border"
                         strokeWidth={strokeWidth}
                     />
 
@@ -76,17 +77,17 @@ export const DonutChartCard: React.FC<Props> = ({ icon: HeaderIcon, data }) => {
 
                 {/* Center Label and Value */}
                 <div className="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
-                    <span className="text-[11px] text-[#64748B] font-medium leading-tight">
+                    <span className="text-[11px] text-[#64748B] dark:text-dashboard-muted-foreground font-medium leading-tight">
                         {centerLabel}
                     </span>
-                    <span className="text-2xl font-bold text-[#0F172A] leading-tight">
+                    <span className="text-2xl font-bold text-[#0F172A] dark:text-dashboard-foreground leading-tight">
                         {total}
                     </span>
                 </div>
             </div>
 
             {/* Legend Section matching Image 1 */}
-            <div className="grid grid-cols-2 gap-x-2 gap-y-1.5 pt-2 border-t border-[#F8FAFC] text-[11px] font-medium text-[#475569]">
+            <div className="grid grid-cols-2 gap-x-2 gap-y-1.5 pt-2 border-t border-[#F8FAFC] dark:border-dashboard-border text-[11px] font-medium text-[#475569] dark:text-dashboard-muted-foreground">
                 {segments.map((segment) => (
                     <div key={segment.label} className="flex items-center gap-1.5 whitespace-nowrap">
                         <span

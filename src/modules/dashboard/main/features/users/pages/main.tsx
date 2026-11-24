@@ -198,13 +198,13 @@ export default function UsersPage() {
                 <div className="overflow-x-auto w-full">
                     <table className="w-full text-start border-collapse text-xs">
                         <thead>
-                            <tr className="border-b border-[#F1F5F9] bg-[#F8FAFC]/50 text-[11px] font-bold text-[#64748B] uppercase tracking-wider select-none">
+                            <tr className="border-b border-[#F1F5F9] dark:border-dashboard-border bg-[#F8FAFC]/50 dark:bg-dashboard-secondary/30 text-[11px] font-bold text-[#64748B] dark:text-dashboard-muted-foreground uppercase tracking-wider select-none">
                                 <th className="px-4 py-3.5 w-12 text-center">
                                     <input
                                         type="checkbox"
                                         checked={isAllSelected}
                                         onChange={handleSelectAll}
-                                        className="w-4 h-4 rounded border-[#CBD5E1] text-[#2563EB] focus:ring-[#2563EB]/20 cursor-pointer"
+                                        className="w-4 h-4 rounded border-[#CBD5E1] text-dashboard-primary focus:ring-dashboard-primary/20 cursor-pointer"
                                         aria-label="Select all"
                                     />
                                 </th>
@@ -217,7 +217,7 @@ export default function UsersPage() {
                                 <th className="px-4 py-3.5 text-center font-bold w-16">ACTION</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-[#F1F5F9]">
+                        <tbody className="divide-y divide-[#F1F5F9] dark:divide-dashboard-border">
                             {isLoading ? (
                                 <tr>
                                     <td colSpan={8} className="p-8 text-center text-[#94A3B8]">
@@ -236,8 +236,8 @@ export default function UsersPage() {
                                     return (
                                         <tr
                                             key={item.id}
-                                            className={`hover:bg-[#F8FAFC] transition-colors ${
-                                                isRowSelected ? "bg-[#EFF6FF]/40" : ""
+                                            className={`hover:bg-[#F8FAFC] dark:hover:bg-dashboard-secondary/40 transition-colors ${
+                                                isRowSelected ? "bg-[#EFF6FF]/40 dark:bg-dashboard-secondary/60" : ""
                                             }`}
                                         >
                                             {/* Checkbox */}
@@ -246,7 +246,7 @@ export default function UsersPage() {
                                                     type="checkbox"
                                                     checked={isRowSelected}
                                                     onChange={() => handleSelectRow(item.id)}
-                                                    className="w-4 h-4 rounded border-[#CBD5E1] text-[#2563EB] focus:ring-[#2563EB]/20 cursor-pointer"
+                                                    className="w-4 h-4 rounded border-[#CBD5E1] text-dashboard-primary focus:ring-dashboard-primary/20 cursor-pointer"
                                                     aria-label={`Select ${item.name}`}
                                                 />
                                             </td>
@@ -254,17 +254,17 @@ export default function UsersPage() {
                                             {/* Name & Avatar */}
                                             <td className="px-4 py-3.5">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="w-8 h-8 rounded-lg bg-[#E2E8F0] text-[#64748B] font-bold flex items-center justify-center text-xs shrink-0 select-none">
+                                                    <div className="w-8 h-8 rounded-lg bg-[#E2E8F0] dark:bg-dashboard-secondary text-[#64748B] dark:text-dashboard-foreground font-bold flex items-center justify-center text-xs shrink-0 select-none">
                                                         N/A
                                                     </div>
-                                                    <span className="font-bold text-[#0F172A] text-xs">
+                                                    <span className="font-bold text-[#0F172A] dark:text-dashboard-foreground text-xs">
                                                         {item.name}
                                                     </span>
                                                 </div>
                                             </td>
 
                                             {/* Role */}
-                                            <td className="px-4 py-3.5 text-[#334155] font-medium text-xs">
+                                            <td className="px-4 py-3.5 text-[#334155] dark:text-dashboard-muted-foreground font-medium text-xs">
                                                 {item.role || "أدمن"}
                                             </td>
 
@@ -273,22 +273,22 @@ export default function UsersPage() {
                                                 <div className="flex flex-col gap-1 text-xs">
                                                     {item.email && (
                                                         <div className="flex items-center gap-2">
-                                                            <span className="text-[#334155] font-medium">
+                                                            <span className="text-[#334155] dark:text-dashboard-foreground font-medium">
                                                                 {item.email}
                                                             </span>
-                                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]">
-                                                                <CheckCircle2 className="w-3 h-3 text-[#059669]" />
+                                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#ECFDF5] dark:bg-emerald-950/40 text-[#059669] dark:text-emerald-400 border border-[#A7F3D0] dark:border-emerald-800/50">
+                                                                <CheckCircle2 className="w-3 h-3 text-[#059669] dark:text-emerald-400" />
                                                                 <span>Activated</span>
                                                             </span>
                                                         </div>
                                                     )}
                                                     {item.phone && (
                                                         <div className="flex items-center gap-2">
-                                                            <span className="text-[#64748B] text-[11px]">
+                                                            <span className="text-[#64748B] dark:text-dashboard-muted-foreground text-[11px]">
                                                                 {item.phone}
                                                             </span>
-                                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]">
-                                                                <CheckCircle2 className="w-3 h-3 text-[#059669]" />
+                                                            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#ECFDF5] dark:bg-emerald-950/40 text-[#059669] dark:text-emerald-400 border border-[#A7F3D0] dark:border-emerald-800/50">
+                                                                <CheckCircle2 className="w-3 h-3 text-[#059669] dark:text-emerald-400" />
                                                                 <span>Activated</span>
                                                             </span>
                                                         </div>
@@ -297,19 +297,19 @@ export default function UsersPage() {
                                             </td>
 
                                             {/* Creation Date */}
-                                            <td className="px-4 py-3.5 text-[#475569] text-xs">
+                                            <td className="px-4 py-3.5 text-[#475569] dark:text-dashboard-muted-foreground text-xs">
                                                 {item.createdAt}
                                             </td>
 
                                             {/* Modification Date */}
-                                            <td className="px-4 py-3.5 text-[#475569] text-xs">
+                                            <td className="px-4 py-3.5 text-[#475569] dark:text-dashboard-muted-foreground text-xs">
                                                 {item.updatedAt}
                                             </td>
 
                                             {/* Status Badge */}
                                             <td className="px-4 py-3.5">
-                                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#ECFDF5] text-[#059669] border border-[#A7F3D0]">
-                                                    <CheckCircle2 className="w-3.5 h-3.5 text-[#059669]" />
+                                                <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#ECFDF5] dark:bg-emerald-950/40 text-[#059669] dark:text-emerald-400 border border-[#A7F3D0] dark:border-emerald-800/50">
+                                                    <CheckCircle2 className="w-3.5 h-3.5 text-[#059669] dark:text-emerald-400" />
                                                     <span>Active</span>
                                                 </span>
                                             </td>
@@ -318,25 +318,25 @@ export default function UsersPage() {
                                             <td className="px-4 py-3.5 text-center">
                                                 <DropdownMenu>
                                                     <DropdownMenuTrigger
-                                                        className="w-7 h-7 rounded-lg flex items-center justify-center text-[#94A3B8] hover:text-[#0F172A] hover:bg-[#F1F5F9] transition-colors cursor-pointer outline-none mx-auto"
+                                                        className="w-7 h-7 rounded-lg flex items-center justify-center text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-dashboard-foreground hover:bg-[#F1F5F9] dark:hover:bg-dashboard-secondary transition-colors cursor-pointer outline-none mx-auto"
                                                         aria-label="Actions"
                                                     >
                                                         <MoreVertical className="w-4 h-4" />
                                                     </DropdownMenuTrigger>
                                                     <DropdownMenuContent
                                                         align="end"
-                                                        className="w-32 bg-white border border-[#E2E8F0] rounded-xl p-1 shadow-lg text-xs z-50"
+                                                        className="w-32 bg-white dark:bg-dashboard-card border border-[#E2E8F0] dark:border-dashboard-border rounded-xl p-1 shadow-lg text-xs z-50"
                                                     >
                                                         <DropdownMenuItem
                                                             onClick={() => handleOpenEdit(item)}
-                                                            className="flex items-center gap-2 px-3 py-2 text-[#334155] hover:bg-[#F1F5F9] rounded-lg cursor-pointer transition-colors"
+                                                            className="flex items-center gap-2 px-3 py-2 text-[#334155] dark:text-dashboard-foreground hover:bg-[#F1F5F9] dark:hover:bg-dashboard-secondary rounded-lg cursor-pointer transition-colors"
                                                         >
-                                                            <Edit2 className="w-3.5 h-3.5 text-[#64748B]" />
+                                                            <Edit2 className="w-3.5 h-3.5 text-[#64748B] dark:text-dashboard-muted-foreground" />
                                                             <span>تعديل</span>
                                                         </DropdownMenuItem>
                                                         <DropdownMenuItem
                                                             onClick={() => setDeletingUser(item)}
-                                                            className="flex items-center gap-2 px-3 py-2 text-[#DC2626] hover:bg-[#FEF2F2] rounded-lg cursor-pointer transition-colors"
+                                                            className="flex items-center gap-2 px-3 py-2 text-[#DC2626] hover:bg-[#FEF2F2] dark:hover:bg-rose-950/30 rounded-lg cursor-pointer transition-colors"
                                                         >
                                                             <Trash2 className="w-3.5 h-3.5 text-[#DC2626]" />
                                                             <span>حذف</span>

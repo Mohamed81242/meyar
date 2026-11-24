@@ -237,9 +237,85 @@
 }
 
 .dark {
+  --color-dashboard-background: #0B0C0E;
+  --color-dashboard-foreground: #F8FAFC;
+  --color-dashboard-card: #121316;
+  --color-dashboard-card-foreground: #F8FAFC;
+  --color-dashboard-popover: #121316;
+  --color-dashboard-popover-foreground: #F8FAFC;
+  --color-dashboard-secondary: #18191D;
+  --color-dashboard-secondary-foreground: #F8FAFC;
+  --color-dashboard-muted: #18191D;
+  --color-dashboard-muted-foreground: #94A3B8;
+  --color-dashboard-accent: #18191D;
+  --color-dashboard-accent-foreground: #F8FAFC;
+  --color-dashboard-border: #23252A;
+  --color-dashboard-input: #18191D;
+  --color-dashboard-sidebar: #0B0C0E;
+  --color-dashboard-sidebar-foreground: #F8FAFC;
+  --color-dashboard-sidebar-accent: #18191D;
+  --color-dashboard-sidebar-accent-foreground: #F8FAFC;
+  --color-dashboard-sidebar-border: #23252A;
+
   --dashboard-card-shadow: 0 6px 24px -2px rgba(0, 0, 0, 0.45);
-  --dashboard-card-border: #2A2A2C;
+  --dashboard-card-border: #23252A;
   --dashboard-card-hover-shadow: 0 14px 30px -4px rgba(0, 0, 0, 0.65);
+}
+
+.dark body,
+.dark main {
+  color: var(--color-dashboard-foreground, #F8FAFC);
+}
+
+/* Global dark mode overrides for hardcoded light-theme color classes */
+.dark [class*="text-[#0F172A]"],
+.dark [class*="text-[#0f172a]"],
+.dark [class*="text-[#1E293B]"],
+.dark [class*="text-[#1e293b]"],
+.dark [class*="text-[#000000]"],
+.dark [class*="text-[#000]"],
+.dark .text-slate-900,
+.dark .text-gray-900 {
+  color: var(--color-dashboard-foreground, #F8FAFC) !important;
+}
+
+.dark [class*="text-[#334155]"],
+.dark [class*="text-[#475569]"],
+.dark [class*="text-[#64748B]"],
+.dark [class*="text-[#64748b]"],
+.dark .text-slate-600,
+.dark .text-gray-600,
+.dark .text-slate-500,
+.dark .text-gray-500 {
+  color: var(--color-dashboard-muted-foreground, #94A3B8) !important;
+}
+
+.dark [class*="bg-[#F8FAFC]"],
+.dark [class*="bg-[#f8fafc]"],
+.dark [class*="bg-[#F1F5F9]"],
+.dark [class*="bg-[#f1f5f9]"] {
+  background-color: var(--color-dashboard-secondary, #18191D) !important;
+}
+
+.dark [class*="border-[#E2E8F0]"],
+.dark [class*="border-[#e2e8f0]"],
+.dark [class*="border-[#F1F5F9]"],
+.dark [class*="border-[#f1f5f9]"],
+.dark [class*="border-[#CBD5E1]"],
+.dark [class*="border-[#cbd5e1]"] {
+  border-color: var(--color-dashboard-border, #23252A) !important;
+}
+
+.dark [class*="hover:bg-[#F8FAFC]"]:hover,
+.dark [class*="hover:bg-[#f8fafc]"]:hover,
+.dark [class*="hover:bg-[#F1F5F9]"]:hover,
+.dark [class*="hover:bg-[#f1f5f9]"]:hover {
+  background-color: var(--color-dashboard-secondary, #18191D) !important;
+}
+
+.dark [class*="hover:text-[#0F172A]"]:hover,
+.dark [class*="hover:text-[#0f172a]"]:hover {
+  color: var(--color-dashboard-foreground, #F8FAFC) !important;
 }
 
 .dark[data-contrast="contrast"],

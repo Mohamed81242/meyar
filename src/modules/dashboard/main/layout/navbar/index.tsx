@@ -31,25 +31,25 @@ export const Navbar: React.FC = () => {
     };
 
     return (
-        <header className="h-16 bg-white border-b border-[#E2E8F0] px-6 flex items-center justify-between shrink-0 z-30 select-none text-[#1E293B]">
+        <header className="h-16 bg-white dark:bg-dashboard-card border-b border-[#E2E8F0] dark:border-dashboard-border px-6 flex items-center justify-between shrink-0 z-30 select-none text-[#1E293B] dark:text-dashboard-foreground">
             {/* Left side: Hamburger Toggle + Search Bar */}
             <div className="flex items-center gap-3.5">
                 <button
                     onClick={toggleSidebar}
-                    className="w-9 h-9 rounded-lg flex items-center justify-center text-[#64748B] hover:text-[#0F172A] hover:bg-[#F8FAFC] transition-colors cursor-pointer"
+                    className="w-9 h-9 rounded-lg flex items-center justify-center text-[#64748B] hover:text-[#0F172A] dark:hover:text-dashboard-foreground hover:bg-[#F8FAFC] dark:hover:bg-dashboard-secondary transition-colors cursor-pointer"
                     aria-label="Toggle Sidebar"
                 >
                     <Menu className="w-5 h-5" />
                 </button>
 
                 {/* Search Bar */}
-                <div className="hidden sm:flex items-center gap-2.5 px-3 h-9 rounded-lg border border-[#E2E8F0] bg-white w-60 md:w-68 text-xs text-[#94A3B8]">
+                <div className="hidden sm:flex items-center gap-2.5 px-3 h-9 rounded-lg border border-[#E2E8F0] dark:border-dashboard-border bg-white dark:bg-dashboard-background w-60 md:w-68 text-xs text-[#94A3B8]">
                     <Search className="w-4 h-4 text-[#94A3B8] shrink-0" />
                     <input
                         type="text"
                         placeholder="Ctrl + K"
                         aria-label="Search"
-                        className="bg-transparent border-none outline-none text-xs text-[#0F172A] placeholder:text-[#94A3B8] flex-1 w-full"
+                        className="bg-transparent border-none outline-none text-xs text-[#0F172A] dark:text-dashboard-foreground placeholder:text-[#94A3B8] flex-1 w-full"
                     />
                 </div>
             </div>
@@ -60,14 +60,14 @@ export const Navbar: React.FC = () => {
                 <button
                     onClick={handleToggleLanguage}
                     title={currentLanguage === "ar" ? "Switch to English" : "التبديل إلى العربية"}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-[#64748B] hover:text-[#0F172A] hover:bg-[#F8FAFC] transition-colors cursor-pointer"
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-[#64748B] hover:text-[#0F172A] dark:hover:text-dashboard-foreground hover:bg-[#F8FAFC] dark:hover:bg-dashboard-secondary transition-colors cursor-pointer"
                 >
                     <Languages className="w-4 h-4 text-[#64748B]" />
                 </button>
 
                 {/* Notification Bell with Badge */}
                 <button
-                    className="relative w-8 h-8 rounded-lg flex items-center justify-center text-[#64748B] hover:text-[#0F172A] hover:bg-[#F8FAFC] transition-colors cursor-pointer"
+                    className="relative w-8 h-8 rounded-lg flex items-center justify-center text-[#64748B] hover:text-[#0F172A] dark:hover:text-dashboard-foreground hover:bg-[#F8FAFC] dark:hover:bg-dashboard-secondary transition-colors cursor-pointer"
                     aria-label="Notifications"
                 >
                     <Bell className="w-4 h-4" />
@@ -79,7 +79,7 @@ export const Navbar: React.FC = () => {
                 {/* Fullscreen Button */}
                 <button
                     onClick={toggleFullscreen}
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-[#64748B] hover:text-[#0F172A] hover:bg-[#F8FAFC] transition-colors cursor-pointer"
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-[#64748B] hover:text-[#0F172A] dark:hover:text-dashboard-foreground hover:bg-[#F8FAFC] dark:hover:bg-dashboard-secondary transition-colors cursor-pointer"
                     aria-label="Toggle Fullscreen"
                 >
                     {isFullscreen ? (

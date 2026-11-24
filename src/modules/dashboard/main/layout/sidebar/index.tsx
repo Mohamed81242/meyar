@@ -206,7 +206,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                                 "w-full flex items-center gap-3 px-3.5 py-2 text-sm rounded-xl transition-colors cursor-pointer",
                                                 isGroupActive
                                                     ? "bg-dashboard-secondary text-dashboard-primary font-bold"
-                                                    : "text-[#475569] hover:bg-[#F8FAFC] hover:text-[#0F172A] font-semibold",
+                                                    : "text-[#475569] dark:text-[#94A3B8] hover:bg-[#F8FAFC] dark:hover:bg-dashboard-secondary hover:text-[#0F172A] dark:hover:text-dashboard-foreground font-semibold",
                                                 isCollapsed && "justify-center px-0"
                                             )}
                                             title={isCollapsed ? item.title : undefined}
@@ -250,7 +250,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                                                 "flex items-center gap-2.5 px-3 py-1.5 text-xs rounded-lg transition-all",
                                                                 isActive
                                                                     ? "text-dashboard-primary font-bold bg-dashboard-secondary/50"
-                                                                    : "text-[#64748B] hover:text-[#0F172A] hover:bg-[#F8FAFC] font-medium"
+                                                                    : "text-[#64748B] dark:text-[#94A3B8] hover:text-[#0F172A] dark:hover:text-dashboard-foreground hover:bg-[#F8FAFC] dark:hover:bg-dashboard-secondary font-medium"
                                                             )}
                                                         >
                                                             {SubIcon && (
@@ -286,7 +286,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                         isCollapsed && "justify-center px-0",
                                         isActive
                                             ? "bg-dashboard-secondary text-dashboard-primary font-bold"
-                                            : "text-[#475569] hover:bg-[#F8FAFC] hover:text-[#0F172A] font-semibold"
+                                            : "text-[#475569] dark:text-[#94A3B8] hover:bg-[#F8FAFC] dark:hover:bg-dashboard-secondary hover:text-[#0F172A] dark:hover:text-dashboard-foreground font-semibold"
                                     )}
                                     title={isCollapsed ? item.title : undefined}
                                 >
@@ -305,7 +305,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
             </div>
 
             {/* Bottom Profile & Subscription Cards */}
-            <div className="shrink-0 border-t border-[#E2E8F0] p-2.5 space-y-2">
+            <div className="shrink-0 border-t border-[#E2E8F0] dark:border-dashboard-border p-2.5 space-y-2">
                 {/* User Profile Card with Menu */}
                 <UserAvatarMenu
                     side="right"
@@ -327,7 +327,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                                     <span className="text-xs font-bold text-[#0F172A] dark:text-dashboard-foreground truncate">
                                         {user?.name || "فراس حافظ"}
                                     </span>
-                                    <span className="text-[11px] text-[#64748B]">
+                                    <span className="text-[11px] text-[#64748B] dark:text-dashboard-muted-foreground">
                                         أدمن
                                     </span>
                                 </div>
@@ -341,17 +341,17 @@ export const Sidebar: React.FC<SidebarProps> = ({ isCollapsed = false }) => {
                 {!isCollapsed && (
                     <Link
                         to="/dashboard/settings?tab=subscriptions"
-                        className="block bg-[#F8FAFC] hover:bg-[#F1F5F9] border border-[#E2E8F0] rounded-xl p-2.5 space-y-1 transition-colors cursor-pointer"
+                        className="block bg-[#F8FAFC] dark:bg-dashboard-card hover:bg-[#F1F5F9] dark:hover:bg-dashboard-secondary border border-[#E2E8F0] dark:border-dashboard-border rounded-xl p-2.5 space-y-1 transition-colors cursor-pointer"
                     >
                         <div className="flex items-center justify-between">
-                            <span className="text-xs font-bold text-[#0F172A]">
+                            <span className="text-xs font-bold text-[#0F172A] dark:text-dashboard-foreground">
                                 Basic Plan
                             </span>
                             <span className="px-2 py-0.5 rounded-full bg-[#E6F4EA] text-[#137333] border border-[#CEEAD6] text-[10px] font-semibold">
                                 Active
                             </span>
                         </div>
-                        <p className="text-[10px] text-[#64748B] tracking-tight">
+                        <p className="text-[10px] text-[#64748B] dark:text-dashboard-muted-foreground tracking-tight">
                             [27 Days] تاريخ الاستحقاق: 2026/12/22
                         </p>
                     </Link>

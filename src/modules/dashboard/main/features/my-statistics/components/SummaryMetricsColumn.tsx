@@ -17,10 +17,10 @@ export const SummaryMetricsColumn: React.FC<Props> = ({
             {/* Card 1: In Progress Tasks */}
             <div className="dashboard-card p-4 px-5 flex items-center justify-between">
                 <div>
-                    <h3 className="text-2xl font-bold text-[#0F172A] tracking-tight">
+                    <h3 className="text-2xl font-bold text-[#0F172A] dark:text-dashboard-foreground tracking-tight">
                         {inProgressTasks} +
                     </h3>
-                    <p className="text-xs text-[#64748B] font-medium mt-1">
+                    <p className="text-xs text-[#64748B] dark:text-dashboard-muted-foreground font-medium mt-1">
                         In Progress Tasks
                     </p>
                 </div>
@@ -32,10 +32,10 @@ export const SummaryMetricsColumn: React.FC<Props> = ({
             {/* Card 2: Completed Tasks */}
             <div className="dashboard-card p-4 px-5 flex items-center justify-between">
                 <div>
-                    <h3 className="text-2xl font-bold text-[#0F172A] tracking-tight">
+                    <h3 className="text-2xl font-bold text-[#0F172A] dark:text-dashboard-foreground tracking-tight">
                         {completedTasks} +
                     </h3>
-                    <p className="text-xs text-[#64748B] font-medium mt-1">
+                    <p className="text-xs text-[#64748B] dark:text-dashboard-muted-foreground font-medium mt-1">
                         Completed Tasks
                     </p>
                 </div>
@@ -47,10 +47,10 @@ export const SummaryMetricsColumn: React.FC<Props> = ({
             {/* Card 3: Open Actions */}
             <div className="dashboard-card p-4 px-5 flex items-center justify-between">
                 <div>
-                    <h3 className="text-2xl font-bold text-[#0F172A] tracking-tight">
+                    <h3 className="text-2xl font-bold text-[#0F172A] dark:text-dashboard-foreground tracking-tight">
                         {openActions} +
                     </h3>
-                    <p className="text-xs text-[#64748B] font-medium mt-1">
+                    <p className="text-xs text-[#64748B] dark:text-dashboard-muted-foreground font-medium mt-1">
                         Open Actions
                     </p>
                 </div>

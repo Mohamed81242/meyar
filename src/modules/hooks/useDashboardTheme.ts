@@ -201,12 +201,12 @@ export function generatePalette(
     if (isDark) {
         return {
             primary: primaryHex,
-            secondary: "#1E293B",
-            accent: "#1E293B",
-            background: "#0F172A",
+            secondary: "#18191D",
+            accent: "#18191D",
+            background: "#0B0C0E",
             foreground: "#F8FAFC",
-            card: "#1E293B",
-            border: "#334155",
+            card: "#121316",
+            border: "#23252A",
         };
     } else {
         const sec = getSecondaryTint(primaryHex, false);
@@ -331,7 +331,7 @@ export function useDashboardTheme() {
         // Set sidebar custom properties explicitly to avoid color bleeding
         root.style.setProperty(
             "--color-dashboard-sidebar",
-            isDark ? "#1E293B" : "#FFFFFF"
+            isDark ? "#0B0C0E" : "#FFFFFF"
         );
         root.style.setProperty(
             "--color-dashboard-sidebar-foreground",
@@ -339,11 +339,23 @@ export function useDashboardTheme() {
         );
         root.style.setProperty(
             "--color-dashboard-sidebar-accent",
-            isDark ? "#334155" : "#EFF6FF"
+            isDark ? "#18191D" : "#EFF6FF"
         );
         root.style.setProperty(
             "--color-dashboard-sidebar-border",
-            isDark ? "#334155" : "#E5E7EB"
+            isDark ? "#23252A" : "#E5E7EB"
+        );
+        root.style.setProperty(
+            "--color-dashboard-muted",
+            isDark ? "#18191D" : "#F8FAFC"
+        );
+        root.style.setProperty(
+            "--color-dashboard-muted-foreground",
+            isDark ? "#94A3B8" : "#64748B"
+        );
+        root.style.setProperty(
+            "--color-dashboard-input",
+            isDark ? "#18191D" : "#FFFFFF"
         );
 
         // Auto-adjust foreground colors for contrast if primary/secondary is set

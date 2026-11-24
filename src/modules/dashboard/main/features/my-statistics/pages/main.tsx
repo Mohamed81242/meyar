@@ -39,19 +39,19 @@ export default function MyStatisticsPage() {
     }
 
     return (
-        <div className="flex flex-col gap-5 w-full select-none text-[#1E293B]">
+        <div className="flex flex-col gap-5 w-full select-none text-[#1E293B] dark:text-dashboard-foreground">
             {/* Breadcrumb matching Image 1 */}
-            <div className="flex items-center gap-1.5 text-xs text-[#64748B] font-medium">
+            <div className="flex items-center gap-1.5 text-xs text-[#64748B] dark:text-dashboard-muted-foreground font-medium">
                 <span>{t("home", "Home")}</span>
                 <ChevronRight className="w-3.5 h-3.5 text-[#94A3B8]" />
-                <span className="text-[#334155] font-semibold">
+                <span className="text-[#334155] dark:text-dashboard-foreground font-semibold">
                     {t("title", "My Statistics")}
                 </span>
             </div>
 
             {/* Page Title */}
             <div>
-                <h1 className="text-2xl font-bold text-[#0F172A] tracking-tight">
+                <h1 className="text-2xl font-bold text-[#0F172A] dark:text-dashboard-foreground tracking-tight">
                     {t("title", "My Statistics")}
                 </h1>
             </div>

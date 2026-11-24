@@ -224,6 +224,14 @@ export const TemplateStyles = ({
             .dark .text-slate-900, 
             .dark .text-gray-900, 
             .dark .text-black,
+            .dark .text-\\[\\#0F172A\\],
+            .dark .text-\\[\\#0f172a\\],
+            .dark .text-\\[\\#1E293B\\],
+            .dark .text-\\[\\#1e293b\\],
+            .dark [class*="text-[#0F172A]"],
+            .dark [class*="text-[#0f172a]"],
+            .dark [class*="text-[#1E293B]"],
+            .dark [class*="text-[#1e293b]"],
             .dark .text-dashboard-foreground,
             .dark .text-primary {
                 color: var(--color-dashboard-foreground) !important;
@@ -232,15 +240,55 @@ export const TemplateStyles = ({
             .dark .text-gray-600, 
             .dark .text-slate-500, 
             .dark .text-gray-500,
+            .dark .text-\\[\\#334155\\],
+            .dark .text-\\[\\#475569\\],
+            .dark .text-\\[\\#64748B\\],
+            .dark .text-\\[\\#64748b\\],
+            .dark [class*="text-[#334155]"],
+            .dark [class*="text-[#475569]"],
+            .dark [class*="text-[#64748B]"],
+            .dark [class*="text-[#64748b]"],
             .dark .text-dashboard-muted-foreground {
                 color: var(--color-dashboard-muted-foreground) !important;
             }
             .dark .border-slate-200, 
             .dark .border-gray-200, 
+            .dark .border-\\[\\#E2E8F0\\],
+            .dark .border-\\[\\#e2e8f0\\],
+            .dark .border-\\[\\#F1F5F9\\],
+            .dark .border-\\[\\#f1f5f9\\],
+            .dark .border-\\[\\#CBD5E1\\],
+            .dark .border-\\[\\#cbd5e1\\],
+            .dark [class*="border-[#E2E8F0]"],
+            .dark [class*="border-[#e2e8f0]"],
+            .dark [class*="border-[#F1F5F9]"],
+            .dark [class*="border-[#f1f5f9]"],
+            .dark [class*="border-[#CBD5E1]"],
+            .dark [class*="border-[#cbd5e1]"],
             .dark .border-dashboard-border,
             .dark .border-white\\/20,
             .dark .border-white\\/10 {
                 border-color: var(--color-dashboard-border) !important;
+            }
+            .dark .bg-\\[\\#F8FAFC\\],
+            .dark .bg-\\[\\#f8fafc\\],
+            .dark .bg-\\[\\#F1F5F9\\],
+            .dark .bg-\\[\\#f1f5f9\\],
+            .dark [class*="bg-[#F8FAFC]"],
+            .dark [class*="bg-[#f8fafc]"],
+            .dark [class*="bg-[#F1F5F9]"],
+            .dark [class*="bg-[#f1f5f9]"] {
+                background-color: var(--color-dashboard-secondary) !important;
+            }
+            .dark [class*="hover:bg-[#F8FAFC]"]:hover,
+            .dark [class*="hover:bg-[#f8fafc]"]:hover,
+            .dark [class*="hover:bg-[#F1F5F9]"]:hover,
+            .dark [class*="hover:bg-[#f1f5f9]"]:hover {
+                background-color: var(--color-dashboard-secondary) !important;
+            }
+            .dark [class*="hover:text-[#0F172A]"]:hover,
+            .dark [class*="hover:text-[#0f172a]"]:hover {
+                color: var(--color-dashboard-foreground) !important;
             }
             .dark input, 
             .dark select, 

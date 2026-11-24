@@ -57,7 +57,7 @@ export function MainDashboardLayout() {
                 )}
 
                 {/* Main View Area */}
-                <main className="flex-1 flex flex-col min-h-0 overflow-hidden relative bg-[#F4F6F8] dark:bg-dashboard-background">
+                <main className="flex-1 flex flex-col min-h-0 overflow-hidden relative bg-[#F4F6F8] dark:bg-dashboard-background text-[#1E293B] dark:text-dashboard-foreground">
                     {/* Header: Horizontal Navbar when horizontal mode, otherwise standard Navbar */}
                     {orientation === "horizontal" ? (
                         <HorizontalNavbar />
@@ -66,7 +66,7 @@ export function MainDashboardLayout() {
                     )}
 
                     {/* Scrollable Page Content */}
-                    <div className="flex-1 min-h-0 overflow-y-auto p-6 md:p-8">
+                    <div className="flex-1 min-h-0 overflow-y-auto p-6 md:p-8 text-[#1E293B] dark:text-dashboard-foreground">
                         <Suspense
                             fallback={
                                 <div className="h-full flex items-center justify-center">
